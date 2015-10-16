@@ -1,0 +1,222 @@
+#!/usr/bin/env bash
+#
+# download repository and run boostrap
+
+# -----------------------------------------------------------------------------
+# | Errors                                                                     |
+# -----------------------------------------------------------------------------
+declare -r E_OS_NOT_SUPPORTED=101
+declare -r E_DOWNLOAD_FAILURE=102
+declare -r E_DIRECTORY_FAILURE=103
+declare -r E_UNARCHIVE_FAILURE=104
+declare -r E_RM_TMP_FAILURE=105
+
+# -----------------------------------------------------------------------------
+# | Global variables                                                           |
+# -----------------------------------------------------------------------------
+
+# location to download dotfiles to
+declare DOT_DIR="${HOME}/dotfiles2" # TODO: revert after testing
+
+# github repository
+declare -r GITHUB_REPOSITORY="hellowor1dn/dotfiles"
+declare -r GITHUB_TARBALL_URL="https://github.com/${GITHUB_REPOSITORY}/tarball/master"
+
+# -----------------------------------------------------------------------------
+# | System                                                                     |
+# -----------------------------------------------------------------------------
+
+# is_supported_version(actual, expected): test if compatible version
+is_supported_version() {
+    declare -a v1="${1//./ }"
+    declare -a v2="${2//./ }"
+    local i=""
+
+    # Fill empty positions in v1 with zeros
+    for (( i="${#v1[@]}"; i<"${#v2[@]}"; i++ )); do
+        v1[i]=0
+    done
+
+    for (( i=0; i<"${#v1[@]}"; i++ )); do
+        # Fill empty positions in v2 with zeros
+        if [[ -z "${v2[i]}" ]]; then
+            v2[i]=0
+        fi
+        # test if version is valid
+        if [[ 10#"${v1[i]}" < 10#"${v2[i]}" ]]; then
+            return 1
+        fi
+    done
+}
+
+# verify_os(): verify current computer is running a supported os
+#   Supported: OSX
+verify_os() {
+    declare -r OS_NAME="$(uname -s)"
+    declare OS_VERSION=""
+
+    # OSX El Capitan
+    declare -r MINIMUM_OS_X_VERSION="10.11"
+    # TODO: Ubuntu Trusty
+    # declare -r MINIMUM_UBUNTU_VERSION="14.04"
+
+    if [[ "${OS_NAME}" == "Darwin" ]]; then
+        OS_VERSION="$(sw_vers -productVersion)"
+        is_supported_version "${OS_VERSION}" "${MINIMUM_OS_X_VERSION}" \
+            && return 0 \
+            || printf "Sorry, this script is intended only for OS X ${MINIMUM_OS_X_VERSION}+\n"
+    elif [[ ("${OS_NAME}" == "Linux") && (-e "/etc/lsb-release") ]]; then
+        # OS_VERSION="$(lsb_release -d | cut -f2 | cut -d' ' -f2)"
+        # is_supported_version "${OS_VERSION}" "${MINIMUM_UBUNTU_VERSION}" \
+        #     && return 0 \
+        #     || printf "Sorry, this script is intended only for Ubuntu ${MINIMUM_UBUNTU_VERSION}+\n"
+        printf 'Sorry, this script is intended only for OS X!\n'
+    else
+        printf 'Sorry, this script is intended only for OS X!\n'
+    fi
+
+    return 1
+}
+
+# -----------------------------------------------------------------------------
+# | Download and extract                                                       |
+# -----------------------------------------------------------------------------
+
+# download(url, output): download a file
+download() {
+    local url="$1"
+    local output="$2"
+
+    if command -v 'curl' &> /dev/null; then
+        curl -LsSo "${output}" "${url}" &> /dev/null
+        #     │││└─ write output to file
+        #     ││└─ show error messages
+        #     │└─ don't show the progress meter
+        #     └─ follow redirects
+        return $?
+    elif command -v 'wget' &> /dev/null; then
+        wget -qO "${output}" "${url}" &> /dev/null
+        #     │└─ write output to file
+        #     └─ don't show output
+        return "$?"
+    fi
+
+    return 1
+}
+
+# extract(archive, targetDir): extract tarball
+extract() {
+    local archive="$1"
+    local outputDir="$2"
+
+    if command -v 'tar' &> /dev/null; then
+        tar -zxf "${archive}" --strip-components 1 -C "${outputDir}"
+        return "$?"
+    fi
+
+    return 1
+}
+
+# download_dotfiles(): download and extract dotfiles
+download_dotfiles() {
+    # confirm dotfile directory
+    printf "Unarchive to ${DOT_DIR}? (y/n) "
+    read -n 1
+    printf "\n"
+    if [[ "${REPLY}" =~ ^[Nn]$ ]]; then
+        DOT_DIR=""
+        while [[ -z "${DOT_DIR}" ]]; do
+            printf "Location/path: "
+            read
+            DOT_DIR="${REPLY}"
+        done
+    fi
+
+    # ensure directory doesnt exist or overwrite
+    while [[ -e "${DOT_DIR}" ]]; do
+        printf "${DOT_DIR} exists, overwrite? (y/n) "
+        read -n 1
+        printf "\n"
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+            rm -rf "${DOT_DIR}"
+            break
+        else
+            DOT_DIR=""
+            while [[ -z "${DOT_DIR}" ]]; do
+                printf "Location/path: "
+                read
+                DOT_DIR="${REPLY}"
+            done
+        fi
+    done
+
+    printf "\n"
+
+    # tmp file
+    local tmpFile="$(mktemp /tmp/XXXXX)"
+
+    # download archive
+    echo "Downloading archive..."
+    download "${GITHUB_TARBALL_URL}" "${tmpFile}"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Download failed, please try again" >&2
+        exit "${E_DOWNLOAD_FAILURE}"
+    fi
+    echo "Download finished"
+
+    # create directory
+    echo "Creating ${DOT_DIR}..."
+    mkdir -p "${DOT_DIR}"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Directory creation failed" >&2
+        exit "${E_DIRECTORY_FAILURE}"
+    fi
+    echo "Created ${DOT_DIR}"
+
+    # extract archive
+    echo "Extracting archive..."
+    extract "${tmpFile}" "${DOT_DIR}"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Archive extraction failed" >&2
+        exit "${E_UNARCHIVE_FAILURE}"
+    fi
+    echo "Extracted archive to ${DOT_DIR}"
+
+    # remove tmp
+    rm -rf "${tmpFile}"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Unable to remove temporary file" >&2
+        exit "${E_RM_TMP_FAILURE}"
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# | Main                                                                       |
+# -----------------------------------------------------------------------------
+
+main () {
+    # ensure OS and version are supported
+    verify_os || exit "${E_OS_NOT_SUPPORTED}"
+
+    # ensure actions are made relative to this script's path
+    cd "$(dirname "${BASH_SOURCE}")"
+
+    # download git repo
+    download_dotfiles
+
+    # bootstrap
+    printf "Run bootstrap script? (y/n) "
+    read -n 1
+    printf "\n"
+    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+        # run bootstrap
+        echo "Running bootstrap script!"
+        cd "${DOT_DIR}"
+        source "script/bootstrap"
+    else
+        echo "Manual install: "
+        echo "    cd ${DOT_DIR} && ./script/bootstrap"
+    fi
+}
+
+main

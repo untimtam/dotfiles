@@ -6,8 +6,11 @@
 # OSX https://github.com/github/gitignore/blob/master/Global/OSX.gitignore
 # ****************************************
 .DS_Store
+.DS_Store? # TODO: what generates this?
 .AppleDouble
 .LSOverride
+Desktop.ini
+.localized
 
 # Icon must end with two \r
 Icon
@@ -54,6 +57,19 @@ $RECYCLE.BIN/
 *.lnk
 
 # ****************************************
+# Linux https://github.com/github/gitignore/blob/master/Global/Linux.gitignore
+# ****************************************
+
+# Temporary files on linux
+*~
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# ****************************************
 # Sublime https://github.com/github/gitignore/blob/master/Global/SublimeText.gitignore
 # ****************************************
 # cache files for sublime text
@@ -66,7 +82,7 @@ $RECYCLE.BIN/
 
 # project files should be checked into the repository, unless a significant
 # proportion of contributors will probably not be using SublimeText
-# *.sublime-project
+*.sublime-project
 
 # sftp configuration file
 sftp-config.json
@@ -75,10 +91,10 @@ sftp-config.json
 # Other
 # ****************************************
 
-# OSX localized
-.localized
-
 # Temp
-*~
 ~*
 .tmp
+test.sh
+
+# workspace folder
+workspace
