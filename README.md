@@ -1,6 +1,8 @@
 [Tim](https://github.com/hellowor1dn)'s dotfiles
 =====
 
+# :warning: IN PROGRESS :warning:
+
 ## Setup
 
 To setup the [dotfiles](dotfiles) just run the appropriate snippet in the terminal:
