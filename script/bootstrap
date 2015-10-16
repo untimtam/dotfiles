@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 #
 # update dotfiles from git and install
+
+echo "Bootstrap bill turner"
