@@ -33,6 +33,8 @@ main() {
         && source "../../../script/utils.sh"
 
     if ! xcode-select -p &> /dev/null; then
+        print_info "Installing XCode command line tools"
+
         # prompt user to install command line tools
         xcode-select --install &> /dev/null
         # wait for installation to be complete
@@ -40,7 +42,7 @@ main() {
             sleep 5
         done
 
-        status "Install command line tools" "${E_XCODE_INSTALL_FAILED}"
+        status "Command line tools" "${E_XCODE_INSTALL_FAILED}"
 
         # point xcode-select developer directory to appropriate directory
         sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer

@@ -120,8 +120,7 @@ update_dotfiles() {
 
 # update_submodules(): update git submodules
 update_submodules() {
-    git submodule init &> /dev/null \
-        && git submodule update &> /dev/null
+    git submodule update --init --recursive &> /dev/null
 
     return "$?"
 }
@@ -143,7 +142,7 @@ main() {
     # remotes
     if [[ "$1" -eq 0 ]] || ! is_git_repo; then
         set_git_remote "${DOTFILES_HTTPS_ORIGIN}"
-        status "Set git remote to $1" "${E_BAD_REMOTE}"
+        status "Set git remote to ${DOTFILES_HTTPS_ORIGIN}" "${E_BAD_REMOTE}"
     elif ! is_dotfile_repo; then
         print_error "Bad Git remote"
         set_git_remote "${DOTFILES_HTTPS_ORIGIN}"
