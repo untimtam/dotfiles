@@ -243,7 +243,7 @@ main() {
         echo "Running bootstrap script!"
         printf "\n\n"
         cd "${DOT_DIR}"
-        source ./script/bootstrap
+        ./script/bootstrap
     else
         echo "Manual install: "
         echo "  cd ${DOT_DIR} && ./script/bootstrap"

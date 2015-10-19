@@ -148,9 +148,9 @@ main() {
         print_error "Bad Git remote"
         set_git_remote "${DOTFILES_HTTPS_ORIGIN}"
         if status_code; then
-            print_fix "Set git remote to $1"
+            print_fix "Set git remote to ${DOTFILES_HTTPS_ORIGIN}"
         else
-            errexit "Set git remote to $1" "${E_BAD_REMOTE}"
+            errexit "Set git remote to ${DOTFILES_HTTPS_ORIGIN}" "${E_BAD_REMOTE}"
         fi
     fi
 
