@@ -2,4 +2,161 @@
 #
 # update dotfiles from git and install
 
-echo "Bootstrap bill turner"
+# -----------------------------------------------------------------------------
+# | Errors                                                                     |
+# -----------------------------------------------------------------------------
+
+declare -r E_OS_NOT_SUPPORTED=101
+
+# -----------------------------------------------------------------------------
+# | Global variables                                                           |
+# -----------------------------------------------------------------------------
+
+
+
+# -----------------------------------------------------------------------------
+# | System                                                                     |
+# -----------------------------------------------------------------------------
+
+# is_supported_version(actual, expected): test if compatible version
+is_supported_version() {
+    declare -a v1="${1//./ }"
+    declare -a v2="${2//./ }"
+    local i=""
+
+    # Fill empty positions in v1 with zeros
+    for (( i="${#v1[@]}"; i<"${#v2[@]}"; i++ )); do
+        v1[i]=0
+    done
+
+    for (( i=0; i<"${#v1[@]}"; i++ )); do
+        # Fill empty positions in v2 with zeros
+        if [[ -z "${v2[i]}" ]]; then
+            v2[i]=0
+        fi
+        # test if version is valid
+        if [[ 10#"${v1[i]}" < 10#"${v2[i]}" ]]; then
+            return 1
+        fi
+    done
+
+    return 0
+}
+
+# verify_os(): verify current computer is running a supported os
+#   Supported: OSX
+verify_os() {
+    local -r OS="$(get_os)"
+    declare OS_VERSION=""
+
+    # OSX El Capitan
+    declare -r MINIMUM_OS_X_VERSION="10.11"
+    # TODO: Ubuntu Trusty
+    # declare -r MINIMUM_UBUNTU_VERSION="14.04"
+
+    if [[ "${OS}" == "osx" ]]; then
+        OS_VERSION="$(sw_vers -productVersion)"
+        is_supported_version "${OS_VERSION}" "${MINIMUM_OS_X_VERSION}" \
+            && return 0 \
+            || print_error "Sorry, this script is intended only for OS X ${MINIMUM_OS_X_VERSION}+\n"
+    elif [[ "${OS}" == "ubuntu" ]]; then
+        # OS_VERSION="$(lsb_release -d | cut -f2 | cut -d' ' -f2)"
+        # is_supported_version "${OS_VERSION}" "${MINIMUM_UBUNTU_VERSION}" \
+        #     && return 0 \
+        #     || printf "Sorry, this script is intended only for Ubuntu ${MINIMUM_UBUNTU_VERSION}+\n"
+        print_error 'Sorry, this script is intended only for OS X!\n'
+    else
+        print_error 'Sorry, this script is intended only for OS X!\n'
+    fi
+
+    return 1
+}
+
+request_sudo() {
+    print_in_yellow "\n  [ ? ] Sudo: \n  "
+    # Ask for the administrator password upfront
+    sudo -v &> /dev/null
+    # Update existing `sudo` time stamp until this script has finished
+    # https://gist.github.com/cowboy/3118588
+    while true; do
+        sudo -n true
+        sleep 60
+        kill -0 "$$" || exit
+    done &> /dev/null &
+}
+
+kill_sudo() {
+    sudo -K &> /dev/null
+}
+
+# -----------------------------------------------------------------------------
+# | Functions                                                                  |
+# -----------------------------------------------------------------------------
+
+# end_prompt(): pause program before termination if no automatic restart
+end_prompt() {
+    print_in_blue "\n Press any key to continue... "
+    read -n 1 &> /dev/null
+    printf "\n"
+}
+
+# -----------------------------------------------------------------------------
+# | Main                                                                       |
+# -----------------------------------------------------------------------------
+
+main() {
+    # switch path to script source
+    cd "$(dirname "${BASH_SOURCE}")" \
+        && source "utils.sh"
+
+    verify_os || errexit "Error: OS is not suported" "${E_OS_NOT_SUPPORTED}"
+
+    clear
+    print_section "Beginning bootstrap script"
+
+    # Confirm fresh or existing install
+    local fresh=1
+    confirm "Is this a fresh install?"
+    if status_code; then
+        fresh=0
+        print_fix "Installing all components!"
+    else
+        fresh=1
+        print_fix "Running updates..."
+    fi
+
+    # ask for sudo
+    request_sudo
+
+    # run init
+    ./os/init.sh "${fresh}"
+    # check and update git repo
+    # ./os/repository.sh "${fresh}"
+    # create directories
+    ./os/directories.sh "${fresh}"
+    # sync scripts
+    ./os/bin.sh "${fresh}"
+    # create symbolic links
+    ./os/symlinks.sh "${fresh}"
+    # TODO: only do the following on fresh install? or ask?
+    # download/install tools
+    ./os/tools.sh "${fresh}"
+    # download/install applications
+    ./os/apps.sh "${fresh}"
+    # set preferences
+    ./os/preferences.sh "${fresh}"
+
+    print_section "Bootstrap script complete"
+    confirm "Do you want to restart?"
+    if status_code; then
+        print_fix "Restarting now!"
+        ./os/restart.sh
+        # no need to kill sudo when restarting
+    else
+        print_fix "Manual restart required"
+        end_prompt
+        kill_sudo
+    fi
+}
+
+main

@@ -14,7 +14,7 @@ To setup the [dotfiles](dotfiles) just run the appropriate snippet in the termin
 This will:
 
 * Download these dotfiles to `~/dotfiles`
-* Create directories: `~/work`, `~/code`, `~/bin`, `~/Downloads/torrents`
+* Create directories: `~/bin`, `~/code`, `~/projects`, `~/work`, `~/Downloads/torrents`
 * Symlink some dotfiles
 * Install tools, apps, and relevant plugins
 * Set preferences

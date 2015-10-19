@@ -5,22 +5,49 @@
 # -----------------------------------------------------------------------------
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
+
 declare -r E_OS_NOT_SUPPORTED=101
 declare -r E_DOWNLOAD_FAILURE=102
-declare -r E_DIRECTORY_FAILURE=103
+declare -r E_MKDIR_FAILURE=103
 declare -r E_UNARCHIVE_FAILURE=104
-declare -r E_RM_TMP_FAILURE=105
+declare -r E_RM_FAILURE=105
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
 # location to download dotfiles to
-declare DOT_DIR="${HOME}/dotfiles2" # TODO: revert after testing
+# declare -r TMPHOME="${HOME}/tmp"
+declare DOT_DIR="${HOME}/dotfiles"
 
 # github repository
 declare -r GITHUB_REPOSITORY="hellowor1dn/dotfiles"
 declare -r GITHUB_TARBALL_URL="https://github.com/${GITHUB_REPOSITORY}/tarball/master"
+
+# -----------------------------------------------------------------------------
+# | Prompt                                                                     |
+# -----------------------------------------------------------------------------
+
+# confirm_prompt(question): prompt the user for confirmation
+confirm_prompt() {
+    printf "$1 (y/n) "
+    read -n 1
+    printf "\n"
+}
+
+# confirm(question): prompt for confirmation and return bash friendly result
+confirm() {
+    confirm_prompt "$1"
+    if [[ "${REPLY}" =~ ^[YyNn]$ ]]; then
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+            return 0
+        else
+            return 1
+        fi
+    else
+        confirm "$1"
+    fi
+}
 
 # -----------------------------------------------------------------------------
 # | System                                                                     |
@@ -47,6 +74,8 @@ is_supported_version() {
             return 1
         fi
     done
+
+    return 0
 }
 
 # verify_os(): verify current computer is running a supported os
@@ -87,14 +116,14 @@ download() {
     local url="$1"
     local output="$2"
 
-    if command -v 'curl' &> /dev/null; then
+    if command -v "curl" &> /dev/null; then
         curl -LsSo "${output}" "${url}" &> /dev/null
         #     │││└─ write output to file
         #     ││└─ show error messages
         #     │└─ don't show the progress meter
         #     └─ follow redirects
         return $?
-    elif command -v 'wget' &> /dev/null; then
+    elif command -v "wget" &> /dev/null; then
         wget -qO "${output}" "${url}" &> /dev/null
         #     │└─ write output to file
         #     └─ don't show output
@@ -109,7 +138,7 @@ extract() {
     local archive="$1"
     local outputDir="$2"
 
-    if command -v 'tar' &> /dev/null; then
+    if command -v "tar" &> /dev/null; then
         tar -zxf "${archive}" --strip-components 1 -C "${outputDir}"
         return "$?"
     fi
@@ -120,10 +149,8 @@ extract() {
 # download_dotfiles(): download and extract dotfiles
 download_dotfiles() {
     # confirm dotfile directory
-    printf "Unarchive to ${DOT_DIR}? (y/n) "
-    read -n 1
-    printf "\n"
-    if [[ "${REPLY}" =~ ^[Nn]$ ]]; then
+    confirm "Unarchive to ${DOT_DIR}?"
+    if [[ "$?" -eq 1 ]]; then
         DOT_DIR=""
         while [[ -z "${DOT_DIR}" ]]; do
             printf "Location/path: "
@@ -134,11 +161,15 @@ download_dotfiles() {
 
     # ensure directory doesnt exist or overwrite
     while [[ -e "${DOT_DIR}" ]]; do
-        printf "${DOT_DIR} exists, overwrite? (y/n) "
-        read -n 1
-        printf "\n"
-        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+        confirm "${DOT_DIR} exists, overwrite?"
+        if [[ "$?" -eq 0 ]]; then
+            echo "Removing ${DOT_DIR}..."
             rm -rf "${DOT_DIR}"
+            if [[ "$?" -ne 0 ]]; then
+                echo "Unable to directory" >&2
+                exit "${E_RM_FAILURE}"
+            fi
+            echo "${DOT_DIR} removed"
             break
         else
             DOT_DIR=""
@@ -155,6 +186,7 @@ download_dotfiles() {
     # tmp file
     local tmpFile="$(mktemp /tmp/XXXXX)"
 
+    # TODO: clone git if git command exists?
     # download archive
     echo "Downloading archive..."
     download "${GITHUB_TARBALL_URL}" "${tmpFile}"
@@ -169,7 +201,7 @@ download_dotfiles() {
     mkdir -p "${DOT_DIR}"
     if [[ "$?" -ne 0 ]]; then
         echo "Directory creation failed" >&2
-        exit "${E_DIRECTORY_FAILURE}"
+        exit "${E_MKDIR_FAILURE}"
     fi
     echo "Created ${DOT_DIR}"
 
@@ -186,7 +218,7 @@ download_dotfiles() {
     rm -rf "${tmpFile}"
     if [[ "$?" -ne 0 ]]; then
         echo "Unable to remove temporary file" >&2
-        exit "${E_RM_TMP_FAILURE}"
+        exit "${E_RM_FAILURE}"
     fi
 }
 
@@ -194,7 +226,7 @@ download_dotfiles() {
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
 
-main () {
+main() {
     # ensure OS and version are supported
     verify_os || exit "${E_OS_NOT_SUPPORTED}"
 
@@ -205,17 +237,16 @@ main () {
     download_dotfiles
 
     # bootstrap
-    printf "Run bootstrap script? (y/n) "
-    read -n 1
-    printf "\n"
-    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+    confirm "Run bootstrap script?"
+    if [[ "$?" -eq 0 ]]; then
         # run bootstrap
         echo "Running bootstrap script!"
+        printf "\n\n"
         cd "${DOT_DIR}"
-        source "script/bootstrap"
+        ./script/bootstrap
     else
         echo "Manual install: "
-        echo "    cd ${DOT_DIR} && ./script/bootstrap"
+        echo "  cd ${DOT_DIR} && ./script/bootstrap"
     fi
 }
 
