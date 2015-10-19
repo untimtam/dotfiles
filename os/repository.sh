@@ -161,15 +161,16 @@ main() {
         fi
     fi
 
+    # TODO: fix git setup and update
     # verify ssh key or set it up
     update_ssh
-    status "Set ssh key" "${E_SET_SSH_FAILURE}"
+    status_no_exit "Set ssh key"
     # update repo
     update_dotfiles 0
-    status "Updated dotfiles" "${E_UPDATE_FAILURE}"
+    status_no_exit "Updated dotfiles"
     # update submodules
     update_submodules
-    status "Updated dotfile dependencies" "${E_UPDATE_SUBMODULE_FAILURE}"
+    status_no_exit "Updated dotfile dependencies"
 
     print_success "Finished updating from Git repository"
 }
