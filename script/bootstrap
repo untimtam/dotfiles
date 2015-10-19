@@ -129,28 +129,28 @@ main() {
     request_sudo
 
     # run init
-    ./os/init.sh "${fresh}"
+    ../os/init.sh "${fresh}"
     # check and update git repo
-    # ./os/repository.sh "${fresh}"
+    ../os/repository.sh "${fresh}"
     # create directories
-    ./os/directories.sh "${fresh}"
+    ../os/directories.sh "${fresh}"
     # sync scripts
-    ./os/bin.sh "${fresh}"
+    ../os/bin.sh "${fresh}"
     # create symbolic links
-    ./os/symlinks.sh "${fresh}"
+    ../os/symlinks.sh "${fresh}"
     # TODO: only do the following on fresh install? or ask?
     # download/install tools
-    ./os/tools.sh "${fresh}"
+    ../os/tools.sh "${fresh}"
     # download/install applications
-    ./os/apps.sh "${fresh}"
+    ../os/apps.sh "${fresh}"
     # set preferences
-    ./os/preferences.sh "${fresh}"
+    ../os/preferences.sh "${fresh}"
 
     print_section "Bootstrap script complete"
     confirm "Do you want to restart?"
     if status_code; then
         print_fix "Restarting now!"
-        ./os/restart.sh
+        ../os/restart.sh
         # no need to kill sudo when restarting
     else
         print_fix "Manual restart required"
