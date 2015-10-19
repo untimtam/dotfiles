@@ -53,7 +53,7 @@ main() {
         status_no_exit "Agree with the XCode Command Line Tools licence"
     fi
 
-    status "Xcode command line tools" "${E_INSTALL_FAILED}"
+    print_success "Xcode command line tools"
 }
 
 main
