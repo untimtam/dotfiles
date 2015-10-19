@@ -65,7 +65,7 @@ setup_git_ssh_key() {
     # Before proceeding, wait for ssh access
     while true; do
         # attempt to ssh to github
-        ssh -o StrictHostKeyChecking=no -T git@github.com &> /dev/null
+        ssh -T git@github.com &> /dev/null
         [[ "$?" -eq 1 ]] && break
         # sleep if not successful
         sleep 5
@@ -77,9 +77,8 @@ setup_git_ssh_key() {
 }
 
 update_ssh() {
-    # TODO: add github to known_hosts? for now just skip
-    ssh -o StrictHostKeyChecking=no -T git@github.com &> /dev/null
-    [[ "$?" -eq 1 ]] && setup_git_ssh_key
+    ssh -T git@github.com &> /dev/null
+    [[ "$?" -ne 1 ]] && setup_git_ssh_key
 
     return "$?"
 }
