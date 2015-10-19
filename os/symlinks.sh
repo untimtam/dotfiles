@@ -97,6 +97,12 @@ main() {
         fi
     done
 
+    # Symlink ZSH theme
+    local prompt_source="$(cd .. && pwd)/shell/zsh/prompt_hellowor1d_setup"
+    local prompt_target="$(cd .. && pwd)/shell/zsh/.zprezto/modules/prompt/functions/prompt_hellowor1d_setup"
+    verify_symlink "${prompt_source}" "${prompt_target}"
+    exit_on_fail "Symbolic link creation error or conflict"
+
     print_success "Finished creating symbolic links"
 }
 
