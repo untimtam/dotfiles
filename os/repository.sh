@@ -163,13 +163,13 @@ main() {
     # TODO: fix git setup and update
     # verify ssh key or set it up
     update_ssh
-    status_no_exit "Set ssh key"
+    status "Set ssh key"
     # update repo
     update_dotfiles 0
-    status_no_exit "Updated dotfiles"
+    status "Updated dotfiles"
     # update submodules
     update_submodules
-    status_no_exit "Updated dotfile dependencies"
+    status "Updated dotfile dependencies"
 
     print_success "Finished updating from Git repository"
 }

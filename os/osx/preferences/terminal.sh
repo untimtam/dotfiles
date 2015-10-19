@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# Set up preferences
+# Set terminal preferences
 
 # -----------------------------------------------------------------------------
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
-declare -r E_INVALID_OS=101
+
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
@@ -18,7 +18,9 @@ declare -r E_INVALID_OS=101
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
-
+set_preferences() {
+    #
+}
 
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
@@ -27,31 +29,12 @@ declare -r E_INVALID_OS=101
 main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")" \
-        && source "../script/utils.sh"
+        && source "../../../script/utils.sh"
 
-    print_section "Setting up preferences"
-
-    local pref=1
-    if [[ "$1" -eq 0 ]]; then
-        pref=0
-    else
-        confirm "Set preferences?"
-        pref="$?"
-    fi
-
-    if [[ "${pref}" -eq 0 ]]; then
-        local -r OS="$(get_os)"
-        if [[ "${OS}" == "osx" ]]; then
-            ./osx/preferences/main.sh
-            exit_on_fail "Error while setting preferences"
-        elif [[ "${OS}" == "ununtu" ]]; then
-            errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
-        else
-            errexit "This OS is not supported yet!" "${E_INVALID_OS}"
-        fi
-    fi
-
-    print_success "Finished setting up preferences"
+    print_info "Setting terminal preferences"
+    set_preferences
+    status_no_exit "Finished setting terminal preferences"
+    printf "\n"
 }
 
-main "$1"
+main

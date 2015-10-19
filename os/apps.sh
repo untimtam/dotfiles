@@ -31,14 +31,24 @@ main() {
 
     print_section "Installing apps"
 
-    local -r OS="$(get_os)"
-    if [[ "${OS}" == "osx" ]]; then
-        ./osx/apps/main.sh
-        exit_on_fail "Error while installing apps"
-    elif [[ "${OS}" == "ununtu" ]]; then
-        errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+    local app=1
+    if [[ "$1" -eq 0 ]]; then
+        app=0
     else
-        errexit "This OS is not supported yet!" "${E_INVALID_OS}"
+        confirm "Install apps?"
+        app="$?"
+    fi
+
+    if [[ "${app}" -eq 0 ]]; then
+        local -r OS="$(get_os)"
+        if [[ "${OS}" == "osx" ]]; then
+            ./osx/apps/main.sh
+        exit_on_fail "Error while installing apps"
+        elif [[ "${OS}" == "ununtu" ]]; then
+            errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+        else
+            errexit "This OS is not supported yet!" "${E_INVALID_OS}"
+        fi
     fi
 
     print_success "Finished installing apps"

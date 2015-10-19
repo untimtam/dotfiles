@@ -31,14 +31,24 @@ main() {
 
     print_section "Installing tools"
 
-    local -r OS="$(get_os)"
-    if [[ "${OS}" == "osx" ]]; then
-        ./osx/tools/main.sh
-        exit_on_fail "Error while installing tools"
-    elif [[ "${OS}" == "ununtu" ]]; then
-        errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+    local tool=1
+    if [[ "$1" -eq 0 ]]; then
+        tool=0
     else
-        errexit "This OS is not supported yet!" "${E_INVALID_OS}"
+        confirm "Install tools?"
+        tool="$?"
+    fi
+
+    if [[ "${tool}" -eq 0 ]]; then
+        local -r OS="$(get_os)"
+        if [[ "${OS}" == "osx" ]]; then
+            ./osx/tools/main.sh
+            exit_on_fail "Error while installing tools"
+        elif [[ "${OS}" == "ununtu" ]]; then
+            errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+        else
+            errexit "This OS is not supported yet!" "${E_INVALID_OS}"
+        fi
     fi
 
     print_success "Finished installing tools"
