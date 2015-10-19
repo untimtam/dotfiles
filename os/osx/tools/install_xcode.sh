@@ -46,6 +46,7 @@ main() {
         # https://github.com/alrra/dotfiles/issues/13
         sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer &> /dev/null
         status_no_exit 'Make "xcode-select" developer directory point to Xcode'
+        # TODO: switch to another location?
 
         # prompt user to agree to xcode terms
         # https://github.com/alrra/dotfiles/issues/10

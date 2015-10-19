@@ -7,9 +7,9 @@
 # -----------------------------------------------------------------------------
 
 declare -r E_BAD_REMOTE=101
-declare -r E_INVALID_REPO=102
-declare -r E_UPDATE_FAILED=103
-declare -r E_UPDATE_SUBMODULE_FAILED=104
+declare -r E_SET_SSH_FAILURE=102
+declare -r E_UPDATE_FAILURE=103
+declare -r E_UPDATE_SUBMODULE_FAILURE=104
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
@@ -17,8 +17,8 @@ declare -r E_UPDATE_SUBMODULE_FAILED=104
 
 # dotfiles repository
 declare -r GITHUB_REPOSITORY="hellowor1dn/dotfiles"
-# declare -r DOTFILES_SSH_ORIGIN="git@github.com:${GITHUB_REPOSITORY}.git"
-declare -r DOTFILES_HTTPS_ORIGIN="https://github.com/${GITHUB_REPOSITORY}.git"
+declare -r DOTFILES_SSH_ORIGIN="git@github.com:${GITHUB_REPOSITORY}.git"
+# declare -r DOTFILES_HTTPS_ORIGIN="https://github.com/${GITHUB_REPOSITORY}.git"
 
 # github ssh settings
 declare -r GITHUB_SET_SSH_URL="https://github.com/settings/ssh"
@@ -65,7 +65,7 @@ setup_git_ssh_key() {
     # Before proceeding, wait for ssh access
     while true; do
         # attempt to ssh to github
-        ssh -T git@github.com &> /dev/null
+        ssh -o StrictHostKeyChecking=no -T git@github.com &> /dev/null
         [[ "$?" -eq 1 ]] && break
         # sleep if not successful
         sleep 5
@@ -74,6 +74,14 @@ setup_git_ssh_key() {
     print_success "Finished setting up SSH key"
 
     cd "${workingDirectory}"
+}
+
+update_ssh() {
+    # TODO: add github to known_hosts? for now just skip
+    ssh -o StrictHostKeyChecking=no -T git@github.com &> /dev/null
+    [[ "$?" -eq 1 ]] && setup_git_ssh_key
+
+    return "$?"
 }
 
 # -----------------------------------------------------------------------------
@@ -141,27 +149,27 @@ main() {
 
     # remotes
     if [[ "$1" -eq 0 ]] || ! is_git_repo; then
-        set_git_remote "${DOTFILES_HTTPS_ORIGIN}"
-        status "Set git remote to ${DOTFILES_HTTPS_ORIGIN}" "${E_BAD_REMOTE}"
+        set_git_remote "${DOTFILES_SSH_ORIGIN}"
+        status "Set git remote to ${DOTFILES_SSH_ORIGIN}" "${E_BAD_REMOTE}"
     elif ! is_dotfile_repo; then
         print_error "Bad Git remote"
-        set_git_remote "${DOTFILES_HTTPS_ORIGIN}"
+        set_git_remote "${DOTFILES_SSH_ORIGIN}"
         if status_code; then
-            print_fix "Set git remote to ${DOTFILES_HTTPS_ORIGIN}"
+            print_fix "Set git remote to ${DOTFILES_SSH_ORIGIN}"
         else
-            errexit "Set git remote to ${DOTFILES_HTTPS_ORIGIN}" "${E_BAD_REMOTE}"
+            errexit "Set git remote to ${DOTFILES_SSH_ORIGIN}" "${E_BAD_REMOTE}"
         fi
     fi
 
     # verify ssh key or set it up
-    ssh -T git@github.com &> /dev/null
-    [[ "$?" -eq 1 ]] && setup_git_ssh_key
+    update_ssh
+    status "Set ssh key" "${E_SET_SSH_FAILURE}"
     # update repo
-    update_dotfiles
-    status "Updated dotfiles" "${E_UPDATE_FAILED}"
+    update_dotfiles 0
+    status "Updated dotfiles" "${E_UPDATE_FAILURE}"
     # update submodules
     update_submodules
-    status "Updated dotfile dependencies" "${E_UPDATE_SUBMODULE_FAILED}"
+    status "Updated dotfile dependencies" "${E_UPDATE_SUBMODULE_FAILURE}"
 
     print_success "Finished updating from Git repository"
 }
