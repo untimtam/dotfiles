@@ -15,8 +15,9 @@ This will:
 
 * Download these dotfiles to `~/dotfiles`
 * Create directories: `~/bin`, `~/code`, `~/projects`, `~/work`, `~/Downloads/torrents`
+* copy bin scripts
 * Symlink some dotfiles
-* Install tools, apps, and relevant plugins
+* Install tools, apps, other stuff
 * Set preferences
 
 ## Update
@@ -30,6 +31,9 @@ To update the dotfiles, run the [bootstrap](script/bootstrap) script.
 ## Resources
 
 * [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
+* [BASH manual](https://www.gnu.org/software/bash/manual/bash.html)
+* [Bash Exit Codes](http://tldp.org/LDP/abs/html/exitcodes.html)
+* [Bash Testing](http://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html)
 
 ## [Contributing](CONTRIBUTING.md)
 
