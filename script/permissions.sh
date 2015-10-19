@@ -8,8 +8,9 @@ set_permissions() {
         if [[ -e "$1" ]]; then
             if [[ -d "$1" ]]; then
                 for file in $1/*.sh; do
-                    if [[ -e "${file}" ]]; then
+                    if [[ (-e "${file}") && (! -x "${file}") ]]; then
                         chmod +x "${file}"
+                        echo "${file} is now executable"
                     fi
                 done
                 for directory in $1/*; do
