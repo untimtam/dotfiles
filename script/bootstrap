@@ -76,6 +76,7 @@ request_sudo() {
     print_in_yellow "\n  [ ? ] Sudo: \n  "
     # Ask for the administrator password upfront
     sudo -v &> /dev/null
+    local granted="$?"
     # Update existing `sudo` time stamp until this script has finished
     # https://gist.github.com/cowboy/3118588
     while true; do
@@ -83,6 +84,8 @@ request_sudo() {
         sleep 60
         kill -0 "$$" || exit
     done &> /dev/null &
+
+    return granted
 }
 
 kill_sudo() {
@@ -127,6 +130,8 @@ main() {
 
     # ask for sudo
     request_sudo
+    # TODO: fail when no sudo access?
+    exit_on_fail "No sudo access"
 
     # run init
     ../os/init.sh "${fresh}"
@@ -144,7 +149,6 @@ main() {
     ../os/symlinks.sh "${fresh}"
     exit_on_fail "Symbolic link creation failed"
 
-    # TODO: only do the following on fresh install? or ask?
     # download/install tools
     ../os/tools.sh "${fresh}"
     exit_on_fail "Tool installation failed"
@@ -154,6 +158,8 @@ main() {
     # set preferences
     ../os/preferences.sh "${fresh}"
     exit_on_fail "Preferences failed"
+
+    ../os/extras.sh "${fresh}"
 
     print_section "Bootstrap script complete"
     confirm "Do you want to restart?"
