@@ -130,21 +130,30 @@ main() {
 
     # run init
     ../os/init.sh "${fresh}"
+    exit_on_fail "Initialization failed"
     # check and update git repo
     ../os/repository.sh "${fresh}"
+    exit_on_fail "Repository check failed"
     # create directories
     ../os/directories.sh "${fresh}"
+    exit_on_fail "Directory creation failed"
     # sync scripts
     ../os/bin.sh "${fresh}"
+    exit_on_fail "Script synchronization failed"
     # create symbolic links
     ../os/symlinks.sh "${fresh}"
+    exit_on_fail "Symbolic link creation failed"
+
     # TODO: only do the following on fresh install? or ask?
     # download/install tools
     ../os/tools.sh "${fresh}"
+    exit_on_fail "Tool installation failed"
     # download/install applications
     ../os/apps.sh "${fresh}"
+    exit_on_fail "Application installation failed"
     # set preferences
     ../os/preferences.sh "${fresh}"
+    exit_on_fail "Preferences failed"
 
     print_section "Bootstrap script complete"
     confirm "Do you want to restart?"

@@ -34,6 +34,7 @@ main() {
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
         ./osx/tools/install_xcode.sh
+        exit_on_fail "Xcode install failed"
     elif [[ "${OS}" == "ununtu" ]]; then
         errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
     else

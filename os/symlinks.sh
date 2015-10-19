@@ -94,6 +94,7 @@ main() {
         if [[ -n "${file}" ]]; then
             # create symlink if it doesnt already exist
             verify_symlink "${sourceFile}" "${targetFile}"
+            exit_on_fail "Symbolic link creation error or conflict"
         fi
     done
 

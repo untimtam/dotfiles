@@ -173,10 +173,11 @@ errexit() {
     exit "$2"
 }
 
-# exit_on_fail(message, err_code):
+# exit_on_fail(message):
 exit_on_fail() {
-    if [[ "$?" -ne 0 ]]; then
-        errexit "$1" "$2"
+    local stat="$?"
+    if [[ "${stat}" -ne 0 ]]; then
+        errexit "$1" "$stat"
     fi
 }
 

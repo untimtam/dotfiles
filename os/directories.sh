@@ -65,6 +65,7 @@ main() {
         if [[ -n "${directory}" ]]; then
             # create directory if it doesnt already exist
             verify_directory "${directory}"
+            exit_on_fail "Directory creation error or conflict"
         fi
     done
 
