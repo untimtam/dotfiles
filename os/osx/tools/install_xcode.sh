@@ -44,12 +44,12 @@ main() {
 
         # point xcode-select developer directory to appropriate directory
         # https://github.com/alrra/dotfiles/issues/13
-        sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+        sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer &> /dev/null
         status_no_exit 'Make "xcode-select" developer directory point to Xcode'
 
         # prompt user to agree to xcode terms
         # https://github.com/alrra/dotfiles/issues/10
-        sudo xcodebuild -license
+        sudo xcodebuild -license &> /dev/null
         status_no_exit "Agree with the XCode Command Line Tools licence"
     fi
 
