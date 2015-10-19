@@ -1,1 +1,57 @@
-# .bash_profile
+#!/usr/bin/env bash
+#
+# .bash_profile for login
+
+# -----------------------------------------------------------------------------
+# | Global variables                                                           |
+# -----------------------------------------------------------------------------
+
+
+
+# -----------------------------------------------------------------------------
+# | Functions                                                                  |
+# -----------------------------------------------------------------------------
+
+enable_programmable_completion() {
+    # TODO: add completion with brew?
+}
+
+# source_bash_file(file): source a particular file
+source_bash_file() {
+    [[ (-r "$1") && (-f "$1") ]] && source "$1"
+}
+
+# source_bash_files(): source bash files like aliases and path
+source_bash_files() {
+    local file=""
+    # load the shell dotfiles
+    for file in ${HOME}/dotfiles/shell/{env,path,exports,aliases,functions,extra}; do
+        source_bash_file "${file}"
+    done
+    # load bash specific dotfiles
+    for file in ${HOME}/dotfiles/shell/bash/{bash_prompt,bash_options,bash_extra,tmuxinator_completions}; do
+        source_bash_file "${file}"
+    done
+}
+
+# -----------------------------------------------------------------------------
+# | Main                                                                       |
+# -----------------------------------------------------------------------------
+
+main() {
+    source_bash_files
+}
+
+main
+
+# -----------------------------------------------------------------------------
+# | Unset                                                                      |
+# -----------------------------------------------------------------------------
+
+unset -f enable_programmable_completion
+unset -f source_bash_file
+unset -f source_bash_files
+unset -f main
+
+# Clear system messages
+clear

@@ -22,7 +22,6 @@ declare -a SYMLINK_FILES=(
     "shell/other/curlrc"
     "shell/other/wgetrc"
     "shell/other/inputrc"
-    "shell/other/screenrc"
     "shell/other/hushlogin"
 
     "tools/tmux/tmux.conf"

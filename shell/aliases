@@ -1,0 +1,126 @@
+# Aliases
+# TODO: will only work on OSX
+
+# -----------------------------------------------------------------------------
+# | General                                                                    |
+# -----------------------------------------------------------------------------
+
+# Shortcuts for changing directories
+alias ~="cd ~"
+alias cd..="cd ../"
+
+# quickly switch to commonly used directories
+# `~/code`, `~/projects`, `~/work`, `~/Downloads/torrents`
+alias dl="cd ${HOME}/Downloads"
+alias dt="cd ${HOME}/Desktop"
+alias co="cd ${HOME}/code"
+alias pr="cd ${HOME}/projects"
+alias wr="cd ${HOME}/work"
+
+# List directories only
+alias ld='ls -l | grep "^d"'
+
+# path
+alias path='echo -e ${PATH//:/\\n}'
+
+# delete things
+# alias rm='rm -rf'
+
+alias update='sudo softwareupdate --install --all \
+                   && brew update \
+                   && brew upgrade --all \
+                   && brew cleanup \
+                   && npm install -g npm \
+                   && npm update -g'
+
+# -----------------------------------------------------------------------------
+# | Developer                                                                  |
+# -----------------------------------------------------------------------------
+
+# print defaults
+alias shell='echo "${SHELL}"'
+alias editor='echo "${EDITOR}"'
+
+# clear
+alias c='clear'
+alias cls='clear && ls'
+
+# Developer shortcuts
+alias edit='vim'
+alias tasks='gulp --tasks'
+alias check='npm-check'
+alias numFiles='echo $(ls -1 | wc -l)'
+# TODO: is this defined in zsh?
+alias f='open -a Finder ./'
+alias m='man'
+alias map='xargs -n1'
+
+# chown
+alias own='sudo chown -R $(whoami):admin'
+alias ownv='sudo chown -R -v $(whoami):admin'
+alias octal='stat -f %Mp%Lp'
+
+# link files
+alias lns='ln -s'
+alias symlink='lns'
+
+# npm list
+alias ng='npm list -g --depth=0 2> /dev/null'
+alias nl='npm list --depth=0 2> /dev/null'
+
+# tmux
+alias muxls='tmux list-session'
+alias muxks='tmux kill-session'
+
+# -----------------------------------------------------------------------------
+# | Network                                                                    |
+# -----------------------------------------------------------------------------
+
+# IP
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+# Ports
+alias openPorts='sudo lsof -i | grep LISTEN'
+alias showBlocked='sudo ipfw list'
+
+# Flush (DNS) Directory Service cache
+alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+
+# View HTTP traffic
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# -----------------------------------------------------------------------------
+# | Other                                                                      |
+# -----------------------------------------------------------------------------
+
+alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+
+# Show/hide hidden files in Finder
+alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Empty the Trash on all mounted volumes and the main HDD.
+# Also, clear Apple’s System Logs to improve shell startup speed.
+# Finally, clear download history from quarantine. https://mths.be/bum
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+# Merge PDF files
+# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
+alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+
+# Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
+# (useful when executing time-consuming commands)
+alias badge="tput bel"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"

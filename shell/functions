@@ -1,0 +1,4 @@
+# Functions
+
+# Create a new directory and navigate to it
+mkcd () { mkdir -p "$1" && cd "$1"; }
