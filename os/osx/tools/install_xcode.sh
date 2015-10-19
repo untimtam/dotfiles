@@ -8,8 +8,6 @@
 
 declare -r E_INSTALL_FAILED=101
 declare -r E_XCODE_INSTALL_FAILED=102
-declare -r E_XCODE_DIR_FAILED=103
-declare -r E_XCODE_LICENSE_FAILED=104
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
@@ -45,12 +43,14 @@ main() {
         status "Command line tools" "${E_XCODE_INSTALL_FAILED}"
 
         # point xcode-select developer directory to appropriate directory
+        # https://github.com/alrra/dotfiles/issues/13
         sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
-        status 'Make "xcode-select" developer directory point to Xcode' "${E_XCODE_DIR_FAILED}"
+        status_no_exit 'Make "xcode-select" developer directory point to Xcode'
 
         # prompt user to agree to xcode terms
+        # https://github.com/alrra/dotfiles/issues/10
         sudo xcodebuild -license
-        status "Agree with the XCode Command Line Tools licence" "${E_XCODE_LICENSE_FAILED}"
+        status_no_exit "Agree with the XCode Command Line Tools licence"
     fi
 
     status "Xcode command line tools" "${E_INSTALL_FAILED}"
