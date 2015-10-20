@@ -32,7 +32,7 @@ main() {
         && source "../../../script/utils.sh"
 
     print_info "Setting terminal preferences"
-    set_preferences
+    # set_preferences
     status_no_exit "Finished setting terminal preferences"
     printf "\n"
 }

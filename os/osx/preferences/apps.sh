@@ -32,7 +32,7 @@ main() {
         && source "../../../script/utils.sh"
 
     print_info "Setting app preferences"
-    set_preferences
+    # set_preferences
     status_no_exit "Finishedsetting app preferences"
     printf "\n"
 }

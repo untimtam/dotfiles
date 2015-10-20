@@ -32,7 +32,7 @@ main() {
         && source "../../../script/utils.sh"
 
     print_info "Setting web preferences"
-    set_preferences
+    # set_preferences
     status_no_exit "Finished setting web preferences"
     printf "\n"
 }

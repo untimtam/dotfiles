@@ -12,9 +12,9 @@
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
-enable_programmable_completion() {
-    # TODO: add completion with brew?
-}
+# enable_programmable_completion() {
+#     # TODO: add completion with brew?
+# }
 
 # source_bash_file(file): source a particular file
 source_bash_file() {
@@ -48,7 +48,7 @@ main
 # | Unset                                                                      |
 # -----------------------------------------------------------------------------
 
-unset -f enable_programmable_completion
+# unset -f enable_programmable_completion
 unset -f source_bash_file
 unset -f source_bash_files
 unset -f main
