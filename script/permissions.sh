@@ -28,16 +28,18 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "utils.sh"
 
-    local sourceDir="$(cd ../os && pwd)"
-    set_permissions "${sourceDir}"
-    local res="$?"
-    if [[ "${res}" -eq 0 ]]; then
-        echo "script success"
-        return "${res}"
+    print_section "Setting up executable file permissions"
+
+    if [[ -n "$1" ]]; then
+        local sourceDir="$(cd ../$1 && pwd)"
     else
-        echo "script failure"
-        return "${res}"
+        local sourceDir="$(cd ../os && pwd)"
     fi
+
+    set_permissions "${sourceDir}"
+    status_no_exit "Finished setting up executable file permissions"
+
+    return "$?"
 }
 
-main
+main "$1"

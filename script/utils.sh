@@ -185,6 +185,24 @@ exit_on_fail() {
 # | System                                                                     |
 # -----------------------------------------------------------------------------
 
+request_sudo() {
+    print_in_yellow "  [ ? ] $1"
+    print_in_yellow "\n  [ ? ] Sudo: \n  "
+    # Ask for the administrator password upfront
+    sudo -v &> /dev/null
+    # Update existing `sudo` time stamp until this script has finished
+    # https://gist.github.com/cowboy/3118588
+    while true; do
+        sudo -n true
+        sleep 60
+        kill -0 "$$" || exit
+    done &> /dev/null &
+}
+
+kill_sudo() {
+    sudo -K &> /dev/null
+}
+
 # cmd_exists(command): verify that a command exists
 cmd_exists() {
     command -v "$1" &> /dev/null
