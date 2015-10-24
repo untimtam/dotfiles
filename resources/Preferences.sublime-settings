@@ -1,0 +1,52 @@
+{
+    "file_exclude_patterns":
+    [
+        ".DS_Store",
+        "Desktop.ini",
+        "*.pyc",
+        "._*",
+        "Thumbs.db",
+        ".Spotlight-V100",
+        ".Trashes"
+    ],
+    "folder_exclude_patterns":
+    [
+        ".git",
+        "node_modules"
+    ],
+    "rulers":
+    [
+        80
+    ],
+
+    "color_scheme": "Packages/Material Theme/schemes/Material-Theme.tmTheme",
+    "theme": "Material-Theme.sublime-theme",
+    "font_face": "Source Code Pro for Powerline",
+    "font_size": 14,
+    "font_options": [ "gray_antialias" ],
+
+    "create_window_at_startup": true,
+    "open_files_in_new_window": true,
+    "hot_exit": false,
+    "remember_open_files": true,
+
+    "default_encoding": "UTF-8",
+    "show_encoding": true,
+    "default_line_ending": "unix",
+    "ensure_newline_at_eof_on_save": true,
+    "trim_trailing_white_space_on_save": true,
+    "detect_indentation": true,
+    "translate_tabs_to_spaces": true,
+    "tab_size": 4,
+    "show_line_endings": true,
+    "word_wrap": true,
+    "line_padding_bottom": 3,
+    "line_padding_top": 3,
+
+    "always_show_minimap_viewport": true,
+    "overlay_scroll_bars": "enabled",
+    "highlight_modified_tabs": true,
+    "bold_folder_labels": true,
+    "match_brackets": true,
+    "match_brackets_angle": true
+}
