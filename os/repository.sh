@@ -165,7 +165,7 @@ main() {
     update_ssh
     status "Set ssh key"
     # update repo
-    update_dotfiles 0
+    update_dotfiles "$1"
     status "Updated dotfiles"
     # update submodules
     update_submodules

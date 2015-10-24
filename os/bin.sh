@@ -31,7 +31,6 @@ main() {
 
     print_section "Syncing scripts"
 
-    # declare -r TMPHOME="${HOME}/tmp"
     rsync -avh --no-perms "../bin" "${HOME}" &> /dev/null
     status "Finished syncing scripts" "${E_RSYNC_FAILURE}"
 }

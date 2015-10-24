@@ -114,30 +114,39 @@ main() {
     # run init
     ../os/init.sh "${fresh}"
     exit_on_fail "Initialization failed"
+    print_separator_large
     # check and update git repo
     ../os/repository.sh "${fresh}"
     exit_on_fail "Repository check failed"
+    print_separator_large
     # create directories
     ../os/directories.sh "${fresh}"
     exit_on_fail "Directory creation failed"
+    print_separator_large
     # sync scripts
     ../os/bin.sh "${fresh}"
     exit_on_fail "Script synchronization failed"
+    print_separator_large
     # create symbolic links
     ../os/symlinks.sh "${fresh}"
     exit_on_fail "Symbolic link creation failed"
+    print_separator_large
 
     # download/install tools
     ../os/tools.sh "${fresh}"
     exit_on_fail "Tool installation failed"
+    print_separator_large
     # download/install applications
     ../os/apps.sh "${fresh}"
     exit_on_fail "Application installation failed"
+    print_separator_large
     # set preferences
     ../os/preferences.sh "${fresh}"
     exit_on_fail "Preferences failed"
+    print_separator_large
 
     ../os/extras.sh "${fresh}"
+    print_separator_large
 
     print_section "Bootstrap script complete"
     confirm "Do you want to restart?"

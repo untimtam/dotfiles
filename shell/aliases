@@ -23,15 +23,16 @@ alias ld='ls -l | grep "^d"'
 # path
 alias path='echo -e ${PATH//:/\\n}'
 
-# delete things
+# TODO: really delete things?
 # alias rm='rm -rf'
 
-alias update='sudo softwareupdate --install --all \
-                   && brew update \
-                   && brew upgrade --all \
-                   && brew cleanup \
-                   && npm install -g npm \
-                   && npm update -g'
+# TODO: update things in script?
+# alias update='sudo softwareupdate -ia \
+#                    && brew update \
+#                    && brew upgrade --all \
+#                    && brew cleanup \
+#                    && npm install -g npm \
+#                    && npm update -g'
 
 # -----------------------------------------------------------------------------
 # | Developer                                                                  |
@@ -108,6 +109,9 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Clean up LaunchServices to remove duplicates in the “Open With” menu
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 # Empty the Trash on all mounted volumes and the main HDD.
 # Also, clear Apple’s System Logs to improve shell startup speed.

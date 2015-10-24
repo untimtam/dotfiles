@@ -73,6 +73,14 @@ print_fix() {
     print_in_cyan "   [ + ] $1\n"
 }
 
+print_separator_large() {
+    print_in_purple "\n  ---\n\n"
+}
+
+print_separator() {
+    print_in_purple "  ---\n"
+}
+
 # print_status(status, message, err_code, [no_exit]): validate and print the status
 print_status() {
     if [[ "$1" -ne 0 ]]; then
@@ -108,8 +116,12 @@ status() {
 
 # status_no_exit(message): print success or failure message
 status_no_exit() {
+    local status_code="$?"
     # err_code doesnt matter since an error will never be thrown
-    print_status "$?" "$1" 1 0
+    print_status "${status_code}" "$1" 1 0
+
+    # propagate status
+    return "${status_code}"
 }
 
 # status_code(): return status_code of last command
