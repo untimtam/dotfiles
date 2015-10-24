@@ -24,11 +24,13 @@ declare -r E_PIP3_UPDATE_FAILURE=106
 # -----------------------------------------------------------------------------
 
 update_osx() {
+    print_info "updating osx"
     sudo softwareupdate -ia >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "updated osx" "${E_OSX_UPDATE_FAILURE}"
 }
 
 update_homebrew() {
+    print_info "updating homebrew"
     brew update >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
        && brew upgrade --all >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
        && brew cleanup >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
@@ -36,6 +38,7 @@ update_homebrew() {
 }
 
 update_npm() {
+    print_info "updating node"
     npm install -g npm >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
         && npm update -g >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "updated npm packages" "${E_NPM_UPDATE_FAILURE}"
@@ -43,17 +46,20 @@ update_npm() {
 
 # TODO: why does ruby need sudo?
 update_gems() {
+    print_info "updating ruby"
     sudo gem update >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "updated gems" "${E_RUBY_UPDATE_FAILURE}"
 }
 
 # TODO: update other packages?
 update_pip() {
+    print_info "updating pyhon 2.x"
     pip install --upgrade pip setuptools >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "updated pip" "${E_PIP_UPDATE_FAILURE}"
 }
 
 update_pip3() {
+    print_info "updating python 3.x"
     pip3 install --upgrade pip setuptools >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "updated pip3" "${E_PIP3_UPDATE_FAILURE}"
 }
@@ -72,8 +78,6 @@ main() {
         echo "Error: dotfile utils not found"
         exit 1
     fi
-
-    print_info "Running updates"
 
     # osx
     if [[ "$(get_os)" == "osx" ]]; then
