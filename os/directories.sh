@@ -12,10 +12,11 @@ declare -r E_MKDIR_FAILED=101
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-# declare -r TMPHOME="${HOME}/tmp"
+declare -r USER="hellowor1dn"
 declare -a DIRECTORIES=(
     "${HOME}/bin"
     "${HOME}/code"
+    "${HOME}/code/Go/src/github.com/${USER}"
     "${HOME}/projects"
     "${HOME}/work"
     "${HOME}/Downloads/torrents"
