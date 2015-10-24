@@ -86,9 +86,9 @@ safari_preferences() {
 }
 
 set_preferences() {
-    chrome_preferences &> /dev/null
+    chrome_preferences > /dev/null
     status "set chrome preferences" "${E_PREFERENCE_FAILURE}"
-    safari_preferences &> /dev/null
+    safari_preferences > /dev/null
     status "set safari preferences" "${E_PREFERENCE_FAILURE}"
 }
 

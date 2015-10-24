@@ -73,11 +73,11 @@ archive_preferences() {
 }
 
 set_preferences() {
-    transmission_preferences &> /dev/null
+    transmission_preferences > /dev/null
     status "set transmission preferences" "${E_PREFERENCE_FAILURE}"
-    spectacle_preferences &> /dev/null
+    spectacle_preferences > /dev/null
     status "set spectacle preferences" "${E_PREFERENCE_FAILURE}"
-    archive_preferences &> /dev/null
+    archive_preferences > /dev/null
     status "set archive preferences" "${E_PREFERENCE_FAILURE}"
 }
 

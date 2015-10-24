@@ -171,12 +171,12 @@ confirm() {
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
-# err([err_code], message): print out error messages
+# err(message): print out error messages
 # https://google-styleguide.googlecode.com/svn/trunk/shell.xml#STDOUT_vs_STDERR
 # usage: err "Unable to do something"
 #        exit "$(E_DID_NOTHING)"
 err() {
-  print_in_red "[ ✖ ] [$(date +'%Y-%m-%d %H:%M:%S%z')]: $@ \n" >&2
+  print_in_red "[ ✖ ] [$(date +'%Y-%m-%d %H:%M:%S%z')]: $1 \n" >&2
 }
 
 # errexit(message, err_code): print out error message and exit

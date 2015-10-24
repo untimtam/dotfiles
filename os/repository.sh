@@ -105,8 +105,8 @@ is_dotfile_repo() {
 
 # set_git_remote(repo): set remote origin to repo
 set_git_remote() {
-    git init &> /dev/null \
-        && git remote add origin "$1" &> /dev/null
+    git init > /dev/null \
+        && git remote add origin "$1" > /dev/null
 
     return "$?"
 }
@@ -115,11 +115,11 @@ set_git_remote() {
 update_dotfiles() {
     if [[ ("$#" -eq 1) && ("$1" -eq 0) ]]; then
         # Update content and remove untracked files
-        git fetch --all &> /dev/null \
-            && git reset --hard origin/master &> /dev/null \
-            && git clean -fd  &> /dev/null
+        git fetch --all > /dev/null \
+            && git reset --hard origin/master > /dev/null \
+            && git clean -fd  > /dev/null
     else
-        git pull origin master &> /dev/null
+        git pull origin master > /dev/null
     fi
 
     return "$?"
@@ -127,7 +127,7 @@ update_dotfiles() {
 
 # update_submodules(): update git submodules
 update_submodules() {
-    git submodule update --init --recursive &> /dev/null
+    git submodule update --init --recursive > /dev/null
 
     return "$?"
 }

@@ -35,13 +35,13 @@ download() {
 # download_zip(name,url)
 download_zip() {
     download "$1.zip" "$2" || return 1
-    unzip "$1.zip" || return 1
+    unzip "$1.zip" > /dev/null || return 1
     return 0
 }
 
 # remove_zip(name)
 remove_zip() {
-    rm "$1.zip" || return 1
+    rm "$1.zip" > /dev/null || return 1
     return 0
 }
 
@@ -52,13 +52,13 @@ remove_zip() {
 # download_dmg(name,url)
 download_dmg() {
     download "$1.dmg" "$2" || return 1
-    hdiutil mount -nobrowse "$1.dmg" || return 1
+    hdiutil mount -nobrowse "$1.dmg" > /dev/null || return 1
     return 0
 }
 
 # remove_dmg(name,path)
 remove_dmg() {
-    hdiutil unmount "$2" || return 1
-    rm "$1.dmg" || return 1
+    hdiutil unmount "$2" > /dev/null || return 1
+    rm "$1.dmg" > /dev/null || return 1
     return 0
 }

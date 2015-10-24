@@ -37,9 +37,9 @@ iterm_preferences() {
 }
 
 set_preferences() {
-    terminal_preferences &> /dev/null
+    terminal_preferences > /dev/null
     status "set terminal preferences" "${E_PREFERENCE_FAILURE}"
-    iterm_preferences &> /dev/null
+    iterm_preferences > /dev/null
     status "set iterm preferences" "${E_PREFERENCE_FAILURE}"
 }
 

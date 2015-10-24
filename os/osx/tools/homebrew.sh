@@ -83,7 +83,7 @@ brew_tap() {
 # Homebrew
 install_homebrew() {
     if ! cmd_exists 'brew'; then
-        printf "\n" | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" &> /dev/null
+        printf "\n" | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" > /dev/null
         #  └─ simulate the ENTER keypress
     fi
     status "Homebrew" "${E_BREW_INSTALL_FAILURE}"
@@ -98,7 +98,7 @@ install_homebrew_formulae() {
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
                 else
-                    brew install "$i" &> /dev/null
+                    brew install "$i" > /dev/null
                     status "$i installed" "${E_BREW_FAILURE}"
                 fi
             fi
@@ -115,7 +115,7 @@ install_homebrew_formulae_versions() {
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
                 else
-                    brew install "$i" &> /dev/null
+                    brew install "$i" > /dev/null
                     status "$i installed" "${E_BREW_FAILURE}"
                 fi
             fi
@@ -135,7 +135,7 @@ install_homebrew_cask() {
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
                 else
-                    brew cask install "$i" &> /dev/null
+                    brew cask install "$i" > /dev/null
                     status "$i installed" "${E_BREW_FAILURE}"
                 fi
             fi
@@ -152,7 +152,7 @@ install_homebrew_font() {
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
                 else
-                    brew cask install "$i" &> /dev/null
+                    brew cask install "$i" > /dev/null
                     status "$i installed" "${E_BREW_FAILURE}"
                 fi
             fi

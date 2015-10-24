@@ -31,7 +31,7 @@ main() {
 
     print_section "Syncing scripts"
 
-    rsync -avh --no-perms "../bin" "${HOME}" &> /dev/null
+    rsync -avh --no-perms "../bin" "${HOME}" > /dev/null
     status "Finished syncing scripts" "${E_RSYNC_FAILURE}"
 }
 

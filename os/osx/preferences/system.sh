@@ -318,15 +318,15 @@ language_preferences() {
 }
 
 set_preferences() {
-    io_preferences &> /dev/null
+    io_preferences > /dev/null
     status "set io preferences" "${E_PREFERENCE_FAILURE}"
-    screen_preferences &> /dev/null
+    screen_preferences > /dev/null
     status "set screen preferences" "${E_PREFERENCE_FAILURE}"
-    finder_preferences &> /dev/null
+    finder_preferences > /dev/null
     status "set finder preferences" "${E_PREFERENCE_FAILURE}"
-    dock_preferences &> /dev/null
+    dock_preferences > /dev/null
     status "set dock preferences" "${E_PREFERENCE_FAILURE}"
-    language_preferences &> /dev/null
+    language_preferences > /dev/null
     status "set language preferences" "${E_PREFERENCE_FAILURE}"
 }
 

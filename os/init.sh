@@ -63,7 +63,7 @@ main() {
     if [[ "${OS}" == "osx" ]]; then
         # update osx
         print_info "If OSX update requires restart, please run 'cd ${HOME} && ./dotfiles/script/bootstrap'"
-        sudo softwareupdate -ia &> /dev/null
+        sudo softwareupdate -ia > /dev/null
         status "updated osx" "${E_OSX_UPDATE_FAILURE}"
         # install xcode command line tools
         install_xcode

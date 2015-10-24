@@ -152,9 +152,9 @@ ssd_preferences() {
 }
 
 set_preferences() {
-    general_preferences &> /dev/null
+    general_preferences > /dev/null
     status "set general preferences" "${E_PREFERENCE_FAILURE}"
-    ssd_preferences &> /dev/null
+    ssd_preferences > /dev/null
     status "set ssd preferences" "${E_PREFERENCE_FAILURE}"
 }
 

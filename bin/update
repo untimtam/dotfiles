@@ -24,36 +24,37 @@ declare -r E_PIP3_UPDATE_FAILURE=106
 # -----------------------------------------------------------------------------
 
 update_osx() {
-    sudo softwareupdate -ia &> /dev/null
+    sudo softwareupdate -ia > /dev/null
     status "updated osx" "${E_OSX_UPDATE_FAILURE}"
 }
 
 update_homebrew() {
-    brew update &> /dev/null \
-       && brew upgrade --all &> /dev/null \
-       && brew cleanup &> /dev/null
+    brew update > /dev/null \
+       && brew upgrade --all > /dev/null \
+       && brew cleanup > /dev/null
     status "updated brew" "${E_BREW_UPDATE_FAILURE}"
 }
 
 update_npm() {
-    npm install -g npm &> /dev/null \
-        && npm update -g &> /dev/null
+    npm install -g npm > /dev/null \
+        && npm update -g > /dev/null
     status "updated npm packages" "${E_NPM_UPDATE_FAILURE}"
 }
 
+# TODO: why does ruby need sudo?
 update_gems() {
-    gem update >&2
+    sudo gem update > /dev/null
     status "updated gems" "${E_RUBY_UPDATE_FAILURE}"
 }
 
 # TODO: update other packages?
 update_pip() {
-    pip install --upgrade pip setuptools &> /dev/null
+    pip install --upgrade pip setuptools > /dev/null
     status "updated pip" "${E_PIP_UPDATE_FAILURE}"
 }
 
 update_pip3() {
-    pip3 install --upgrade pip setuptools &> /dev/null
+    pip3 install --upgrade pip setuptools > /dev/null
     status "updated pip3" "${E_PIP3_UPDATE_FAILURE}"
 }
 

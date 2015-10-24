@@ -159,19 +159,19 @@ messages_preferences() {
 }
 
 set_preferences() {
-    spotlight_preferences &> /dev/null
+    spotlight_preferences > /dev/null
     status "set spotlight preferences" "${E_PREFERENCE_FAILURE}"
-    mail_preferences &> /dev/null
+    mail_preferences > /dev/null
     status "set mail preferences" "${E_PREFERENCE_FAILURE}"
-    timemachine_preferences &> /dev/null
+    timemachine_preferences > /dev/null
     status "set time machine preferences" "${E_PREFERENCE_FAILURE}"
-    activity_preferences &> /dev/null
+    activity_preferences > /dev/null
     status "set activity monitor preferences" "${E_PREFERENCE_FAILURE}"
-    utility_preferences &> /dev/null
+    utility_preferences > /dev/null
     status "set utility preferences" "${E_PREFERENCE_FAILURE}"
-    appstore_preferences &> /dev/null
+    appstore_preferences > /dev/null
     status "set appstore preferences" "${E_PREFERENCE_FAILURE}"
-    messages_preferences &> /dev/null
+    messages_preferences > /dev/null
     status "set messages preferences" "${E_PREFERENCE_FAILURE}"
 }
 
