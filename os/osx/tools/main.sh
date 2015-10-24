@@ -31,6 +31,7 @@ main() {
 
     # run updates
     ../../../bin/update
+    exit_on_fail "Update failed"
 
     # xcode installed in init
 
@@ -57,6 +58,7 @@ main() {
 
     # run updates
     ../../../bin/update
+    exit_on_fail "Update failed"
 
     # update shells
     if [[ -e "/usr/local/bin/bash" ]]; then
