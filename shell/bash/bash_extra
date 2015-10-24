@@ -18,7 +18,7 @@ alias .5='cd ../../../../../'     # Go back 5 directory levels
 alias .6='cd ../../../../../../'  # Go back 6 directory levels
 
 # Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1; then # GNU `ls`
+if ls --color &> /dev/null; then # GNU `ls`
   colorflag="--color"
 else # OS X `ls`
   colorflag="-G"
