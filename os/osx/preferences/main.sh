@@ -58,7 +58,7 @@ main() {
     exit_on_fail "App Preferences failed"
     print_separator_large
 
-    for app in ${APPS[@]}; do
+    for app in "${APPS[@]}"; do
         if [[ -n "${app}" ]]; then
             killall "${app}" &> /dev/null
         fi

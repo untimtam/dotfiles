@@ -93,7 +93,7 @@ install_homebrew() {
 # https://github.com/Homebrew/homebrew
 install_homebrew_formulae() {
     if cmd_exists 'brew'; then
-        for i in ${HOMEBREW[@]}; do
+        for i in "${HOMEBREW[@]}"; do
             if [[ -n "$i" ]]; then
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
@@ -110,7 +110,7 @@ install_homebrew_formulae() {
 # https://github.com/Homebrew/homebrew-versions
 install_homebrew_formulae_versions() {
     if cmd_exists 'brew' && brew_tap 'homebrew/versions'; then
-        for i in ${HOMEBREW_VERSIONS[@]}; do
+        for i in "${HOMEBREW_VERSIONS[@]}"; do
             if [[ -n "$i" ]]; then
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
@@ -130,7 +130,7 @@ install_homebrew_cask() {
         brew install "caskroom/cask/brew-cask"
         status "cask installed"
         print_separator
-        for i in ${HOMEBREW_CASK_QL[@]}; do
+        for i in "${HOMEBREW_CASK_QL[@]}"; do
             if [[ -n "$i" ]]; then
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
@@ -147,7 +147,7 @@ install_homebrew_cask() {
 # https://github.com/caskroom/homebrew-fonts
 install_homebrew_font() {
     if cmd_exists 'brew' && brew_tap 'caskroom/fonts'; then
-        for i in ${HOMEBREW_FONTS[@]}; do
+        for i in "${HOMEBREW_FONTS[@]}"; do
             if [[ -n "$i" ]]; then
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"

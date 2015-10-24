@@ -87,7 +87,7 @@ update_nvm() {
     source "${NVM_DIRECTORY}/nvm.sh"
 
     # Install node versions
-    for i in ${NODE_VERSIONS[@]}; do
+    for i in "${NODE_VERSIONS[@]}"; do
         nvm install "$i" &> /dev/null
         status "nvm (install: $i)" "${E_NVM_NODE_FAILURE}"
     done
@@ -104,7 +104,7 @@ update_npm() {
 
 install_npm_packages() {
     # Install the `npm` packages
-    for i in ${NPM_PACKAGES[@]}; do
+    for i in "${NPM_PACKAGES[@]}"; do
         if [[ -n "$i"]]; then
             npm install -g "$i" &> /dev/null
             status_no_exit "npm (package): $i"

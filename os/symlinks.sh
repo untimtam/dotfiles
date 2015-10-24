@@ -86,7 +86,7 @@ main() {
 
     local sourceFile=""
     local targetFile=""
-    for file in ${SYMLINK_FILES[@]}; do
+    for file in "${SYMLINK_FILES[@]}"; do
         sourceFile="$(cd .. && pwd)/${file}"
         targetFile="${HOME}/.$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
 

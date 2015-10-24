@@ -62,7 +62,7 @@ main() {
 
     print_section "Creating directories"
 
-    for directory in ${DIRECTORIES[@]}; do
+    for directory in "${DIRECTORIES[@]}"; do
         if [[ -n "${directory}" ]]; then
             # create directory if it doesnt already exist
             verify_directory "${directory}"

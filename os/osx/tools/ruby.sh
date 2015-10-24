@@ -53,19 +53,19 @@ install_rbenv() {
         fi
 
         # Install ruby versions
-        for i in ${RUBY_VERSIONS[@]}; do
+        for i in "${RUBY_VERSIONS[@]}"; do
             rbenv install "$i" &> /dev/null
             status "rbenv (install: $i)" "${E_RBENV_FAILURE}"
         done
         if status_code; then
-            rbenv global ${RUBY_VERSIONS[0]} &> /dev/null
+            rbenv global "${RUBY_VERSIONS[0]}" &> /dev/null
             status_no_exit "switched to ruby ${RUBY_VERSIONS[0]}"
         fi
     fi
 }
 
 install_gems() {
-    for i in ${GEMS[@]}; do
+    for i in "${GEMS[@]}"; do
         if [[ -n "$i"]]; then
             gem install "$i" &> /dev/null
             status_no_exit "ruby (gem): $i"

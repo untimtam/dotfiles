@@ -51,7 +51,7 @@ install_homebrew_apps() {
         brew install "caskroom/cask/brew-cask"
         status "cask installed"
         print_separator
-        for i in ${HOMEBREW_CASK_APPS[@]}; do
+        for i in "${HOMEBREW_CASK_APPS[@]}"; do
             if [[ -n "$i" ]]; then
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"

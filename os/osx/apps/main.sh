@@ -34,7 +34,7 @@ declare -r -a APPSTORE=(
 # -----------------------------------------------------------------------------
 
 install_apps() {
-    for i in ${INSTALL_FILES[@]}; do
+    for i in "${INSTALL_FILES[@]}"; do
         if [[ (-n "$i") && (-e "$i") ]]; then
             # TODO: . $i instead?
             ./$i
@@ -44,7 +44,7 @@ install_apps() {
 }
 
 list_appstore() {
-    for i in ${APPSTORE[@]}; do
+    for i in "${APPSTORE[@]}"; do
         if [[ -n "$i" ]]; then
             print_info "Please install $i from the appstore!"
         fi
