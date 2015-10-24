@@ -141,11 +141,6 @@ question_prompt() {
     read
 }
 
-# question_result(): get user reply (could also just read from REPLY)
-# question_result() {
-#     printf "${REPLY}"
-# }
-
 # confirm_prompt(question): prompt the user for confirmation
 confirm_prompt() {
     print_question "$1 (y/n) "
@@ -189,7 +184,7 @@ errexit() {
 exit_on_fail() {
     local stat="$?"
     if [[ "${stat}" -ne 0 ]]; then
-        errexit "$1" "$stat"
+        errexit "$1" "${stat}"
     fi
 }
 
@@ -198,7 +193,7 @@ exit_on_fail() {
 # -----------------------------------------------------------------------------
 
 request_sudo() {
-    print_in_yellow "\n  [ ? ] Sudo: \n  "
+    print_in_yellow "  [ ? ] Sudo: \n  "
     # Ask for the administrator password upfront
     sudo -v &> /dev/null
     # Update existing `sudo` time stamp until this script has finished
@@ -234,9 +229,4 @@ get_os() {
     fi
 
     printf "%s" "${os}"
-}
-
-# symlink(source, target)
-symlink() {
-    ln -s "$1" "$2"
 }
