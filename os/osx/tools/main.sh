@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#
+# Install all relevant tools
 
 # -----------------------------------------------------------------------------
 # | Errors                                                                     |
@@ -29,7 +29,46 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "../../../script/utils.sh"
 
-    # TODO: change default shell to zsh?
+    # run updates
+    ../../../bin/update
+
+    # xcode installed in init
+
+    # TODO: check for install dependencies
+    # install homebrew
+    ./homebrew.sh
+    exit_on_fail "Homebrew script failed"
+    print_separator_large
+
+    # install ruby (rbenv+packages)
+    ./ruby.sh
+    exit_on_fail "Ruby script failed"
+    print_separator_large
+
+    # install node (nvm+packages)
+    ./node.sh
+    exit_on_fail "Node script failed"
+    print_separator_large
+
+    # extra setup for tools
+    ./extras.sh
+    exit_on_fail "Extras script failed"
+    print_separator_large
+
+    # run updates
+    ../../../bin/update
+
+    # update shells
+    if [[ -e "/usr/local/bin/bash" ]]; then
+        sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
+        # set shell to updated bash
+        chsh -s '/usr/local/bin/bash'
+    fi
+    if [[ -e "/usr/local/bin/zsh" ]]; then
+        sudo bash -c 'echo /usr/local/bin/zsh >> /etc/shells'
+        # set shell to updated zsh (preferred over bash)
+        chsh -s '/usr/local/bin/zsh'
+    fi
 }
 
 main

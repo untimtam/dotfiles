@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#
+# Perform extra operations for tools
 
 # -----------------------------------------------------------------------------
 # | Errors                                                                     |
@@ -28,6 +28,8 @@ main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "../../../script/utils.sh"
+
+    # opam install ocp-index for ocaml autocomplete
 }
 
 main
