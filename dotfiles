@@ -2,6 +2,8 @@
 #
 # download repository and run boostrap
 
+{ # ensure entire script is downloaded
+
 # -----------------------------------------------------------------------------
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
@@ -251,3 +253,5 @@ main() {
 }
 
 main
+
+} # ensure entire script is downloaded
