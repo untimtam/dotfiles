@@ -42,7 +42,7 @@ update_npm() {
 }
 
 update_gems() {
-    gem update &> /dev/null
+    gem update >&2
     status "updated gems" "${E_RUBY_UPDATE_FAILURE}"
 }
 
@@ -72,7 +72,7 @@ main() {
         exit 1
     fi
 
-    print_section "Running updates"
+    print_info "Running updates"
 
     # osx
     if [[ "$(get_os)" == "osx" ]]; then
