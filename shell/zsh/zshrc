@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 #
 # .zshrc
 
@@ -21,7 +21,7 @@ source_zsh_file() {
 source_zsh_files() {
     local file=""
     # load the shell dotfiles
-    for file in ${HOME}/dotfiles/shell/{env,path,exports,aliases,functions,extra}; do
+    for file in ${HOME}/dotfiles/shell/{path,exports,aliases,functions,extra}; do
         source_zsh_file "${file}"
     done
     # load zsh specifc dotfiles

@@ -1,5 +1,26 @@
 # Path
 
-PATH=$HOME/bin:$PATH
-# PATH=$PATH:/usr/local/heroku/bin/
+# Default path (fresh install)
+#   /usr/local/bin
+#   /usr/bin
+#   /bin
+#   /usr/sbin
+#   /sbin
+
+# search ~/bin first
+PATH="${HOME}/bin:${PATH}"
+
+# add heroku cli to path if installed
+if which heroku &> /dev/null; then
+    PATH="${PATH}:/usr/local/heroku/bin/"
+fi
+
+# add go to path if installed
+if which go &> /dev/null; then
+    export GOPATH="${HOME}/code/Go"
+    export GOROOT=/usr/local/opt/go/libexec
+    PATH="${PATH}:${GOPATH}/bin"
+    PATH="${PATH}:${GOROOT}/bin"
+fi
+
 export PATH

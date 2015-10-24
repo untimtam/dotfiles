@@ -3,18 +3,8 @@
 # .bash_profile for login
 
 # -----------------------------------------------------------------------------
-# | Global variables                                                           |
-# -----------------------------------------------------------------------------
-
-
-
-# -----------------------------------------------------------------------------
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
-
-# enable_programmable_completion() {
-#     # TODO: add completion with brew?
-# }
 
 # source_bash_file(file): source a particular file
 source_bash_file() {
@@ -25,7 +15,7 @@ source_bash_file() {
 source_bash_files() {
     local file=""
     # load the shell dotfiles
-    for file in ${HOME}/dotfiles/shell/{env,path,exports,aliases,functions,extra}; do
+    for file in ${HOME}/dotfiles/shell/{path,exports,aliases,functions,extra}; do
         source_bash_file "${file}"
     done
     # load bash specific dotfiles
@@ -34,12 +24,30 @@ source_bash_files() {
     done
 }
 
+enable_programmable_completion() {
+    # Add tab completion for many Bash commands
+    if which brew > /dev/null && [[ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]]; then
+        source "$(brew --prefix)/share/bash-completion/bash_completion"
+    elif [[ -f /etc/bash_completion ]]; then
+        source /etc/bash_completion
+    fi
+
+    # Enable tab completion for `g` by marking it as an alias for `git`
+    if type _git &> /dev/null && [[ -f /usr/local/etc/bash_completion.d/git-completion.bash ]]; then
+        complete -o default -o nospace -F _git g;
+    fi;
+
+    [[ -f "${NVM_DIR}/bash_completion" ]] \
+        && source "${NVM_DIR}/bash_completion"
+}
+
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
 
 main() {
     source_bash_files
+    enable_programmable_completion
 }
 
 main
@@ -48,10 +56,11 @@ main
 # | Unset                                                                      |
 # -----------------------------------------------------------------------------
 
-# unset -f enable_programmable_completion
 unset -f source_bash_file
 unset -f source_bash_files
+unset -f enable_programmable_completion
 unset -f main
 
 # Clear system messages
-clear
+# Unnecessary with hushlogin?
+# clear
