@@ -12,19 +12,17 @@ declare -r E_SYMLINK_FAILED=101
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-# declare -r TMPHOME="${HOME}/tmp"
 declare -a SYMLINK_FILES=(
     "shell/bash/bash_profile"
     "shell/bash/bashrc"
 
     "shell/zsh/zshrc"
+    "shell/zsh/zshenv"
 
     "shell/other/curlrc"
     "shell/other/wgetrc"
     "shell/other/inputrc"
     "shell/other/hushlogin"
-
-    "tools/tmux/tmux.conf"
 
     "tools/git/gitattributes"
     "tools/git/gitconfig"
@@ -33,6 +31,8 @@ declare -a SYMLINK_FILES=(
     "tools/vim/vim"
     "tools/vim/vimrc"
     "tools/vim/gvimrc"
+
+    "tools/tmux/tmux.conf"
 
     "tools/editor/editorconfig"
 )
