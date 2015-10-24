@@ -1,26 +1,20 @@
 #!/usr/bin/env bash
 #
-# Set other app preferences
+# Install TeamViewer
 
 # -----------------------------------------------------------------------------
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
-
+declare -r E_DOWNLOAD_FAILURE=101
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-
-
-# -----------------------------------------------------------------------------
-# | Functions                                                                  |
-# -----------------------------------------------------------------------------
-
-# set_preferences() {
-#     #
-# }
+# Dowload
+declare -r NAME="TeamViewer"
+declare -r URL="http://download.teamviewer.com/download/TeamViewer.dmg"
 
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
@@ -29,12 +23,13 @@
 main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")" \
-        && source "../../../script/utils.sh"
+        && source "../../../script/utils.sh" \
+        && source "./util.sh"
 
-    print_info "Setting app preferences"
-    # set_preferences
-    status_no_exit "Finishedsetting app preferences"
-    printf "\n"
+    download_dmg "${NAME}" "${URL}"
+    status "Downloading ${NAME}" "${E_DOWNLOAD_FAILURE}"
+    print_info "${NAME} needs to be installed manually"
+    print_separator
 }
 
 main

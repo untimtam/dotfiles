@@ -1,26 +1,20 @@
 #!/usr/bin/env bash
 #
-# Set general preferences for UI and UX
+# Install Parallels Desktop 11
 
 # -----------------------------------------------------------------------------
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
-
+declare -r E_DOWNLOAD_FAILURE=101
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-
-
-# -----------------------------------------------------------------------------
-# | Functions                                                                  |
-# -----------------------------------------------------------------------------
-
-# set_preferences() {
-#     #
-# }
+# Dowload
+declare -r NAME="parallels"
+declare -r URL="http://www.parallels.com/directdownload/pd11/"
 
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
@@ -29,12 +23,13 @@
 main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")" \
-        && source "../../../script/utils.sh"
+        && source "../../../script/utils.sh" \
+        && source "./util.sh"
 
-    print_info "Setting general preferences"
-    # set_preferences
-    status_no_exit "Finished setting general preferences"
-    printf "\n"
+    download_dmg "${NAME}" "${URL}"
+    status "Downloading ${NAME}" "${E_DOWNLOAD_FAILURE}"
+    print_info "${NAME} needs to be installed manually"
+    print_separator
 }
 
 main
