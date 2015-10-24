@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+#
+# Perform all updates
+
+# -----------------------------------------------------------------------------
+# | Errors                                                                     |
+# -----------------------------------------------------------------------------
+
+declare -r E_OSX_UPDATE_FAILURE=101
+declare -r E_BREW_UPDATE_FAILURE=102
+declare -r E_NPM_UPDATE_FAILURE=103
+declare -r E_RUBY_UPDATE_FAILURE=104
+declare -r E_PIP_UPDATE_FAILURE=105
+declare -r E_PIP3_UPDATE_FAILURE=106
+
+# -----------------------------------------------------------------------------
+# | Global variables                                                           |
+# -----------------------------------------------------------------------------
+
+
+
+# -----------------------------------------------------------------------------
+# | Functions                                                                  |
+# -----------------------------------------------------------------------------
+
+update_osx() {
+    sudo softwareupdate -ia &> /dev/null
+    status "updated osx" "${E_OSX_UPDATE_FAILURE}"
+}
+
+update_homebrew() {
+    brew update &> /dev/null \
+       && brew upgrade --all &> /dev/null \
+       && brew cleanup &> /dev/null
+    status "updated brew" "${E_BREW_UPDATE_FAILURE}"
+}
+
+update_npm() {
+    npm install -g npm &> /dev/null \
+        && npm update -g &> /dev/null
+    status "updated npm packages" "${E_NPM_UPDATE_FAILURE}"
+}
+
+update_gems() {
+    gem update &> /dev/null
+    status "updated gems" "${E_RUBY_UPDATE_FAILURE}"
+}
+
+# TODO: update other packages?
+update_pip() {
+    pip install --upgrade pip setuptools &> /dev/null
+    status "updated pip" "${E_PIP_UPDATE_FAILURE}"
+}
+
+update_pip3() {
+    pip3 install --upgrade pip setuptools &> /dev/null
+    status "updated pip3" "${E_PIP3_UPDATE_FAILURE}"
+}
+
+# -----------------------------------------------------------------------------
+# | Main                                                                       |
+# -----------------------------------------------------------------------------
+
+main() {
+    # switch path to script source
+    cd "$(dirname "${BASH_SOURCE}")" \
+        && source "../script/utils.sh"
+
+    # TODO: do something when script is run from ~/bin
+    if [[ "$?" -ne 0 ]]; then
+        echo "Error: dotfile utils not found"
+        exit 1
+    fi
+
+    print_section "Running updates"
+
+    # osx
+    if [[ "$(get_os)" == "osx" ]]; then
+        update_osx
+        exit_on_fail "OSX update failed"
+    fi
+
+    # brew
+    if cmd_exists 'brew'; then
+        update_homebrew
+        exit_on_fail "Homebrew update failed"
+    fi
+
+    # node
+    if cmd_exists 'npm'; then
+        update_npm
+        exit_on_fail "NPM update failed"
+    fi
+
+    # ruby
+    if cmd_exists 'gem'; then
+        update_gems
+        exit_on_fail "gem update failed"
+    fi
+
+    # python 2.7
+    if cmd_exists 'pip'; then
+        update_pip
+        exit_on_fail "pip update failed"
+    fi
+
+    # python 3
+    if cmd_exists 'pip3'; then
+        update_pip3
+        exit_on_fail "pip3 update failed"
+    fi
+
+    print_success "Finished running updates"
+}
+
+main
