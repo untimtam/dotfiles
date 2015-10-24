@@ -42,7 +42,7 @@ main() {
     if [[ "${pref}" -eq 0 ]]; then
         local -r OS="$(get_os)"
         if [[ "${OS}" == "osx" ]]; then
-            ./osx/preferences/main.sh
+            ./osx/preferences/main.sh "$1"
             exit_on_fail "Error while setting preferences"
         elif [[ "${OS}" == "ununtu" ]]; then
             errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"

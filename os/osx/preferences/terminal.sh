@@ -1,27 +1,47 @@
 #!/usr/bin/env bash
 #
-# Set all osx preferences
+# Set terminal preferences
 
 # -----------------------------------------------------------------------------
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
-
+declare -r E_PREFERENCE_FAILURE=101
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
+# cant close Terminal.app because it is running scripts
 declare -a APPS=(
-    'SystemUIServer'
-    'cfprefsd'
+    'iTerm'
 )
 
 # -----------------------------------------------------------------------------
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
+terminal_preferences() {
+    # Only use UTF-8 in Terminal.app
+    defaults write com.apple.terminal StringEncodings -array 4
 
+    # Enable “focus follows mouse” for Terminal.app and all X11 apps
+    # i.e. hover over a window and start typing in it without clicking first
+    defaults write com.apple.terminal FocusFollowsMouse -bool true
+    defaults write org.x.X11 wm_ffm -bool true
+}
+
+iterm_preferences() {
+    # Don’t display the annoying prompt when quitting iTerm
+    defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+}
+
+set_preferences() {
+    terminal_preferences &> /dev/null
+    status "set terminal preferences" "${E_PREFERENCE_FAILURE}"
+    iterm_preferences &> /dev/null
+    status "set iterm preferences" "${E_PREFERENCE_FAILURE}"
+}
 
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
@@ -32,37 +52,17 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "../../../script/utils.sh"
 
-    # TODO: break up large preferences into smaller chunks internally
-    # general prefs
-    ./general.sh
-    exit_on_fail "General Preferences failed"
-    print_separator_large
-    # system prefs
-    ./system.sh "$1"
-    exit_on_fail "System Preferences failed"
-    print_separator_large
-    # web prefs
-    ./web.sh
-    exit_on_fail "Web Preferences failed"
-    print_separator_large
-    # apple prefs
-    ./apple.sh
-    exit_on_fail "Apple Preferences failed"
-    print_separator_large
-    # terminal prefs
-    ./terminal.sh
-    exit_on_fail "Terminal Preferences failed"
-    print_separator_large
-    # app prefs
-    ./apps.sh
-    exit_on_fail "App Preferences failed"
-    print_separator_large
+    print_info "Setting terminal preferences"
+
+    set_preferences
 
     for app in ${APPS[@]}; do
         if [[ -n "${app}" ]]; then
             killall "${app}" &> /dev/null
         fi
     done
+
+    status_no_exit "Finished setting terminal preferences"
 }
 
-main "$1"
+main
