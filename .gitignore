@@ -96,6 +96,7 @@ sftp-config.json
 .tmp
 test.sh
 TODO.md
+*.log
 
 # workspace folder
 workspace

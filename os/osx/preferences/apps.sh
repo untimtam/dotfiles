@@ -73,11 +73,11 @@ archive_preferences() {
 }
 
 set_preferences() {
-    transmission_preferences > /dev/null
+    transmission_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set transmission preferences" "${E_PREFERENCE_FAILURE}"
-    spectacle_preferences > /dev/null
+    spectacle_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set spectacle preferences" "${E_PREFERENCE_FAILURE}"
-    archive_preferences > /dev/null
+    archive_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set archive preferences" "${E_PREFERENCE_FAILURE}"
 }
 

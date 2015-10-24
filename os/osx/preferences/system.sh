@@ -314,19 +314,19 @@ language_preferences() {
     defaults write NSGlobalDomain AppleMetricUnits -bool true
 
     # Set the timezone; see `sudo systemsetup -listtimezones` for other values
-    sudo systemsetup -settimezone "America/Montreal" > /dev/null
+    sudo systemsetup -settimezone "America/Montreal" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
 }
 
 set_preferences() {
-    io_preferences > /dev/null
+    io_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set io preferences" "${E_PREFERENCE_FAILURE}"
-    screen_preferences > /dev/null
+    screen_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set screen preferences" "${E_PREFERENCE_FAILURE}"
-    finder_preferences > /dev/null
+    finder_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set finder preferences" "${E_PREFERENCE_FAILURE}"
-    dock_preferences > /dev/null
+    dock_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set dock preferences" "${E_PREFERENCE_FAILURE}"
-    language_preferences > /dev/null
+    language_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set language preferences" "${E_PREFERENCE_FAILURE}"
 }
 

@@ -37,9 +37,9 @@ iterm_preferences() {
 }
 
 set_preferences() {
-    terminal_preferences > /dev/null
+    terminal_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set terminal preferences" "${E_PREFERENCE_FAILURE}"
-    iterm_preferences > /dev/null
+    iterm_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set iterm preferences" "${E_PREFERENCE_FAILURE}"
 }
 

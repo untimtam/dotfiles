@@ -56,7 +56,7 @@ install_homebrew_apps() {
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
                 else
-                    brew cask install --appdir="/Applications" "$i" > /dev/null
+                    brew cask install --appdir="/Applications" "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
                     status "$i installed" "${E_BREW_FAILURE}"
                 fi
             fi

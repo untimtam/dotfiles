@@ -44,7 +44,7 @@ install_rbenv() {
     # TODO: move to homebrew?
     if cmd_exists 'brew'; then
         # install
-        brew install "rbenv" "ruby-build" > /dev/null
+        brew install "rbenv" "ruby-build" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         status "rbenv+ruby-build installed" "${E_BREW_FAILURE}"
         if status_code; then
             printf "%s" "${CONFIGS}" >> "${EXTRAS}" \
@@ -54,7 +54,7 @@ install_rbenv() {
 
         # Install ruby versions
         for i in "${RUBY_VERSIONS[@]}"; do
-            rbenv install "$i" > /dev/null
+            rbenv install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
             status "rbenv (install: $i)" "${E_RBENV_FAILURE}"
         done
         if status_code; then

@@ -20,7 +20,7 @@ declare -r E_XCODE_INSTALL_FAILED=103
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
-install_xcode(){
+install_xcode() {
     if ! xcode-select -p &> /dev/null; then
         print_info "Installing XCode command line tools"
 
@@ -48,6 +48,13 @@ install_xcode(){
     fi
 }
 
+remove_log() {
+    if [[ -e "${HOME}/dotfiles/dot_stderr.log" ]]; then
+        rm -rf "${HOME}/dotfiles/dot_stderr.log"
+        status_no_exit "removed error log"
+    fi
+}
+
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
@@ -59,11 +66,14 @@ main() {
 
     print_section "Running initialization"
 
+    # if boostrap was run before, remove existing log
+    remove_log
+
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
         # update osx
         print_info "If OSX update requires restart, please run 'cd ${HOME} && ./dotfiles/script/bootstrap'"
-        sudo softwareupdate -ia > /dev/null
+        sudo softwareupdate -ia >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         status "updated osx" "${E_OSX_UPDATE_FAILURE}"
         # install xcode command line tools
         install_xcode

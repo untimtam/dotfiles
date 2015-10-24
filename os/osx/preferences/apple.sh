@@ -71,9 +71,9 @@ spotlight_preferences() {
     # Load new settings before rebuilding the index
     killall mds &> /dev/null
     # Make sure indexing is enabled for the main volume
-    sudo mdutil -i on / > /dev/null
+    sudo mdutil -i on / >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     # Rebuild the index from scratch
-    sudo mdutil -E / > /dev/null
+    sudo mdutil -E / >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
 }
 
 mail_preferences() {
@@ -159,19 +159,19 @@ messages_preferences() {
 }
 
 set_preferences() {
-    spotlight_preferences > /dev/null
+    spotlight_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set spotlight preferences" "${E_PREFERENCE_FAILURE}"
-    mail_preferences > /dev/null
+    mail_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set mail preferences" "${E_PREFERENCE_FAILURE}"
-    timemachine_preferences > /dev/null
+    timemachine_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set time machine preferences" "${E_PREFERENCE_FAILURE}"
-    activity_preferences > /dev/null
+    activity_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set activity monitor preferences" "${E_PREFERENCE_FAILURE}"
-    utility_preferences > /dev/null
+    utility_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set utility preferences" "${E_PREFERENCE_FAILURE}"
-    appstore_preferences > /dev/null
+    appstore_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set appstore preferences" "${E_PREFERENCE_FAILURE}"
-    messages_preferences > /dev/null
+    messages_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "set messages preferences" "${E_PREFERENCE_FAILURE}"
 }
 

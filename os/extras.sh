@@ -48,11 +48,11 @@ set_git_config() {
     question_prompt "Git author email?"
     email="${REPLY}"
 
-    git config --global user.name "${author}" \
-        && git config --global user.email "${email}" \
-        && git config --global credential.helper osxkeychain \
-        && git config --global color.ui true \
-        && git config --global core.excludesfile "${HOME}/.gitignore_global" > /dev/null
+    git config --global user.name "${author}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
+        && git config --global user.email "${email}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
+        && git config --global credential.helper osxkeychain >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
+        && git config --global color.ui true >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
+        && git config --global core.excludesfile "${HOME}/.gitignore_global" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "Git config" "${E_GIT_CONFIG_FAILURE}"
 }
 
@@ -61,7 +61,7 @@ set_git_config() {
 # -----------------------------------------------------------------------------
 
 set_terminal() {
-    osascript > /dev/null <<EOD
+    osascript >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null <<EOD
 
 tell application "Terminal"
 
@@ -115,14 +115,14 @@ EOD
 
 set_iterm() {
     # close iterm
-    killall "iTerm" > /dev/null
+    killall "iTerm" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "close iterm" "${E_CLOSE_ITERM_FAILURE}"
     # copy preferences
     cp -r "${HOME}/dotfiles/resources/com.googlecode.iterm2.plist" \
-        "${HOME}/Library/Preferences/com.googlecode.iterm2.plist" > /dev/null
+        "${HOME}/Library/Preferences/com.googlecode.iterm2.plist" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "copy iterm preferences" "${E_COPY_PREFERENCE_FAILURE}"
     # read preferences
-    defaults read com.googlecode.iterm2 > /dev/null
+    defaults read com.googlecode.iterm2 >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "read iterm preferences" "${E_READ_PREFERENCE_FAILURE}"
 }
 
@@ -134,13 +134,13 @@ set_sublime() {
     local st3="${HOME}/Library/Application\ Support/Sublime\ Text\ 3"
     local name="Package\ Control"
     # sublime settings
-    cp -r "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/Preferences.sublime-settings" > /dev/null
+    cp -r "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/Preferences.sublime-settings" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "Copy sublime preferences" "${E_COPY_SETTING_FAILURE}"
     # install package control
-    curl -LsSo "${st3}/Installed\ Packages/${name}.sublime-package" "https://packagecontrol.io/Package%20Control.sublime-package" > /dev/null
+    curl -LsSo "${st3}/Installed\ Packages/${name}.sublime-package" "https://packagecontrol.io/Package%20Control.sublime-package" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "Download package control" "${E_DL_PACKAGE_CONTROL_FAILURE}"
     # install packages
-    cp -r "${HOME}/dotfiles/resources/${name}.sublime-settings" "${st3}/Packages/User/${name}.sublime-settings" > /dev/null
+    cp -r "${HOME}/dotfiles/resources/${name}.sublime-settings" "${st3}/Packages/User/${name}.sublime-settings" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "write package control settings" "${E_PACKAGES_FAILURE}"
 }
 

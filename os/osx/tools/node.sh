@@ -69,7 +69,7 @@ declare -r -a NPM_PACKAGES=(
 # -----------------------------------------------------------------------------
 
 install_nvm() {
-    git clone https://github.com/creationix/nvm.git "${NVM_DIRECTORY}" > /dev/null
+    git clone https://github.com/creationix/nvm.git "${NVM_DIRECTORY}" &> /dev/null
     status "nvm cloned" "${E_NVM_CLONE_FAILURE}"
     if status_code; then
         # nvm.sh should work in both bash and zsh
@@ -81,24 +81,24 @@ install_nvm() {
 
 update_nvm() {
     # Ensure the latest version of `nvm` is used
-    cd "${NVM_DIRECTORY}" && git checkout `git describe --abbrev=0 --tags` > /dev/null
+    cd "${NVM_DIRECTORY}" && git checkout `git describe --abbrev=0 --tags` &> /dev/null
     status "nvm (update)" "${E_NVM_UPDATE_FAILURE}"
 
     source "${NVM_DIRECTORY}/nvm.sh"
 
     # Install node versions
     for i in "${NODE_VERSIONS[@]}"; do
-        nvm install "$i" > /dev/null
+        nvm install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         status "nvm (install: $i)" "${E_NVM_NODE_FAILURE}"
     done
 
     # Use `Node.js` by default
-    nvm alias default node > /dev/null
+    nvm alias default node >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status_no_exit "nvm (set default)"
 }
 
 update_npm() {
-    npm install -g npm > /dev/null
+    npm install -g npm >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status "npm (update)" "${E_NODE_NPM_FAILURE}"
 }
 
@@ -106,7 +106,7 @@ install_npm_packages() {
     # Install the `npm` packages
     for i in "${NPM_PACKAGES[@]}"; do
         if [[ -n "$i"]]; then
-            npm install -g "$i" > /dev/null
+            npm install -g "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
             status_no_exit "npm (package): $i"
         fi
     done
