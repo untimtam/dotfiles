@@ -33,7 +33,7 @@ declare -r -a HOMEBREW=(
     'tmux'
     'pandoc'
 
-    'vim --override-system-vi'
+    'vim'
     'git'
     'git-lfs'
 
@@ -41,11 +41,16 @@ declare -r -a HOMEBREW=(
     'heroku-toolbelt'
 
     # Still evaluating these
-    'imagemagick --with-webp'
-    'wget --with-iri'
+    'imagemagick'
+    'wget'
     'ack'
     'rename'
     'zopfli'
+)
+declare -r -a HOMEBREW_OPTS=(
+    ['vim']='--override-system-vi'
+    ['imagemagick']='--with-webp'
+    ['wget']='--with-iri'
 )
 declare -r -a HOMEBREW_VERSIONS=(
     'bash-completion2'
@@ -98,7 +103,11 @@ install_homebrew_formulae() {
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
                 else
-                    brew install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+                    if [[ -n "${HOMEBREW_OPTS[$i]}" ]]; then
+                        brew install "$i" "${HOMEBREW_OPTS[$i]}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+                    else
+                        brew install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+                    fi
                     status "$i installed" "${E_BREW_FAILURE}"
                 fi
             fi
