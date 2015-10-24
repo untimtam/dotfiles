@@ -198,7 +198,6 @@ exit_on_fail() {
 # -----------------------------------------------------------------------------
 
 request_sudo() {
-    print_in_yellow "  [ ? ] $1"
     print_in_yellow "\n  [ ? ] Sudo: \n  "
     # Ask for the administrator password upfront
     sudo -v &> /dev/null
