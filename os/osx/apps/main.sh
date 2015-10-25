@@ -12,7 +12,6 @@ declare -r E_INSTALL_FAILURE=101
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-declare -r -a INSTALL_FILES=(install_*.sh)
 declare -r -a APPSTORE=(
     'keynote'
     'pages'
@@ -34,10 +33,8 @@ declare -r -a APPSTORE=(
 # -----------------------------------------------------------------------------
 
 install_apps() {
-    print_info "installing apps"
     for i in "${INSTALL_FILES[@]}"; do
         if [[ (-n "$i") && (-e "./$i") ]]; then
-            print_info "$i-----"
             ./"$i"
             status "Installed $i" "${E_INSTALL_FAILURE}"
         fi
@@ -64,6 +61,8 @@ main() {
     # TODO: switch to homebrew cask when app move is fully supported
     # TODO: verify links
     # mkcd temp directory?
+    # TODO: global variable with relative path??
+    declare -r -a INSTALL_FILES=(install_*.sh)
     install_apps
     exit_on_fail "App install failed"
 
