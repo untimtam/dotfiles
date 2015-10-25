@@ -74,7 +74,7 @@ print_fix() {
 }
 
 print_separator_large() {
-    print_in_purple "\n  ---\n\n"
+    print_in_purple "\n  ---\n"
 }
 
 print_separator() {

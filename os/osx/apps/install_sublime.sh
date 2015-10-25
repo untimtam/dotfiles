@@ -16,7 +16,7 @@ declare -r E_REMOVE_FAILURE=103
 
 # Dowload
 declare -r NAME="sublime"
-declare -r URL="http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%20Build%203065.dmg"
+declare -r URL="http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%20Build%203083.dmg"
 # Dmg
 declare -r VPATH="Sublime Text.app"
 declare -r APP="/Volumes/Sublime Text"

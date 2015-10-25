@@ -16,7 +16,7 @@ declare -r E_REMOVE_FAILURE=103
 
 # Dowload
 declare -r NAME="Alfred 2"
-declare -r URL="https://cachefly.alfredapp.com/Alfred_2.6_374.zip"
+declare -r URL="https://cachefly.alfredapp.com/Alfred_2.8_414.zip"
 
 # -----------------------------------------------------------------------------
 # | Main                                                                       |

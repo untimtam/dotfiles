@@ -16,7 +16,7 @@ declare -r E_REMOVE_FAILURE=103
 
 # Dowload
 declare -r NAME="Transmission"
-declare -r URL="https://transmission.cachefly.net/Transmission-2.84.dmg"
+declare -r URL="http://download.transmissionbt.com/files/Transmission-2.84.dmg"
 # Dmg
 declare -r VPATH="/Volumes/Transmission"
 declare -r APP="Transmission.app"

@@ -36,27 +36,27 @@ main() {
     # general prefs
     ./general.sh
     exit_on_fail "General Preferences failed"
-    print_separator_large
+    print_separator
     # system prefs
     ./system.sh "$1"
     exit_on_fail "System Preferences failed"
-    print_separator_large
+    print_separator
     # web prefs
     ./web.sh
     exit_on_fail "Web Preferences failed"
-    print_separator_large
+    print_separator
     # apple prefs
     ./apple.sh
     exit_on_fail "Apple Preferences failed"
-    print_separator_large
+    print_separator
     # terminal prefs
     ./terminal.sh
     exit_on_fail "Terminal Preferences failed"
-    print_separator_large
+    print_separator
     # app prefs
     ./apps.sh
     exit_on_fail "App Preferences failed"
-    print_separator_large
+    print_separator
 
     for app in "${APPS[@]}"; do
         if [[ -n "${app}" ]]; then

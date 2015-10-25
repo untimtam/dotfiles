@@ -32,7 +32,7 @@ main() {
     # run updates: skip osx
     ../../../bin/update 1
     exit_on_fail "Update failed"
-    print_separator_large
+    print_separator
 
     # xcode installed in init
 
@@ -40,22 +40,22 @@ main() {
     # install homebrew
     ./homebrew.sh
     exit_on_fail "Homebrew script failed"
-    print_separator_large
+    print_separator
 
     # install ruby (rbenv+packages)
     ./ruby.sh
     exit_on_fail "Ruby script failed"
-    print_separator_large
+    print_separator
 
     # install node (nvm+packages)
     ./node.sh
     exit_on_fail "Node script failed"
-    print_separator_large
+    print_separator
 
     # extra setup for tools
     ./extras.sh
     exit_on_fail "Extras script failed"
-    print_separator_large
+    print_separator
 
     # run updates: skip osx
     ../../../bin/update 1

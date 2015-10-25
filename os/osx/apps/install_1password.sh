@@ -16,7 +16,7 @@ declare -r E_REMOVE_FAILURE=103
 
 # Dowload
 declare -r NAME="1Password 5"
-declare -r URL="https://d13itkw33a7sus.cloudfront.net/dist/1P/mac4/1Password-5.1.zip"
+declare -r URL="https://d13itkw33a7sus.cloudfront.net/dist/1P/mac4/1Password-5.4.1.zip"
 
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
