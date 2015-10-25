@@ -15,7 +15,7 @@ declare -r E_REMOVE_FAILURE=103
 # -----------------------------------------------------------------------------
 
 # Dowload
-declare -r NAME="Bartender"
+declare -r NAME="Bartender 2"
 declare -r URL="http://www.macbartender.com/Demo/Bartender%202.zip"
 
 # -----------------------------------------------------------------------------

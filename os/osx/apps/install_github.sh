@@ -15,7 +15,7 @@ declare -r E_REMOVE_FAILURE=103
 # -----------------------------------------------------------------------------
 
 # Dowload
-declare -r NAME="GitHub"
+declare -r NAME="GitHub Desktop"
 declare -r URL="https://central.github.com/mac/latest"
 
 # -----------------------------------------------------------------------------

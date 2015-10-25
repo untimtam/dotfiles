@@ -15,7 +15,7 @@ declare -r E_REMOVE_FAILURE=103
 # -----------------------------------------------------------------------------
 
 # Dowload
-declare -r NAME="iTerm2"
+declare -r NAME="iTerm"
 declare -r URL="https://iterm2.com/downloads/stable/iTerm2-2_1_4.zip"
 
 # -----------------------------------------------------------------------------
