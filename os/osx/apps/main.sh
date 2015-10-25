@@ -34,6 +34,7 @@ declare -r -a APPSTORE=(
 # -----------------------------------------------------------------------------
 
 install_apps() {
+    print_info "installing apps"
     for i in "${INSTALL_FILES[@]}"; do
         if [[ (-n "$i") && (-e "./$i") ]]; then
             print_info "$i-----"
