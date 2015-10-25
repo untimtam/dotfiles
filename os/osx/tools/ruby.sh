@@ -69,16 +69,16 @@ install_rbenv() {
     fi
 }
 
-# TODO: exit on fail
 install_gems() {
     for i in "${GEMS[@]}"; do
         if [[ -n "$i" ]]; then
             start_spinner "Installing $i"
             gem install "$i" &> /dev/null
             status_stop_spinner "Finished installing $i"
-            exit_on_fail "$i installation failed" "${E_GEM_INSTALL_FAILURE}"
         fi
     done
+    # TODO: exit on fail
+    return 0
 }
 
 # -----------------------------------------------------------------------------
