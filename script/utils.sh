@@ -74,11 +74,11 @@ print_fix() {
 }
 
 print_separator_large() {
-    print_in_purple "\n  ---\n"
+    print_in_purple "\n  ---\n\n"
 }
 
 print_separator() {
-    print_in_purple "  ---\n"
+    print_in_purple "\n  ---\n"
 }
 
 # print_status(status, message, err_code, [no_exit]): validate and print the status
