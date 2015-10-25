@@ -35,7 +35,7 @@ brew_tap() {
     declare -r REPOSITORY="$1"
 
     brew tap "${REPOSITORY}" &> /dev/null
-    status_no_exit "brew tap ${REPOSITORY}\n"
+    status_no_exit "brew tap ${REPOSITORY}"
 
     return $?
 }

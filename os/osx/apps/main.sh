@@ -12,7 +12,7 @@ declare -r E_INSTALL_FAILURE=101
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-declare -r -a INSTALL_FILES=(./install_*.sh)
+declare -r -a INSTALL_FILES=(install_*.sh)
 declare -r -a APPSTORE=(
     'keynote'
     'pages'
@@ -36,7 +36,6 @@ declare -r -a APPSTORE=(
 install_apps() {
     for i in "${INSTALL_FILES[@]}"; do
         if [[ (-n "$i") && (-e "$i") ]]; then
-            # TODO: . $i instead?
             ./$i
             status "Installed $i" "${E_INSTALL_FAILURE}"
         fi
