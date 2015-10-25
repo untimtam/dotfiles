@@ -9,6 +9,7 @@
 declare -r E_BREW_FAILURE=101
 declare -r E_RBENV_FAILURE=102
 declare -r E_RUBY_INSTALL_FAILURE=103
+declare -r E_GEM_INSTALL_FAILURE=104
 declare -r E_GEM_NOT_FOUND=105
 
 # -----------------------------------------------------------------------------
@@ -44,8 +45,10 @@ install_rbenv() {
     # TODO: move to homebrew?
     if cmd_exists 'brew'; then
         # install
+        start_spinner "Installing rbenv"
         brew install "rbenv" "ruby-build" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-        status "rbenv+ruby-build installed" "${E_BREW_FAILURE}"
+        status_stop_spinner "Finished installing rbenv"
+        exit_on_fail "rbenv installation failed" "${E_BREW_FAILURE}"
         if status_code; then
             printf "%s" "${CONFIGS}" >> "${EXTRAS}" \
                 && source "${EXTRAS}"
@@ -54,8 +57,10 @@ install_rbenv() {
 
         # Install ruby versions
         for i in "${RUBY_VERSIONS[@]}"; do
+            start_spinner "Installing ruby $i"
             rbenv install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-            status "rbenv (install: $i)" "${E_RBENV_FAILURE}"
+            status_stop_spinner "Finished installing ruby $i"
+            exit_on_fail "ruby $i installation failed" "${E_RBENV_FAILURE}"
         done
         if status_code; then
             rbenv global "${RUBY_VERSIONS[0]}" &> /dev/null
@@ -68,8 +73,10 @@ install_rbenv() {
 install_gems() {
     for i in "${GEMS[@]}"; do
         if [[ -n "$i"]]; then
+            start_spinner "Installing $i"
             gem install "$i" &> /dev/null
-            status_no_exit "ruby (gem): $i"
+            status_stop_spinner "Finished installing $i"
+            exit_on_fail "$i installation failed" "${E_GEM_INSTALL_FAILURE}"
         fi
     done
 }

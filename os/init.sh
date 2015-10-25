@@ -6,8 +6,8 @@
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
-declare -r E_INVALID_OS=101
-declare -r E_OSX_UPDATE_FAILURE=102
+declare -r E_OSX_UPDATE_FAILURE=101
+declare -r E_INVALID_OS=102
 declare -r E_XCODE_INSTALL_FAILED=103
 
 # -----------------------------------------------------------------------------
@@ -72,9 +72,10 @@ main() {
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
         # update osx
-        print_info "If OSX update requires restart, please run 'cd ${HOME} && ./dotfiles/script/bootstrap'"
+        start_spinner "Updating OSX (if system restarts, run 'cd ${HOME} && ./dotfiles/script/bootstrap')"
         sudo softwareupdate -ia >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-        status "updated osx" "${E_OSX_UPDATE_FAILURE}"
+        status_stop_spinner "Finished updating OSX"
+        exit_on_fail "OSX update failed" "${E_OSX_UPDATE_FAILURE}"
         # install xcode command line tools
         install_xcode
         exit_on_fail "Xcode install failed"

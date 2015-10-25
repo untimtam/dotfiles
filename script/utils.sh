@@ -180,11 +180,15 @@ errexit() {
     exit "$2"
 }
 
-# exit_on_fail(message):
+# exit_on_fail(message,[err_code]): either pass along error code or create one
 exit_on_fail() {
     local stat="$?"
     if [[ "${stat}" -ne 0 ]]; then
-        errexit "$1" "${stat}"
+        if [[ "$#" -eq 2 ]]; then
+            errexit "$1" "$2"
+        else
+            errexit "$1" "${stat}"
+        fi
     fi
 }
 
@@ -229,4 +233,70 @@ get_os() {
     fi
 
     printf "%s" "${os}"
+}
+
+# -----------------------------------------------------------------------------
+# | Spinner                                                                    |
+# | Inspired by https://github.com/tlatsas/bash-spinner                        |
+# -----------------------------------------------------------------------------
+
+# _spinner(cmd,msg,[status,pid])
+_spinner() {
+    case "$1" in
+        start)
+            # TODO: spinner on the side?
+            let col=$(tput cols)-${#2}-7
+            # display message
+            printf "\e[0;34m%s%${col}s\e[0m" "  [ ! ] $2"
+
+            # start spinner
+            local i=1
+            local spin='-\|/'
+            local delay=0.1
+
+            while :; do
+                i=$(( (i+1) %4 ))
+                printf "\b${spin:$i:1}"
+                sleep "${delay}"
+            done
+            ;;
+        stop)
+            if [[ -z $4 ]]; then
+                errexit "Spinner is not running..." 1
+            fi
+
+            # remove spinner
+            printf "\b\b\n"
+
+            kill $4 &> /dev/null
+
+            # status
+            print_status "$3" "$2" 1 0
+            ;;
+        *)
+            errexit "Invalid spinner argument, try [start/stop]" 1
+            ;;
+    esac
+}
+
+# start_spinner(message)
+start_spinner() {
+    # $1 : msg to display
+    _spinner "start" "$1" &
+    # set global spinner pid
+    _sp_pid="$!"
+    disown
+}
+
+# stop_spinner(message, status)
+stop_spinner() {
+    _spinner "stop" "$1" "$2" "${_sp_pid}"
+    unset _sp_pid
+}
+
+# status_stop_spinner(message)
+status_stop_spinner() {
+    local stat="$?"
+    stop_spinner "$1" "${stat}"
+    return ${stat}
 }

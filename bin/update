@@ -24,44 +24,51 @@ declare -r E_PIP3_UPDATE_FAILURE=106
 # -----------------------------------------------------------------------------
 
 update_osx() {
-    print_info "updating osx"
+    # TODO: detect if ~/bin or during bootstrap
+    start_spinner "Updating OSX (if system restarts, run 'cd ${HOME} && ./dotfiles/script/bootstrap')"
     sudo softwareupdate -ia >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "updated osx" "${E_OSX_UPDATE_FAILURE}"
+    status_stop_spinner "Finished updating OSX"
+    exit_on_fail "OSX update failed" "${E_OSX_UPDATE_FAILURE}"
 }
 
 update_homebrew() {
-    print_info "updating homebrew"
+    start_spinner "Updating Homebrew"
     brew update >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
        && brew upgrade --all >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
        && brew cleanup >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "updated brew" "${E_BREW_UPDATE_FAILURE}"
+    status_stop_spinner "Finished updating Homebrew"
+    exit_on_fail "Homebrew update failed" "${E_BREW_UPDATE_FAILURE}"
 }
 
 update_npm() {
-    print_info "updating node"
+    start_spinner "Updating NodeJS"
     npm install -g npm >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
         && npm update -g >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "updated npm packages" "${E_NPM_UPDATE_FAILURE}"
+    status_stop_spinner "Finished updating NodeJS"
+    exit_on_fail "NodeJS update failed" "${E_NPM_UPDATE_FAILURE}"
 }
 
 # TODO: why does ruby need sudo?
 update_gems() {
-    print_info "updating ruby"
+    start_spinner "Updating Ruby"
     sudo gem update >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "updated gems" "${E_RUBY_UPDATE_FAILURE}"
+    status_stop_spinner "Finished updating Ruby"
+    exit_on_fail "Ruby update failed" "${E_RUBY_UPDATE_FAILURE}"
 }
 
 # TODO: update other packages?
 update_pip() {
-    print_info "updating pyhon 2.x"
+    start_spinner "Updating Python 2.x"
     pip install --upgrade pip setuptools >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "updated pip" "${E_PIP_UPDATE_FAILURE}"
+    status_stop_spinner "Finished updating Python 2.x"
+    exit_on_fail "Python 2.x update failed" "${E_PIP_UPDATE_FAILURE}"
 }
 
 update_pip3() {
-    print_info "updating python 3.x"
+    start_spinner "Updating python 3.x"
     pip3 install --upgrade pip setuptools >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "updated pip3" "${E_PIP3_UPDATE_FAILURE}"
+    status_stop_spinner "Finished updating Python 3.x"
+    exit_on_fail "Python 3.x update failed" "${E_PIP3_UPDATE_FAILURE}"
 }
 
 # -----------------------------------------------------------------------------

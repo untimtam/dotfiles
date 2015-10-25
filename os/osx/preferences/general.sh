@@ -152,10 +152,15 @@ ssd_preferences() {
 }
 
 set_preferences() {
+    start_spinner "Setting general preferences"
     general_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set general preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting general preferences"
+    exit_on_fail "general preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting ssd preferences"
     ssd_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set ssd preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting ssd preferences"
+    exit_on_fail "ssd preferences failed" "${E_PREFERENCE_FAILURE}"
 }
 
 # -----------------------------------------------------------------------------

@@ -28,8 +28,10 @@ main() {
         && source "../../../script/utils.sh" \
         && source "./util.sh"
 
+    start_spinner "Downloading ${NAME}"
     download_zip "${NAME}" "${URL}"
-    status "Downloading ${NAME}" "${E_DOWNLOAD_FAILURE}"
+    status_stop_spinner "Finished downloading ${NAME}"
+    exit_on_fail "${NAME} download failed" "${E_DOWNLOAD_FAILURE}"
     mv "${NAME}.app" /Applications
     status "${NAME} → /Applications" "${E_COPY_FAILURE}"
     remove_zip "${NAME}"

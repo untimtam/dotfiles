@@ -92,11 +92,16 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "utils.sh"
 
+    # TODO: do something when script is run from ~/bin
+    if [[ "$?" -ne 0 ]]; then
+        echo "Error: dotfile utils not found"
+        exit 1
+    fi
+
     verify_os || errexit "Error: OS is not suported" "${E_OS_NOT_SUPPORTED}"
 
     clear
     print_section "Beginning bootstrap script"
-
     # Confirm fresh or existing install
     local fresh=1
     confirm "Is this a fresh install?"
@@ -107,7 +112,6 @@ main() {
         fresh=1
         print_fix "Running updates..."
     fi
-
     # ask for sudo
     request_sudo
 

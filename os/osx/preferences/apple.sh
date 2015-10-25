@@ -159,20 +159,40 @@ messages_preferences() {
 }
 
 set_preferences() {
+    start_spinner "Setting Spotlight preferences"
     spotlight_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set spotlight preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Spotlight preferences"
+    exit_on_fail "Spotlight preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting Mail preferences"
     mail_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set mail preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Mail preferences"
+    exit_on_fail "Mail preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting Time Machine preferences"
     timemachine_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set time machine preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Time Machine preferences"
+    exit_on_fail "Time Machine preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting Activity Monitor preferences"
     activity_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set activity monitor preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Activity Monitor preferences"
+    exit_on_fail "Activity Monitor preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting utility preferences"
     utility_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set utility preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting utility preferences"
+    exit_on_fail "utility preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting Appstore preferences"
     appstore_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set appstore preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Appstore preferences"
+    exit_on_fail "Appstore preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting Messages preferences"
     messages_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set messages preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Messages preferences"
+    exit_on_fail "Messages preferences failed" "${E_PREFERENCE_FAILURE}"
 }
 
 # -----------------------------------------------------------------------------

@@ -101,14 +101,16 @@ install_homebrew_formulae() {
         for i in "${HOMEBREW[@]}"; do
             if [[ -n "$i" ]]; then
                 if brew list "$i" &> /dev/null; then
-                    print_success "$i already installed"
+                    print_success "$i is already installed"
                 else
+                    start_spinner "Installing $i"
                     if [[ -n "${HOMEBREW_OPTS[$i]}" ]]; then
                         brew install "$i" "${HOMEBREW_OPTS[$i]}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
                     else
                         brew install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
                     fi
-                    status "$i installed" "${E_BREW_FAILURE}"
+                    status_stop_spinner "Finished installing $i"
+                    exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
                 fi
             fi
         done
@@ -124,8 +126,10 @@ install_homebrew_formulae_versions() {
                 if brew list "$i" &> /dev/null; then
                     print_success "$i already installed"
                 else
+                    start_spinner "Installing $i"
                     brew install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-                    status "$i installed" "${E_BREW_FAILURE}"
+                    status_stop_spinner "Finished installing $i"
+                    exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
                 fi
             fi
         done
@@ -136,16 +140,24 @@ install_homebrew_formulae_versions() {
 # https://github.com/caskroom/homebrew-cask
 install_homebrew_cask() {
     if cmd_exists 'brew' && brew_tap 'caskroom/cask'; then
-        brew install "caskroom/cask/brew-cask"
-        status "cask installed"
+        if brew list "caskroom/cask/brew-cask" &> /dev/null; then
+            print_success "cask already installed"
+        else
+            start_spinner "Installing cask"
+            brew install "caskroom/cask/brew-cask" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+            status_stop_spinner "Finished installing cask"
+            exit_on_fail "cask installation failed" "${E_BREW_FAILURE}"
+        fi
         print_separator
         for i in "${HOMEBREW_CASK_QL[@]}"; do
             if [[ -n "$i" ]]; then
-                if brew list "$i" &> /dev/null; then
+                if brew cask list "$i" &> /dev/null; then
                     print_success "$i already installed"
                 else
+                    start_spinner "Installing $i"
                     brew cask install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-                    status "$i installed" "${E_BREW_FAILURE}"
+                    status_stop_spinner "Finished installing $i"
+                    exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
                 fi
             fi
         done
@@ -155,14 +167,16 @@ install_homebrew_cask() {
 # Homebrew Cask Fonts
 # https://github.com/caskroom/homebrew-fonts
 install_homebrew_font() {
-    if cmd_exists 'brew' && brew_tap 'caskroom/fonts'; then
+    if cmd_exists 'brew' && cmd_exists 'brew-cask' && brew_tap 'caskroom/fonts'; then
         for i in "${HOMEBREW_FONTS[@]}"; do
             if [[ -n "$i" ]]; then
-                if brew list "$i" &> /dev/null; then
+                if brew cask list "$i" &> /dev/null; then
                     print_success "$i already installed"
                 else
+                    start_spinner "Installing $i"
                     brew cask install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-                    status "$i installed" "${E_BREW_FAILURE}"
+                    status_stop_spinner "Finished installing $i"
+                    exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
                 fi
             fi
         done

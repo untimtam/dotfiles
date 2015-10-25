@@ -318,16 +318,30 @@ language_preferences() {
 }
 
 set_preferences() {
+    start_spinner "Setting i/o preferences"
     io_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set io preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting i/o preferences"
+    exit_on_fail "i/o preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting screen preferences"
     screen_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set screen preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting screen preferences"
+    exit_on_fail "screen preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting Finder preferences"
     finder_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set finder preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Finder preferences"
+    exit_on_fail "Finder preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting Dock preferences"
     dock_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set dock preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Dock preferences"
+    exit_on_fail "Dock preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting language preferences"
     language_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set language preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting language preferences"
+    exit_on_fail "language preferences failed" "${E_PREFERENCE_FAILURE}"
 }
 
 # -----------------------------------------------------------------------------

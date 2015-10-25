@@ -86,10 +86,15 @@ safari_preferences() {
 }
 
 set_preferences() {
+    start_spinner "Setting Chrome preferences"
     chrome_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set chrome preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Chrome preferences"
+    exit_on_fail "Chrome preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting Safari preferences"
     safari_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status "set safari preferences" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting Safari preferences"
+    exit_on_fail "Safari preferences failed" "${E_PREFERENCE_FAILURE}"
 }
 
 # -----------------------------------------------------------------------------

@@ -11,6 +11,7 @@ declare -r E_SET_SSH_FAILURE=102
 declare -r E_UPDATE_FAILURE=103
 declare -r E_UPDATE_SUBMODULE_FAILURE=104
 
+
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
@@ -163,13 +164,17 @@ main() {
     # TODO: fix git setup and update
     # verify ssh key or set it up
     update_ssh
-    status "Set ssh key"
+    status "Set ssh key" "${E_SET_SSH_FAILURE}"
     # update repo
+    start_spinner "Updating dotfiles"
     update_dotfiles "$1"
-    status "Updated dotfiles"
+    status_stop_spinner "Finished updating dotfiles"
+    exit_on_fail "Unable to update dotfiles" "${E_UPDATE_FAILURE}"
     # update submodules
+    start_spinner "Updating submodules"
     update_submodules
-    status "Updated dotfile dependencies"
+    status_stop_spinner "Finished updating submodules"
+    exit_on_fail "Unable to update submodules" "${E_UPDATE_SUBMODULE_FAILURE}"
 
     print_success "Finished updating from Git repository"
 }
