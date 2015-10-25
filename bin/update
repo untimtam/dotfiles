@@ -48,12 +48,17 @@ update_npm() {
     exit_on_fail "NodeJS update failed" "${E_NPM_UPDATE_FAILURE}"
 }
 
-# TODO: why does ruby need sudo?
 update_gems() {
     start_spinner "Updating Ruby"
-    sudo gem update >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    gem update >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
     status_stop_spinner "Finished updating Ruby"
-    exit_on_fail "Ruby update failed" "${E_RUBY_UPDATE_FAILURE}"
+    if [[ "$?" -ne 0 ]]; then
+        # Only use sudo for system ruby
+        start_spinner "Updating system Ruby"
+        sudo gem update >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+        status_stop_spinner "Finished updating Ruby"
+        exit_on_fail "Ruby update failed" "${E_RUBY_UPDATE_FAILURE}"
+    fi
 }
 
 # TODO: update other packages?
