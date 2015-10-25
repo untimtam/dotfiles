@@ -141,21 +141,21 @@ ssd_preferences() {
 
     # TODO: ? Paul Irish turns this off too?
     # Remove the sleep image file to save disk space
-    sudo rm /private/var/vm/sleepimage
+    # sudo rm /private/var/vm/sleepimage
     # Create a zero-byte file instead…
-    sudo touch /private/var/vm/sleepimage
+    # sudo touch /private/var/vm/sleepimage
     # …and make sure it can’t be rewritten
-    sudo chflags uchg /private/var/vm/sleepimage
+    # sudo chflags uchg /private/var/vm/sleepimage
 
     # Disable the sudden motion sensor as it’s not useful for SSDs
     sudo pmset -a sms 0
 }
 
 set_preferences() {
-    start_spinner "Setting general preferences"
+    start_spinner "Setting basic preferences"
     general_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-    status_stop_spinner "Finished setting general preferences"
-    exit_on_fail "general preferences failed" "${E_PREFERENCE_FAILURE}"
+    status_stop_spinner "Finished setting basic preferences"
+    exit_on_fail "basic preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting ssd preferences"
     ssd_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
