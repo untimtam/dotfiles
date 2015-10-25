@@ -79,9 +79,9 @@ setup_git_ssh_key() {
 
 update_ssh() {
     ssh -T git@github.com &> /dev/null
-    [[ "$?" -ne 1 ]] && setup_git_ssh_key
+    [[ "$?" -ne 1 ]] && setup_git_ssh_key && return "$?"
 
-    return "$?"
+    return 0
 }
 
 # -----------------------------------------------------------------------------
