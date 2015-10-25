@@ -18,7 +18,7 @@ declare -r E_REMOVE_FAILURE=103
 declare -r NAME="vlc"
 declare -r URL="http://get.videolan.org/vlc/2.2.1/macosx/vlc-2.2.1.dmg"
 # Dmg
-declare -r PATH="/Volumes/vlc"
+declare -r VPATH="/Volumes/vlc"
 declare -r APP="VLC.app"
 
 # -----------------------------------------------------------------------------
@@ -40,9 +40,9 @@ main() {
     download_dmg "${NAME}" "${URL}"
     status_stop_spinner "Finished downloading ${NAME}"
     exit_on_fail "${NAME} download failed" "${E_DOWNLOAD_FAILURE}"
-    cp -R "${PATH}/${APP}" /Applications
+    cp -R "${VPATH}/${APP}" /Applications
     status "${NAME} → /Applications" "${E_COPY_FAILURE}"
-    remove_dmg "${NAME}" "${PATH}"
+    remove_dmg "${NAME}" "${VPATH}"
     status "Removed ${NAME} archive" "${E_REMOVE_FAILURE}"
 }
 

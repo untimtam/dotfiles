@@ -18,7 +18,7 @@ declare -r E_REMOVE_FAILURE=103
 declare -r NAME="League"
 declare -r URL="http://l3cdn.riotgames.com/Mac_ShellInstaller/NA/League%20of%20Legends%20NA.dmg"
 # Dmg
-declare -r PATH="/Volumes/League of Legends NA"
+declare -r VPATH="/Volumes/League of Legends NA"
 declare -r APP="League of Legends.app"
 
 # -----------------------------------------------------------------------------
@@ -40,9 +40,9 @@ main() {
     download_dmg "${NAME}" "${URL}"
     status_stop_spinner "Finished downloading ${NAME}"
     exit_on_fail "${NAME} download failed" "${E_DOWNLOAD_FAILURE}"
-    cp -R "${PATH}/${APP}" /Applications
+    cp -R "${VPATH}/${APP}" /Applications
     status "${NAME} → /Applications" "${E_COPY_FAILURE}"
-    remove_dmg "${NAME}" "${PATH}"
+    remove_dmg "${NAME}" "${VPATH}"
     status "Removed ${NAME} archive" "${E_REMOVE_FAILURE}"
 }
 

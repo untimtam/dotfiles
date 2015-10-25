@@ -18,7 +18,7 @@ declare -r E_REMOVE_FAILURE=103
 declare -r NAME="sublime"
 declare -r URL="http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%20Build%203065.dmg"
 # Dmg
-declare -r PATH="Sublime Text.app"
+declare -r VPATH="Sublime Text.app"
 declare -r APP="/Volumes/Sublime Text"
 
 # -----------------------------------------------------------------------------
@@ -40,9 +40,9 @@ main() {
     download_dmg "${NAME}" "${URL}"
     status_stop_spinner "Finished downloading ${NAME}"
     exit_on_fail "${NAME} download failed" "${E_DOWNLOAD_FAILURE}"
-    cp -R "${PATH}/${APP}" /Applications
+    cp -R "${VPATH}/${APP}" /Applications
     status "${NAME} → /Applications" "${E_COPY_FAILURE}"
-    remove_dmg "${NAME}" "${PATH}"
+    remove_dmg "${NAME}" "${VPATH}"
     status "Removed ${NAME} archive" "${E_REMOVE_FAILURE}"
 }
 

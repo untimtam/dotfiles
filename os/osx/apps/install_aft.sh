@@ -18,7 +18,7 @@ declare -r E_REMOVE_FAILURE=103
 declare -r NAME="androidfiletransfer"
 declare -r URL="https://dl.google.com/dl/androidjumper/mtp/current/androidfiletransfer.dmg"
 # Dmg
-declare -r PATH="/Volumes/Android File Transfer"
+declare -r VPATH="/Volumes/Android File Transfer"
 declare -r APP="Android File Transfer.app"
 
 # -----------------------------------------------------------------------------
@@ -40,9 +40,9 @@ main() {
     download_dmg "${NAME}" "${URL}"
     status_stop_spinner "Finished downloading ${NAME}"
     exit_on_fail "${NAME} download failed" "${E_DOWNLOAD_FAILURE}"
-    cp -R "${PATH}/${APP}" /Applications
+    cp -R "${VPATH}/${APP}" /Applications
     status "${NAME} → /Applications" "${E_COPY_FAILURE}"
-    remove_dmg "${NAME}" "${PATH}"
+    remove_dmg "${NAME}" "${VPATH}"
     status "Removed ${NAME} archive" "${E_REMOVE_FAILURE}"
 }
 
