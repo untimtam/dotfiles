@@ -35,8 +35,9 @@ declare -r -a APPSTORE=(
 
 install_apps() {
     for i in "${INSTALL_FILES[@]}"; do
-        if [[ (-n "$i") && (-e "$i") ]]; then
-            ./$i
+        if [[ (-n "$i") && (-e "./$i") ]]; then
+            print_info "$i-----"
+            ./"$i"
             status "Installed $i" "${E_INSTALL_FAILURE}"
         fi
     done
