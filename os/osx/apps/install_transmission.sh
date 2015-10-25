@@ -31,6 +31,11 @@ main() {
         && source "../../../script/utils.sh" \
         && source "./util.sh"
 
+    if [[ -e "/Applications/${NAME}.app" ]]; then
+        print_success "${NAME} already installed"
+        return 0
+    fi
+
     start_spinner "Downloading ${NAME}"
     download_dmg "${NAME}" "${URL}"
     status_stop_spinner "Finished downloading ${NAME}"
@@ -39,7 +44,6 @@ main() {
     status "${NAME} → /Applications" "${E_COPY_FAILURE}"
     remove_dmg "${NAME}" "${PATH}"
     status "Removed ${NAME} archive" "${E_REMOVE_FAILURE}"
-    print_separator
 }
 
 main

@@ -37,6 +37,7 @@ install_apps() {
         if [[ (-n "$i") && (-e "./$i") ]]; then
             ./"$i"
             status "Installed $i" "${E_INSTALL_FAILURE}"
+            print_separator
         fi
     done
 }
