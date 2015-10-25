@@ -114,7 +114,7 @@ update_npm() {
 install_npm_packages() {
     # Install the `npm` packages
     for i in "${NPM_PACKAGES[@]}"; do
-        if [[ -n "$i"]]; then
+        if [[ -n "$i" ]]; then
             start_spinner "Installing $i"
             npm install -g "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
             status_stop_spinner "Finished installing $i"
