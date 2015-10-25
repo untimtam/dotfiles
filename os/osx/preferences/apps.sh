@@ -99,16 +99,15 @@ main() {
         && source "../../../script/utils.sh"
 
     print_info "Setting app preferences"
-
     set_preferences
+    status_no_exit "Finished setting app preferences"
 
     for app in "${APPS[@]}"; do
         if [[ -n "${app}" ]]; then
             killall "${app}" &> /dev/null
         fi
     done
-
-    status_no_exit "Finished setting app preferences"
+    return 0
 }
 
 main

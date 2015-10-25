@@ -63,6 +63,8 @@ main() {
             killall "${app}" &> /dev/null
         fi
     done
+
+    return 0
 }
 
 main "$1"

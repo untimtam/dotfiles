@@ -107,16 +107,15 @@ main() {
         && source "../../../script/utils.sh"
 
     print_info "Setting web preferences"
-
     set_preferences
+    status_no_exit "Finished setting web preferences"
 
     for app in "${APPS[@]}"; do
         if [[ -n "${app}" ]]; then
             killall "${app}" &> /dev/null
         fi
     done
-
-    status_no_exit "Finished setting web preferences"
+    return 0
 }
 
 main

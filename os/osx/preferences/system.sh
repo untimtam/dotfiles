@@ -356,16 +356,15 @@ main() {
     declare -r FRESH_INSTALL="$1"
 
     print_info "Setting system preferences"
-
     set_preferences
+    status_no_exit "Finished setting system preferences"
 
     for app in "${APPS[@]}"; do
         if [[ -n "${app}" ]]; then
             killall "${app}" &> /dev/null
         fi
     done
-
-    status_no_exit "Finished setting system preferences"
+    return 0
 }
 
 main
