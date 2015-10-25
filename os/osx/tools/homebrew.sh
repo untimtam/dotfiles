@@ -215,7 +215,6 @@ main() {
     # homebrew fonts
     install_homebrew_font
     exit_on_fail "homebrew failed (cask fonts)"
-    print_separator
 }
 
 main
