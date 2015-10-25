@@ -32,6 +32,7 @@ main() {
     # run updates: skip osx
     ../../../bin/update 1
     exit_on_fail "Update failed"
+    print_separator_large
 
     # xcode installed in init
 
