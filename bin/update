@@ -86,38 +86,51 @@ main() {
         exit 1
     fi
 
+    # skip certain updates
+    local U_OSX=0
+    local U_BREW=0
+    local U_NPM=0
+    local U_GEM=0
+    local U_PIP=0
+    local U_PIP3=0
+
+    # TODO: make more complex options
+    if [[ ("$#" -ge 1) && ("$1" -eq 1) ]]; then
+        U_OSX=1
+    fi
+
     # osx
-    if [[ "$(get_os)" == "osx" ]]; then
+    if [[ ("$(get_os)" == "osx") && ("${U_OSX}" -eq 0) ]]; then
         update_osx
         exit_on_fail "OSX update failed"
     fi
 
     # brew
-    if cmd_exists 'brew'; then
+    if cmd_exists 'brew' && [[ "${U_BREW}" -eq 0 ]]; then
         update_homebrew
         exit_on_fail "Homebrew update failed"
     fi
 
     # node
-    if cmd_exists 'npm'; then
+    if cmd_exists 'npm' && [[ "${U_NPM}" -eq 0 ]]; then
         update_npm
         exit_on_fail "NPM update failed"
     fi
 
     # ruby
-    if cmd_exists 'gem'; then
+    if cmd_exists 'gem' && [[ "${U_GEM}" -eq 0 ]]; then
         update_gems
         exit_on_fail "gem update failed"
     fi
 
     # python 2.7
-    if cmd_exists 'pip'; then
+    if cmd_exists 'pip' && [[ "${U_PIP}" -eq 0 ]]; then
         update_pip
         exit_on_fail "pip update failed"
     fi
 
     # python 3
-    if cmd_exists 'pip3'; then
+    if cmd_exists 'pip3' && [[ "${U_PIP3}" -eq 0 ]]; then
         update_pip3
         exit_on_fail "pip3 update failed"
     fi
@@ -125,4 +138,4 @@ main() {
     print_success "Finished running updates"
 }
 
-main
+main "$1"

@@ -29,8 +29,8 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "../../../script/utils.sh"
 
-    # run updates
-    ../../../bin/update
+    # run updates: skip osx
+    ../../../bin/update 1
     exit_on_fail "Update failed"
 
     # xcode installed in init
@@ -56,8 +56,8 @@ main() {
     exit_on_fail "Extras script failed"
     print_separator_large
 
-    # run updates
-    ../../../bin/update
+    # run updates: skip osx
+    ../../../bin/update 1
     exit_on_fail "Update failed"
 
     # update shells
