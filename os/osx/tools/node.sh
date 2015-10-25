@@ -77,7 +77,7 @@ install_nvm() {
     if status_code; then
         # nvm.sh should work in both bash and zsh
         printf "%s" "${CONFIGS}" >> "${EXTRAS}" \
-            && source "${EXTRAS}"
+            && source "${HOME}/.bash_profile"
         status_no_exit "nvm (update ${EXTRAS})"
     fi
 }

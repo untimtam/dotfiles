@@ -51,11 +51,11 @@ install_rbenv() {
         exit_on_fail "rbenv installation failed" "${E_BREW_FAILURE}"
         if status_code; then
             printf "%s" "${CONFIGS}" >> "${EXTRAS}" \
-                && source "${EXTRAS}"
+                && source "${HOME}/.bash_profile"
             status_no_exit "rbenv (update ${EXTRAS})"
         fi
 
-        # Install ruby versions
+        # Install ruby versionsg
         for i in "${RUBY_VERSIONS[@]}"; do
             start_spinner "Installing ruby $i"
             rbenv install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null

@@ -12,7 +12,7 @@ PATH="${HOME}/bin:${PATH}"
 
 # add heroku cli to path if installed
 if which heroku &> /dev/null; then
-    PATH="${PATH}:/usr/local/heroku/bin/"
+    PATH="${PATH}:/usr/local/heroku/bin"
 fi
 
 # add go to path if installed
