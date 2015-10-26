@@ -125,7 +125,7 @@ set_iterm() {
         status "Finished closing iterm" "${E_CLOSE_ITERM_FAILURE}"
 
         # copy preferences
-        cp -r "${HOME}/dotfiles/resources/com.googlecode.iterm2.plist" \
+        cp -R "${HOME}/dotfiles/resources/com.googlecode.iterm2.plist" \
             "${HOME}/Library/Preferences/com.googlecode.iterm2.plist" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         status "copy iterm preferences" "${E_COPY_PREFERENCE_FAILURE}"
         # read preferences
@@ -152,13 +152,13 @@ set_sublime() {
         local st3="${HOME}/Library/Application\ Support/Sublime\ Text\ 3"
         local name="Package\ Control"
         # sublime settings
-        cp -r "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/Preferences.sublime-settings" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+        cp -R "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/Preferences.sublime-settings" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         status "Copy sublime preferences" "${E_COPY_SETTING_FAILURE}"
         # install package control
         curl -LsSo "${st3}/Installed\ Packages/${name}.sublime-package" "https://packagecontrol.io/Package%20Control.sublime-package" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         status "Download package control" "${E_DL_PACKAGE_CONTROL_FAILURE}"
         # install packages
-        cp -r "${HOME}/dotfiles/resources/${name}.sublime-settings" "${st3}/Packages/User/${name}.sublime-settings" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+        cp -R "${HOME}/dotfiles/resources/${name}.sublime-settings" "${st3}/Packages/User/${name}.sublime-settings" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         status "write package control settings" "${E_PACKAGES_FAILURE}"
     fi
 }
