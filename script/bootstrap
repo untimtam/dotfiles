@@ -12,7 +12,15 @@ declare -r E_OS_NOT_SUPPORTED=101
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-
+declare -r INIT_SECTION=0
+declare -r REPO_SECTION=1
+declare -r DIR_SECTION=2
+declare -r BIN_SECTION=3
+declare -r SYM_SECTION=4
+declare -r TOOL_SECTION=5
+declare -r APPS_SECTION=6
+declare -r PREF_SECTION=7
+declare -r EXTR_SECTION=8
 
 # -----------------------------------------------------------------------------
 # | System                                                                     |
@@ -121,41 +129,77 @@ main() {
     request_sudo
 
     # run init
-    ../os/init.sh "${fresh}"
-    exit_on_fail "Initialization failed"
-    print_separator_large
+    if [[ "${bootstrap_section}" -le "${INIT_SECTION}" ]]; then
+        ../os/init.sh "${fresh}"
+        exit_on_fail "Initialization failed"
+        print_separator_large
+        ((bootstrap_section+=1))
+    fi
+
     # check and update git repo
-    ../os/repository.sh "${fresh}"
-    exit_on_fail "Repository check failed"
-    print_separator_large
+    if [[ "${bootstrap_section}" -le "${REPO_SECTION}" ]]; then
+        ../os/repository.sh "${fresh}"
+        exit_on_fail "Repository check failed"
+        print_separator_large
+        ((bootstrap_section+=1))
+    fi
+
     # create directories
-    ../os/directories.sh "${fresh}"
-    exit_on_fail "Directory creation failed"
-    print_separator_large
+    if [[ "${bootstrap_section}" -le "${DIR_SECTION}" ]]; then
+        ../os/directories.sh "${fresh}"
+        exit_on_fail "Directory creation failed"
+        print_separator_large
+        ((bootstrap_section+=1))
+    fi
+
     # sync scripts
-    ../os/bin.sh "${fresh}"
-    exit_on_fail "Script synchronization failed"
-    print_separator_large
+    if [[ "${bootstrap_section}" -le "${BIN_SECTION}" ]]; then
+        ../os/bin.sh "${fresh}"
+        exit_on_fail "Script synchronization failed"
+        print_separator_large
+        ((bootstrap_section+=1))
+    fi
+
     # create symbolic links
-    ../os/symlinks.sh "${fresh}"
-    exit_on_fail "Symbolic link creation failed"
-    print_separator_large
+    if [[ "${bootstrap_section}" -le "${SYM_SECTION}" ]]; then
+        ../os/symlinks.sh "${fresh}"
+        exit_on_fail "Symbolic link creation failed"
+        print_separator_large
+        ((bootstrap_section+=1))
+    fi
+
+    # ---
 
     # download/install tools
-    ../os/tools.sh "${fresh}"
-    exit_on_fail "Tool installation failed"
-    print_separator_large
-    # download/install applications
-    ../os/apps.sh "${fresh}"
-    exit_on_fail "Application installation failed"
-    print_separator_large
-    # set preferences
-    ../os/preferences.sh "${fresh}"
-    exit_on_fail "Preferences failed"
-    print_separator_large
+    if [[ "${bootstrap_section}" -le "${TOOL_SECTION}" ]]; then
+        ../os/tools.sh "${fresh}"
+        exit_on_fail "Tool installation failed"
+        print_separator_large
+        ((bootstrap_section+=1))
+    fi
 
-    ../os/extras.sh "${fresh}"
-    print_separator_large
+    # download/install applications
+    if [[ "${bootstrap_section}" -le "${APPS_SECTION}" ]]; then
+        ../os/apps.sh "${fresh}"
+        exit_on_fail "Application installation failed"
+        print_separator_large
+        ((bootstrap_section+=1))
+    fi
+
+    # set preferences
+    if [[ "${bootstrap_section}" -le "${PREF_SECTION}" ]]; then
+        ../os/preferences.sh "${fresh}"
+        exit_on_fail "Preferences failed"
+        print_separator_large
+        ((bootstrap_section+=1))
+    fi
+
+    # perform additional operations
+    if [[ "${bootstrap_section}" -le "${EXTR_SECTION}" ]]; then
+        ../os/extras.sh "${fresh}"
+        print_separator_large
+        ((bootstrap_section+=1))
+    fi
 
     print_section "Bootstrap script complete"
     confirm "Do you want to restart?"
