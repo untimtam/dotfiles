@@ -42,7 +42,7 @@ main() {
     if [[ "${app}" -eq 0 ]]; then
         local -r OS="$(get_os)"
         if [[ "${OS}" == "osx" ]]; then
-            ./osx/apps/main.sh
+            ./osx/apps/main.sh "$1"
             exit_on_fail "Error while installing apps"
         elif [[ "${OS}" == "ununtu" ]]; then
             errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"

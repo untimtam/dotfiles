@@ -36,7 +36,17 @@ install_apps() {
     for i in "${INSTALL_FILES[@]}"; do
         if [[ (-n "$i") && (-e "./$i") ]]; then
             ./"$i"
-            status "Installed $i" "${E_INSTALL_FAILURE}"
+            status "Finished $i" "${E_INSTALL_FAILURE}"
+            print_separator
+        fi
+    done
+}
+
+manual_apps() {
+    for i in "${MAN_INSTALL_FILES[@]}"; do
+        if [[ (-n "$i") && (-e "./$i") ]]; then
+            ./"$i"
+            status "Finished $i" "${E_INSTALL_FAILURE}"
             print_separator
         fi
     done
@@ -67,10 +77,23 @@ main() {
     install_apps
     exit_on_fail "App install failed"
 
+    if [[ "$1" -eq 0 ]]; then
+        declare -r -a MAN_INSTALL_FILES=(manual/install_*.sh)
+        manual_apps
+        exit_on_fail "Manual app install failed"
+    else
+        confirm "Install manual apps (cant check if they are installed already)?"
+        if status_code; then
+            declare -r -a MAN_INSTALL_FILES=(manual/install_*.sh)
+            manual_apps
+            exit_on_fail "Manual app install failed"
+        fi
+    fi
+
     ./homebrew_apps.sh
     exit_on_fail "Homebrew app install failed"
 
     list_appstore
 }
 
-main
+main "$1"
