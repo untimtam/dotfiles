@@ -86,10 +86,9 @@ main() {
     local sourceFile=""
     local targetFile=""
     for file in "${SYMLINK_FILES[@]}"; do
-        sourceFile="$(cd .. && pwd)/${file}"
-        targetFile="${HOME}/.$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
-
         if [[ -n "${file}" ]]; then
+            sourceFile="$(cd .. && pwd)/${file}"
+            targetFile="${HOME}/.$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
             # create symlink if it doesnt already exist
             verify_symlink "${sourceFile}" "${targetFile}"
             exit_on_fail "Symbolic link creation error or conflict"
