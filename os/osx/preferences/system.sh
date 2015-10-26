@@ -12,9 +12,26 @@ declare -r E_PREFERENCE_FAILURE=101
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-declare -a APPS=(
+declare -r -a APPS=(
     'Finder'
     'Dock'
+)
+declare -r -a DOCK_APPS=(
+    'System Preferences'
+    'Mail'
+    'Skype'
+    'Google Chrome'
+    'Calendar'
+    'Reminders'
+    'Notes'
+    'TextEdit'
+    'iTerm'
+    'Sublime Text'
+    'Github Desktop'
+    'Parallels Desktop'
+    'iTunes'
+    'League of Legends'
+    'Curse'
 )
 
 # -----------------------------------------------------------------------------
@@ -281,6 +298,10 @@ dock_preferences() {
     # the Dock to launch apps.
     if [[ "${FRESH_INSTALL}" -eq 0 ]]; then
         defaults write com.apple.dock persistent-apps -array
+        # defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
+        for dock_app in "${DOCK_APPS[@]}"; do
+            defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/${dock_app}.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+        done
     fi
 
     # Hot corners
