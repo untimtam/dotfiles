@@ -2,65 +2,28 @@
 #
 # .bash_profile for login
 
-# -----------------------------------------------------------------------------
-# | Functions                                                                  |
-# -----------------------------------------------------------------------------
+# load the shell dotfiles
+for file in ${HOME}/dotfiles/shell/{path,exports,aliases,functions,extra}; do
+    [[ (-r "${file}") && (-f "${file}") ]] && source "${file}"
+done
+unset file
+# load bash specific dotfiles
+for file in ${HOME}/dotfiles/shell/bash/{bash_prompt,bash_options,bash_extra,tmuxinator_completions}; do
+    [[ (-r "${file}") && (-f "${file}") ]] && source "${file}"
+done
+unset file
 
-# source_bash_file(file): source a particular file
-source_bash_file() {
-    [[ (-r "$1") && (-f "$1") ]] && source "$1"
-}
+# Add tab completion for many Bash commands
+if which brew &> /dev/null && [[ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]]; then
+    source "$(brew --prefix)/share/bash-completion/bash_completion"
+elif [[ -f /etc/bash_completion ]]; then
+    source /etc/bash_completion
+fi
 
-# source_bash_files(): source bash files like aliases and path
-source_bash_files() {
-    local file=""
-    # load the shell dotfiles
-    for file in ${HOME}/dotfiles/shell/{path,exports,aliases,functions,extra}; do
-        source_bash_file "${file}"
-    done
-    # load bash specific dotfiles
-    for file in ${HOME}/dotfiles/shell/bash/{bash_prompt,bash_options,bash_extra,tmuxinator_completions}; do
-        source_bash_file "${file}"
-    done
-}
+# Enable tab completion for `g` by marking it as an alias for `git`
+if type _git &> /dev/null && [[ -f /usr/local/etc/bash_completion.d/git-completion.bash ]]; then
+    complete -o default -o nospace -F _git g;
+fi;
 
-enable_programmable_completion() {
-    # Add tab completion for many Bash commands
-    if which brew &> /dev/null && [[ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]]; then
-        source "$(brew --prefix)/share/bash-completion/bash_completion"
-    elif [[ -f /etc/bash_completion ]]; then
-        source /etc/bash_completion
-    fi
-
-    # Enable tab completion for `g` by marking it as an alias for `git`
-    if type _git &> /dev/null && [[ -f /usr/local/etc/bash_completion.d/git-completion.bash ]]; then
-        complete -o default -o nospace -F _git g;
-    fi;
-
-    [[ -f "${NVM_DIR}/bash_completion" ]] \
-        && source "${NVM_DIR}/bash_completion"
-}
-
-# -----------------------------------------------------------------------------
-# | Main                                                                       |
-# -----------------------------------------------------------------------------
-
-main() {
-    source_bash_files
-    enable_programmable_completion
-}
-
-main
-
-# -----------------------------------------------------------------------------
-# | Unset                                                                      |
-# -----------------------------------------------------------------------------
-
-unset -f source_bash_file
-unset -f source_bash_files
-unset -f enable_programmable_completion
-unset -f main
-
-# Clear system messages
-# Unnecessary with hushlogin?
-# clear
+[[ -f "${NVM_DIR}/bash_completion" ]] \
+    && source "${NVM_DIR}/bash_completion"

@@ -2,56 +2,22 @@
 #
 # .zshrc
 
-# -----------------------------------------------------------------------------
-# | Global variables                                                           |
-# -----------------------------------------------------------------------------
-
+# Location of prezto and zsh dotfiles
 export ZDOTDIR="${HOME}/dotfiles/shell/zsh"
 
-# -----------------------------------------------------------------------------
-# | Functions                                                                  |
-# -----------------------------------------------------------------------------
+# load prezto
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
-# source_zsh_file(file): source a particular file
-source_zsh_file() {
-    [[ (-r "$1") && (-f "$1") ]] && source "$1"
-}
+# load the shell dotfiles
+for file in ${HOME}/dotfiles/shell/{path,exports,aliases,functions,extra}; do
+    [[ (-r "${file}") && (-f "${file}") ]] && source "${file}"
+done
+unset file
+# load zsh specifc dotfiles
+for file in ${HOME}/dotfiles/shell/zsh/{zshextra,tmuxinator_completions}; do
+    [[ (-r "${file}") && (-f "${file}") ]] && source "${file}"
+done
+unset file
 
-# source_zsh_files(): source zsh files like aliases and path
-source_zsh_files() {
-    local file=""
-    # load the shell dotfiles
-    for file in ${HOME}/dotfiles/shell/{path,exports,aliases,functions,extra}; do
-        source_zsh_file "${file}"
-    done
-    # load zsh specifc dotfiles
-    for file in ${HOME}/dotfiles/shell/zsh/{zshextra,tmuxinator_completions}; do
-        source_zsh_file "${file}"
-    done
-}
-
-# -----------------------------------------------------------------------------
-# | Main                                                                       |
-# -----------------------------------------------------------------------------
-
-main() {
-    # load prezto
-    if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-        source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-    fi
-
-    source_zsh_files
-}
-
-main
-
-# -----------------------------------------------------------------------------
-# | Unset                                                                      |
-# -----------------------------------------------------------------------------
-
-unset -f source_zsh_file
-unset -f source_zsh_files
-unset -f main
-
-# Clear system messages
-clear
