@@ -12,7 +12,8 @@ download() {
     local url="$2"
 
     if command -v "curl" &> /dev/null; then
-        curl -LsSo "${output}" "${url}" &> /dev/null
+        curl "${url}" -L -s -S -o "${output}" -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A" &> /dev/null
+        # curl -LsSo "${output}" "${url}" &> /dev/null
         #     │││└─ write output to file
         #     ││└─ show error messages
         #     │└─ don't show the progress meter
