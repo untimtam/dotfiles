@@ -95,6 +95,7 @@ sftp-config.json
 ~*
 .tmp
 test.sh
+test.zsh
 TODO.md
 *.log
 
