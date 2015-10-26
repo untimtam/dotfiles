@@ -152,7 +152,7 @@ set_sublime() {
         local st3="${HOME}/Library/Application\ Support/Sublime\ Text\ 3"
         local name="Package\ Control"
         # sublime settings
-        cp -R "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/Preferences.sublime-settings" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+        cp -R "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         status "Copy sublime preferences" "${E_COPY_SETTING_FAILURE}"
         # install package control
         curl -LsSo "${st3}/Installed\ Packages/${name}.sublime-package" "https://packagecontrol.io/Package%20Control.sublime-package" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
