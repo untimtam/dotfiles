@@ -18,7 +18,7 @@ declare -r E_REMOVE_FAILURE=103
 declare -r NAME="VLC"
 declare -r URL="http://mirror.clibre.uqam.ca/videolan/vlc/2.2.1/macosx/vlc-2.2.1.dmg"
 # Dmg
-declare -r VPATH="/Volumes/vlc"
+declare -r VPATH="/Volumes/vlc-2.2.1"
 declare -r APP="VLC.app"
 
 # -----------------------------------------------------------------------------
