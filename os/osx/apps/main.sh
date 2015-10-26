@@ -73,7 +73,8 @@ main() {
     # TODO: verify links
     # mkcd temp directory?
     # TODO: global variable with relative path??
-    declare -r -a INSTALL_FILES=(install_*.sh)
+    declare -a INSTALL_FILES=(dmg/install_*.sh)
+    INSTALL_FILES+=(zip/install_*.sh)
     install_apps
     exit_on_fail "App install failed"
 
@@ -84,7 +85,6 @@ main() {
     else
         confirm "Install manual apps (cant check if they are installed already)?"
         if status_code; then
-            declare -r -a MAN_INSTALL_FILES=(manual/install_*.sh)
             manual_apps
             exit_on_fail "Manual app install failed"
         fi

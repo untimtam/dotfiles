@@ -18,7 +18,7 @@ download() {
     local url="$2"
 
     if command -v "curl" &> /dev/null; then
-        curl -LsSk -o "${output}" -A "${CURL_USER_AGENT}" "${url}" &> /dev/null
+        curl -LsSk -o "${output}" -A "${CURL_USER_AGENT}" "${url}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         #     ││││  │              └─ user agent: disguies curl as a browser
         #     ││││  └─ output: write output to file
         #     │││└─ insecure: dont check ssl certificate
@@ -27,7 +27,7 @@ download() {
         #     └─ location: follow redirects
         return $?
     elif command -v "wget" &> /dev/null; then
-        wget -qO "${output}" "${url}" &> /dev/null
+        wget -qO "${output}" "${url}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         #     │└─ write output to file
         #     └─ don't show output
         return "$?"
