@@ -23,7 +23,7 @@ declare -r URL="http://www.parallels.com/directdownload/pd11/"
 main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")" \
-        && source "../../../script/utils.sh" \
+        && source "../../../../script/utils.sh" \
         && source "../util.sh"
 
     if [[ -e "/Applications/${NAME}.app" ]]; then

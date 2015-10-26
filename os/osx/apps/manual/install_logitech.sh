@@ -23,7 +23,7 @@ declare -r URL="http://www.logitech.com/pub/techsupport/gaming/LogitechSetup_8.5
 main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")" \
-        && source "../../../script/utils.sh" \
+        && source "../../../../script/utils.sh" \
         && source "../util.sh"
 
     if [[ -e "/Applications/${NAME}.app" ]]; then

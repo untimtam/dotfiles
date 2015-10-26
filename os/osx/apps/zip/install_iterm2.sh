@@ -25,8 +25,8 @@ declare -r URL="https://iterm2.com/downloads/stable/iTerm2-2_1_4.zip"
 main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")" \
-        && source "../../../script/utils.sh" \
-        && source "./util.sh"
+        && source "../../../../script/utils.sh" \
+        && source "../util.sh"
 
     if [[ -e "/Applications/${NAME}.app" ]]; then
         print_success "${NAME} already installed"

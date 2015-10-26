@@ -25,8 +25,8 @@ declare -r URL="https://github.com/dustinblackman/Championify/releases/download/
 main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")" \
-        && source "../../../script/utils.sh" \
-        && source "./util.sh"
+        && source "../../../../script/utils.sh" \
+        && source "../util.sh"
 
     if [[ -e "/Applications/${NAME}.app" ]]; then
         print_success "${NAME} already installed"
