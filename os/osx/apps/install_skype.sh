@@ -15,7 +15,7 @@ declare -r E_REMOVE_FAILURE=103
 # -----------------------------------------------------------------------------
 
 # Dowload
-declare -r NAME="skype"
+declare -r NAME="Skype"
 declare -r URL="http://www.skype.com/go/getskype-macosx.dmg"
 # Dmg
 declare -r VPATH="/Volumes/Skype"

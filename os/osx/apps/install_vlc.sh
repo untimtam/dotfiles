@@ -15,7 +15,7 @@ declare -r E_REMOVE_FAILURE=103
 # -----------------------------------------------------------------------------
 
 # Dowload
-declare -r NAME="vlc"
+declare -r NAME="VLC"
 declare -r URL="http://get.videolan.org/vlc/2.2.1/macosx/vlc-2.2.1.dmg"
 # Dmg
 declare -r VPATH="/Volumes/vlc"

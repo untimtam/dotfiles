@@ -15,7 +15,7 @@ declare -r E_REMOVE_FAILURE=103
 # -----------------------------------------------------------------------------
 
 # Dowload
-declare -r NAME="googlechrome"
+declare -r NAME="Google Chrome"
 declare -r URL="https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg"
 # Dmg
 declare -r VPATH="/Volumes/Google Chrome"

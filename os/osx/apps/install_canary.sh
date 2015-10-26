@@ -15,7 +15,7 @@ declare -r E_REMOVE_FAILURE=103
 # -----------------------------------------------------------------------------
 
 # Dowload
-declare -r NAME="googlechromecanary"
+declare -r NAME="Google Chrome Canary"
 declare -r URL="https://storage.googleapis.com/chrome-canary/GoogleChromeCanary.dmg"
 # Dmg
 declare -r VPATH="/Volumes/Google Chrome Canary"

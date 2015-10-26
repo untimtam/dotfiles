@@ -15,7 +15,7 @@ declare -r E_REMOVE_FAILURE=103
 # -----------------------------------------------------------------------------
 
 # Dowload
-declare -r NAME="League"
+declare -r NAME="League of Legends"
 declare -r URL="http://l3cdn.riotgames.com/Mac_ShellInstaller/NA/League%20of%20Legends%20NA.dmg"
 # Dmg
 declare -r VPATH="/Volumes/League of Legends NA"

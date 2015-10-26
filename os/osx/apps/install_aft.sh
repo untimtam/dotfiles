@@ -15,7 +15,7 @@ declare -r E_REMOVE_FAILURE=103
 # -----------------------------------------------------------------------------
 
 # Dowload
-declare -r NAME="androidfiletransfer"
+declare -r NAME="Android File Transfer"
 declare -r URL="https://dl.google.com/dl/androidjumper/mtp/current/androidfiletransfer.dmg"
 # Dmg
 declare -r VPATH="/Volumes/Android File Transfer"
