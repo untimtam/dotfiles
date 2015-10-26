@@ -17,7 +17,6 @@ declare -a SYMLINK_FILES=(
     "shell/bash/bashrc"
 
     "shell/zsh/zshrc"
-    "shell/zsh/zshenv"
 
     "shell/other/curlrc"
     "shell/other/wgetrc"
