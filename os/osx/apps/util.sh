@@ -13,19 +13,26 @@ declare -r CURL_USER_AGENT="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) Apple
 # -----------------------------------------------------------------------------
 
 # download(output,url): download a file
+# curl -LsSk -o "${output}" -A "${CURL_USER_AGENT}" "${url}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+#       ││││  │              └─ user agent: disguies curl as a browser
+#       ││││  └─ output: write output to file
+#       │││└─ insecure: dont check ssl certificate
+#       ││└─ error: show error messages upon failure
+#       │└─ silent: don't show the progress meter
+#       └─ location: follow redirects
 download() {
     local output="$1"
     local url="$2"
 
     if command -v "curl" &> /dev/null; then
-        curl -LsSk -o "${output}" -A "${CURL_USER_AGENT}" "${url}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
-        #     ││││  │              └─ user agent: disguies curl as a browser
-        #     ││││  └─ output: write output to file
-        #     │││└─ insecure: dont check ssl certificate
-        #     ││└─ error: show error messages upon failure
-        #     │└─ silent: don't show the progress meter
-        #     └─ location: follow redirects
-        return $?
+        # try normal download
+        curl -LsS -o "${output}" -A "${CURL_USER_AGENT}" "${url}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+        if [[ "$?" -ne 0 ]]; then
+            # if download fails, try without ssl certificates
+            curl -LsSk -o "${output}" -A "${CURL_USER_AGENT}" "${url}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+            return "$?"
+        fi
+        return 0
     elif command -v "wget" &> /dev/null; then
         wget -qO "${output}" "${url}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
         #     │└─ write output to file

@@ -102,6 +102,11 @@ main() {
 
     clear
     print_section "Beginning bootstrap script"
+    local bootstrap_section=0
+    if [[ "$#" -ge 1 ]]; then
+        bootstrap_section="$1"
+    fi
+
     # Confirm fresh or existing install
     local fresh=1
     confirm "Is this a fresh install?"
@@ -165,4 +170,4 @@ main() {
     fi
 }
 
-main
+main "$1"
