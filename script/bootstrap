@@ -183,11 +183,9 @@ main() {
     # if boostrap was run before, remove existing log
     remove_logs
 
-    local pretty_terminal=1
     if [[ "$(get_os)" == "osx" ]]; then
         confirm "Use terminal Terminal.app theme?"
         if status_code; then
-            pretty_terminal=0
             set_terminal
             exit_on_fail "Error setting up terminal app"
         fi
@@ -283,6 +281,8 @@ main() {
     echo "$(cat "${INFO_FILE}")"
 
     print_section "Bootstrap script complete"
+    print_info "Use 'cat ${INFO_FILE}' to display extra install information again"
+    print_info "Use 'cat ${ERROR_FILE}' to display install errors"
     confirm "Do you want to restart?"
     if status_code; then
         print_fix "Restarting now!"

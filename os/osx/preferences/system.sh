@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 #
 # Set some system preferences like dock settings and language
@@ -28,7 +29,6 @@ declare -r -a DOCK_APPS=(
     'iTerm'
     'Sublime Text'
     'Github Desktop'
-    'Parallels Desktop'
     'iTunes'
     'League of Legends'
     'Curse'
@@ -234,6 +234,9 @@ finder_preferences() {
 }
 
 dock_preferences() {
+    # Enable dark menu bar and dock
+    defaults write NSGlobalDomain AppleInterfaceStyle Dark
+
     # Enable highlight hover effect for the grid view of a stack (Dock)
     defaults write com.apple.dock mouse-over-hilite-stack -bool true
 

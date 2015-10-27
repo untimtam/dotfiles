@@ -164,6 +164,58 @@ set_sublime() {
 }
 
 # -----------------------------------------------------------------------------
+# | Custom Icons                                                               |
+# | Using: Tina Latif's  http://flaticns.com/                                  |
+# -----------------------------------------------------------------------------
+
+# replace_icon(icns, app):
+replace_icon() {
+  file="$1"
+  dest="$2"
+  icon=/tmp/$(basename "${file}")
+  rsrc=/tmp/icon.rsrc
+
+  # generate rsrc
+  cp "${file}" "${icon}"
+  sips -i "${icon}" > /dev/null
+  DeRez -only icns "${icon}" > "${rsrc}"
+
+  # set icon
+  Rez -append "${rsrc}" -o "$dest"$'/Icon\r'
+  SetFile -a C "${dest}"
+  SetFile -a V "$dest"$'/Icon\r'
+}
+
+# replace_app_icon(icns):
+replace_app_icon() {
+  icon="$1"
+  name=$(basename "${icon}" .icns)
+  app="/Applications/${name}.app"
+  if [[ -d "${app}" ]]; then
+    replace_icon "${icon}" "${app}"
+    status_no_exit "Replaced ${name} icon"
+  fi
+}
+
+# replace_icons(): replace app icons for installed apps (flat ui theme)
+replace_icons() {
+    local -r ICON_URL='https://github.com/tinalatif/flat.icns/archive/master.zip'
+    local -r ICON_ZIP='/tmp/tinalatif-zip'
+    local -r ICON_DIR='/tmp/tinalatif-icns'
+
+    curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null
+    unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}"
+
+    print_info "Updating app icons"
+    for file in "${ICON_DIR}/*.icns"; do
+      replace_app_icon "${file}"
+    done
+    print_success "Finished updating app icons"
+
+    killall 'Dock'
+}
+
+# -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
 
@@ -187,6 +239,9 @@ main() {
 
     set_sublime
     exit_on_fail "Error setting up sublime"
+
+    replace_icons
+    # no reason to fail if icon replacements dont work
 
     print_success "Finished extra operations"
 }
