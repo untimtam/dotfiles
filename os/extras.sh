@@ -149,16 +149,16 @@ set_sublime() {
         killall "Sublime Text" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status "Finished closing Sublime Text" "${E_CLOSE_ITERM_FAILURE}"
 
-        local st3="${HOME}/Library/Application\ Support/Sublime\ Text\ 3"
-        local name="Package\ Control"
+        local st3="${HOME}/Library/Application Support/Sublime Text 3"
+        local name="Package Control"
         # sublime settings
-        cp -R "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/" >> "${ERROR_FILE}" 2>&1 > /dev/null
+        cp -Rf "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/Preferences.sublime-settings" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status "Copy sublime preferences" "${E_COPY_SETTING_FAILURE}"
         # install package control
-        curl -LsSo "${st3}/Installed\ Packages/${name}.sublime-package" "https://packagecontrol.io/Package%20Control.sublime-package" >> "${ERROR_FILE}" 2>&1 > /dev/null
+        curl -LsSo "${st3}/Installed Packages/${name}.sublime-package" "https://packagecontrol.io/Package%20Control.sublime-package" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status "Download package control" "${E_DL_PACKAGE_CONTROL_FAILURE}"
         # install packages
-        cp -R "${HOME}/dotfiles/resources/${name}.sublime-settings" "${st3}/Packages/User/${name}.sublime-settings" >> "${ERROR_FILE}" 2>&1 > /dev/null
+        cp -Rf "${HOME}/dotfiles/resources/${name}.sublime-settings" "${st3}/Packages/User/${name}.sublime-settings" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status "write package control settings" "${E_PACKAGES_FAILURE}"
     fi
 }
