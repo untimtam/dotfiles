@@ -20,12 +20,11 @@ declare -r E_PIP3_UPDATE_FAILURE=106
 
 
 # -----------------------------------------------------------------------------
-# | Functions                                                                  |
+# | Update Functions                                                           |
 # -----------------------------------------------------------------------------
 
 update_osx() {
-    # TODO: detect if ~/bin or during bootstrap
-    start_spinner "Updating OSX (if system restarts, run 'cd ${HOME} && ./dotfiles/script/bootstrap')"
+    start_spinner "Updating OSX (if system restarts during bootstrap, run 'cd ${HOME} && ./dotfiles/script/bootstrap')"
     sudo softwareupdate -ia >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished updating OSX"
     exit_on_fail "OSX update failed" "${E_OSX_UPDATE_FAILURE}"
@@ -82,65 +81,65 @@ update_pip3() {
 
 main() {
     # switch path to script source
-    cd "$(dirname "${BASH_SOURCE}")" \
-        && source "../script/utils.sh"
+    cd "$(dirname "${BASH_SOURCE}")"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Error: Could not go to script"
+        exit 1
+    fi
 
-    # TODO: do something when script is run from ~/bin
+    source "../script/utils.sh" || source "${DOTS}/script/utils.sh"
     if [[ "$?" -ne 0 ]]; then
         echo "Error: dotfile utils not found"
         exit 1
     fi
 
-    # skip certain updates
-    local U_OSX=0
-    local U_BREW=0
-    local U_NPM=0
-    local U_GEM=0
-    local U_PIP=0
-    local U_PIP3=0
+    # Ask for the administrator password upfront
+    sudo -v
 
-    # TODO: make more complex options
-    if [[ ("$#" -ge 1) && ("$1" -eq 1) ]]; then
-        U_OSX=1
-    fi
+    # Keep-alive: update existing `sudo` time stamp until the script has finished
+    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-    # osx
-    if [[ ("$(get_os)" == "osx") && ("${U_OSX}" -eq 0) ]]; then
-        update_osx
-        exit_on_fail "OSX update failed"
-    fi
-
-    # brew
-    if cmd_exists 'brew' && [[ "${U_BREW}" -eq 0 ]]; then
-        update_homebrew
-        exit_on_fail "Homebrew update failed"
-    fi
-
-    # node
-    if cmd_exists 'npm' && [[ "${U_NPM}" -eq 0 ]]; then
-        update_npm
-        exit_on_fail "NPM update failed"
-    fi
-
-    # ruby
-    if cmd_exists 'gem' && [[ "${U_GEM}" -eq 0 ]]; then
-        update_gems
-        exit_on_fail "gem update failed"
-    fi
-
-    # python 2.7
-    if cmd_exists 'pip' && [[ "${U_PIP}" -eq 0 ]]; then
-        update_pip
-        exit_on_fail "pip update failed"
-    fi
-
-    # python 3
-    if cmd_exists 'pip3' && [[ "${U_PIP3}" -eq 0 ]]; then
-        update_pip3
-        exit_on_fail "pip3 update failed"
-    fi
-
-    print_success "Finished running updates"
+    # Run sections based on command line arguments
+    # update all|osx|brew|npm|gem|pip|pip3
+    for ARG in "$@"
+    do
+        if [ $ARG == "osx" ] || [ $ARG == "all" ]; then
+            if [[ "$(get_os)" == "osx" ]]; then
+                update_osx
+                exit_on_fail "OSX update failed"
+            fi
+        fi
+        if [ $ARG == "brew" ] || [ $ARG == "all" ]; then
+            if cmd_exists 'brew'; then
+                update_homebrew
+                exit_on_fail "Homebrew update failed"
+            fi
+        fi
+        if [ $ARG == "npm" ] || [ $ARG == "all" ]; then
+            if cmd_exists 'npm'; then
+                update_npm
+                exit_on_fail "NPM update failed"
+            fi
+        fi
+        if [ $ARG == "gem" ] || [ $ARG == "all" ]; then
+            if cmd_exists 'gem'; then
+                update_gems
+                exit_on_fail "gem update failed"
+            fi
+        fi
+        if [ $ARG == "pip" ] || [ $ARG == "all" ]; then
+            if cmd_exists 'pip'; then
+                update_pip
+                exit_on_fail "pip update failed"
+            fi
+        fi
+        if [ $ARG == "pip3" ] || [ $ARG == "all" ]; then
+            if cmd_exists 'pip3'; then
+                update_pip3
+                exit_on_fail "pip3 update failed"
+            fi
+        fi
+    done
 }
 
-main "$1"
+main "$@"

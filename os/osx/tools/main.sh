@@ -30,7 +30,7 @@ main() {
         && source "../../../script/utils.sh"
 
     # run updates: skip osx
-    ../../../bin/update 1
+    ../../../bin/update gem pip
     exit_on_fail "Update failed"
     print_separator
 
@@ -58,7 +58,7 @@ main() {
     # print_separator
 
     # run updates: skip osx
-    ../../../bin/update 1
+    ../../../bin/update brew npm gem pip pip3
     exit_on_fail "Update failed"
 
     # update shells

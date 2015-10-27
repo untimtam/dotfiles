@@ -62,10 +62,7 @@ main() {
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
         # update osx
-        start_spinner "Updating OSX (if system restarts, run 'cd ${HOME} && ./dotfiles/script/bootstrap')"
-        sudo softwareupdate -ia >> "${ERROR_FILE}" 2>&1 > /dev/null
-        status_stop_spinner "Finished updating OSX"
-        exit_on_fail "OSX update failed" "${E_OSX_UPDATE_FAILURE}"
+        ../../../bin/update osx
         # install xcode command line tools
         install_xcode
         exit_on_fail "Xcode install failed"

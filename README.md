@@ -57,6 +57,7 @@ To update the dotfiles, run the [bootstrap](script/bootstrap) script.
 
 ## TODO:
 
+* finish update script
 * vim and vim packges
 * verification step
 * extra packages for some tools (python, ruby, ocaml, etc)
