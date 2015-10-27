@@ -86,13 +86,6 @@ zstyle ':prezto:module:history-substring-search:color' not-found ''
 # zstyle ':prezto:module:history-substring-search' globbing-flags ''
 
 #
-# SSH
-#
-
-# Set the SSH identities to load into the agent.
-# zstyle ':prezto:module:ssh:load' identities 'id_rsa'
-
-#
 # Syntax Highlighting
 #
 
@@ -129,10 +122,10 @@ zstyle ':prezto:module:syntax-highlighting' styles \
 #
 
 # Auto start a session when Zsh is launched in a local terminal.
-zstyle ':prezto:module:tmux:auto-start' local 'yes'
+# zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
 # Auto start a session when Zsh is launched in a SSH connection.
-zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+# zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 
 # Integrate with iTerm2.
 zstyle ':prezto:module:tmux:iterm' integrate 'yes'
