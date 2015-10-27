@@ -164,6 +164,18 @@ set_sublime() {
 }
 
 # -----------------------------------------------------------------------------
+# | File extensions                                                            |
+# -----------------------------------------------------------------------------
+
+set_file_associations() {
+    if cmd_exists 'duti'; then
+        local -r DUTI_FILE="${HOME}/dotfiles/resources/duti/duti"
+        duti "${DUTI_FILE}"
+        status_no_exit "Set file associations according to ${DUTI_FILE}"
+    fi
+}
+
+# -----------------------------------------------------------------------------
 # | Custom Icons                                                               |
 # | Using: Tina Latif's  http://flaticns.com/                                  |
 # -----------------------------------------------------------------------------
@@ -241,6 +253,8 @@ main() {
 
     set_sublime
     exit_on_fail "Error setting up sublime"
+
+    set_file_associations
 
     replace_icons
     # no reason to fail if icon replacements dont work

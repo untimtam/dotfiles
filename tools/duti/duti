@@ -1,0 +1,8 @@
+# Set default handlers for extensions
+# blank lines and lines beginning with a '#' are ignored
+#
+# bundle id          UTI/ext/MIME type    role
+
+com.sublimetext.3    public.source-code   all
+com.apple.TextEdit   public.plain-text    all
+com.google.Chrome    public.html          all

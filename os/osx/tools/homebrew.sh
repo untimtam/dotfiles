@@ -46,6 +46,7 @@ declare -r -a HOMEBREW=(
     'ack'
     'rename'
     'zopfli'
+    'duti'
 )
 declare -r -a HOMEBREW_OPTS=(
     ['vim']='--override-system-vi'
