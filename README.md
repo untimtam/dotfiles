@@ -10,6 +10,7 @@ To setup the [dotfiles](dotfiles) just run the appropriate snippet in the termin
 | OS | Snippet |
 |:---:|:---|
 | OS X | ```bash -c "$(curl -LsS https://raw.github.com/hellowor1dn/dotfiles/master/dotfiles)"``` |
+| Ubuntu | :warning: Have not set up dotfiles for ubuntu |
 
 This will:
 
@@ -19,6 +20,25 @@ This will:
 * Symlink some dotfiles
 * Install tools, apps, other stuff
 * Set preferences
+
+## Post-setup
+
+### Apps
+
+* install tmuxinator
+* install manual apps
+* install appstore apps
+* set up emails
+
+### Settings
+
+* set preferences: Mission Control > shortcuts
+* set preferences: Trackpad > Swipe preferences
+* set preferences: Notifications > set notifications
+* set preferences: Users & Groups > set login items
+* set preferences: Extensions > remove from share menu
+* set preferences: Keyboard > Shortcuts
+* set preferences: set Desktop & Screen Saver > set desktop
 
 ## Update
 
@@ -34,6 +54,13 @@ To update the dotfiles, run the [bootstrap](script/bootstrap) script.
 * [BASH manual](https://www.gnu.org/software/bash/manual/bash.html)
 * [Bash Exit Codes](http://tldp.org/LDP/abs/html/exitcodes.html)
 * [Bash Testing](http://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html)
+
+## TODO:
+
+* vim and vim packges
+* verification step
+* extra packages for some tools (python, ruby, ocaml, etc)
+* These dotfiles only work from `~/dotfiles`?
 
 ## [Contributing](CONTRIBUTING.md)
 
