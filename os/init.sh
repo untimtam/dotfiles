@@ -62,7 +62,7 @@ main() {
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
         # update osx
-        ../../../bin/update osx
+        ../bin/update osx
         # install xcode command line tools
         install_xcode
         exit_on_fail "Xcode install failed"
