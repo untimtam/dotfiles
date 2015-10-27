@@ -6,7 +6,10 @@
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-declare -r ERROR_FILE="${HOME}/dotfiles/dot_error.log"
+if [[ -z "${ERROR_FILE}" ]]; then
+    # only declare if main utils not sourced
+    declare -r ERROR_FILE="${HOME}/dotfiles/dot_error.log"
+fi
 declare -r CURL_USER_AGENT="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A"
 
 # -----------------------------------------------------------------------------

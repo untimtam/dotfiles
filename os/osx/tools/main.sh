@@ -53,9 +53,9 @@ main() {
     print_separator
 
     # extra setup for tools
-    ./extras.sh
-    exit_on_fail "Extras script failed"
-    print_separator
+    # ./extras.sh
+    # exit_on_fail "Extras script failed"
+    # print_separator
 
     # run updates: skip osx
     ../../../bin/update 1
