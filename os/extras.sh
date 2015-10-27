@@ -203,9 +203,10 @@ replace_icons() {
     local -r ICON_ZIP='/tmp/tinalatif-zip'
     local -r ICON_DIR='/tmp/tinalatif-icns'
 
-    curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null
-    unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}"
+    curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
+    unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}" || return 1
 
+    # TODO: need sudo?
     print_info "Updating app icons"
     for file in "${ICON_DIR}/*.icns"; do
       replace_app_icon "${file}"
@@ -213,6 +214,7 @@ replace_icons() {
     print_success "Finished updating app icons"
 
     killall 'Dock'
+    return 0
 }
 
 # -----------------------------------------------------------------------------
