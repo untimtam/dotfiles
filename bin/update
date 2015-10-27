@@ -83,7 +83,7 @@ main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")"
     if [[ "$?" -ne 0 ]]; then
-        echo "Error: Could not go to script"
+        echo "Error: Could not find script"
         exit 1
     fi
 
@@ -101,8 +101,7 @@ main() {
 
     # Run sections based on command line arguments
     # update all|osx|brew|npm|gem|pip|pip3
-    for ARG in "$@"
-    do
+    for ARG in "$@"; do
         if [ $ARG == "osx" ] || [ $ARG == "all" ]; then
             if [[ "$(get_os)" == "osx" ]]; then
                 update_osx

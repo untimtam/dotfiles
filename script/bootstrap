@@ -17,7 +17,7 @@ declare -r INIT_SECTION=0
 declare -r REPO_SECTION=1
 declare -r DIR_SECTION=2
 declare -r BIN_SECTION=3
-declare -r SYM_SECTION=4
+declare -r LINK_SECTION=4
 declare -r TOOL_SECTION=5
 declare -r APPS_SECTION=6
 declare -r PREF_SECTION=7
@@ -163,10 +163,13 @@ end_prompt() {
 
 main() {
     # switch path to script source
-    cd "$(dirname "${BASH_SOURCE}")" \
-        && source "utils.sh"
+    cd "$(dirname "${BASH_SOURCE}")"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Error: Could not find script"
+        exit 1
+    fi
 
-    # TODO: do something when script is run from ~/bin
+    source "../script/utils.sh" || source "${DOTS}/script/utils.sh"
     if [[ "$?" -ne 0 ]]; then
         echo "Error: dotfile utils not found"
         exit 1
@@ -178,7 +181,31 @@ main() {
     print_section "Beginning bootstrap script"
     local bootstrap_section=0
     if [[ "$#" -ge 1 ]]; then
-        bootstrap_section="$1"
+        if is_number "$1"; then
+            bootstrap_section="$1"
+        else
+            if [[ "$1" == "init" ]]; then
+                bootstrap_section="${INIT_SECTION}"
+            elif [[ "$1" == "repo" ]]; then
+                bootstrap_section="${REPO_SECTION}"
+            elif [[ "$1" == "dir" ]]; then
+                bootstrap_section="${DIR_SECTION}"
+            elif [[ "$1" == "bin" ]]; then
+                bootstrap_section="${BIN_SECTION}"
+            elif [[ "$1" == "link" ]]; then
+                bootstrap_section="${LINK_SECTION}"
+            elif [[ "$1" == "tool" ]]; then
+                bootstrap_section="${TOOL_SECTION}"
+            elif [[ "$1" == "apps" ]]; then
+                bootstrap_section="${APPS_SECTION}"
+            elif [[ "$1" == "pref" ]]; then
+                bootstrap_section="${PREF_SECTION}"
+            elif [[ "$1" == "extr" ]]; then
+                bootstrap_section="${EXTR_SECTION}"
+            elif [[ "$1" == "test" ]]; then
+                bootstrap_section="${TEST_SECTION}"
+            fi
+        fi
     fi
 
     # if boostrap was run before, remove existing log
@@ -238,7 +265,7 @@ main() {
     fi
 
     # create symbolic links
-    if [[ "${bootstrap_section}" -le "${SYM_SECTION}" ]]; then
+    if [[ "${bootstrap_section}" -le "${LINK_SECTION}" ]]; then
         ../os/symlinks.sh "${fresh}"
         exit_on_fail "Symbolic link creation failed"
         print_separator_large
