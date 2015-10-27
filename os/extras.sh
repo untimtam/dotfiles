@@ -169,7 +169,7 @@ set_sublime() {
 
 set_file_associations() {
     if cmd_exists 'duti'; then
-        local -r DUTI_FILE="${HOME}/dotfiles/resources/duti/duti"
+        local -r DUTI_FILE="${HOME}/dotfiles/tools/duti/duti"
         duti "${DUTI_FILE}"
         status_no_exit "Set file associations according to ${DUTI_FILE}"
     fi
@@ -216,7 +216,7 @@ replace_icons() {
     local -r ICON_DIR='/tmp/tinalatif-icns'
 
     curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
-    unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}" || return 1
+    unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
 
     # TODO: need sudo?
     print_info "Updating app icons"
@@ -238,26 +238,40 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "../script/utils.sh"
 
-    print_section "Extras: "
+    print_section "Extras stuff: "
 
-    # TODO: check os and then do os x specific things in a funciton?
+    local extra=1
+    if [[ "$1" -eq 0 ]]; then
+        extra=0
+    else
+        confirm "Install extras?"
+        extra="$?"
+    fi
 
-    set_git_config
-    exit_on_fail "Error setting up git config"
+    if [[ "${extra}" -eq 0 ]]; then
+        set_git_config
+        exit_on_fail "Error setting up git config"
 
-    set_terminal
-    exit_on_fail "Error setting up terminal app"
+        local -r OS="$(get_os)"
+        if [[ "${OS}" == "osx" ]]; then
+            set_terminal
+            exit_on_fail "Error setting up terminal app"
 
-    set_iterm
-    exit_on_fail "Error setting up iTerm"
+            set_iterm
+            exit_on_fail "Error setting up iTerm"
 
-    set_sublime
-    exit_on_fail "Error setting up sublime"
+            set_sublime
+            exit_on_fail "Error setting up sublime"
 
-    set_file_associations
+            set_file_associations
 
-    replace_icons
-    # no reason to fail if icon replacements dont work
+            replace_icons
+        elif [[ "${OS}" == "ununtu" ]]; then
+            errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+        else
+            errexit "This OS is not supported yet!" "${E_INVALID_OS}"
+        fi
+    fi
 
     print_success "Finished extra operations"
 }

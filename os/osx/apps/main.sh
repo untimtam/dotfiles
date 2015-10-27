@@ -55,7 +55,7 @@ manual_apps() {
 list_appstore() {
     for i in "${APPSTORE[@]}"; do
         if [[ -n "$i" ]]; then
-            _print_info "Please install $i from the appstore!"
+            _print_info "Install $i from the appstore"
         fi
     done
 }
