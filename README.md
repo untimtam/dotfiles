@@ -9,8 +9,9 @@ To setup the [dotfiles](dotfiles) just run the appropriate snippet in the termin
 
 | OS | Snippet |
 |:---:|:---|
-| OS X | ```bash -c "$(curl -LsS https://raw.github.com/hellowor1dn/dotfiles/master/dotfiles)"``` |
 | Ubuntu | :warning: Have not set up dotfiles for ubuntu |
+| OS X | ```bash -c "$(curl -LsS https://raw.github.com/hellowor1dn/dotfiles/master/dotfiles)"``` |
+
 
 This will:
 
