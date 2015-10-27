@@ -94,9 +94,6 @@ sftp-config.json
 # Temp
 ~*
 .tmp
-test.sh
-test.zsh
-TODO.md
 *.log
 
 # workspace folder

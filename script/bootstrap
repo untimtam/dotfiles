@@ -22,6 +22,7 @@ declare -r TOOL_SECTION=5
 declare -r APPS_SECTION=6
 declare -r PREF_SECTION=7
 declare -r EXTR_SECTION=8
+declare -r TEST_SECTION=9
 
 # -----------------------------------------------------------------------------
 # | System                                                                     |
@@ -275,6 +276,12 @@ main() {
         ../os/extras.sh "${fresh}"
         print_separator_large
         ((bootstrap_section+=1))
+    fi
+
+    # perform additional operations
+    if [[ "${bootstrap_section}" -le "${TEST_SECTION}" ]]; then
+        ../os/test.sh "${fresh}"
+        print_separator_large
     fi
 
     echo ""
