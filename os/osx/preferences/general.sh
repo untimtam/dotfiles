@@ -110,7 +110,7 @@ general_preferences() {
 
     # TODO: ? use caffeine?
     # Never go into computer sleep mode
-    sudo systemsetup -setcomputersleep Off >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    sudo systemsetup -setcomputersleep Off >> "${ERROR_FILE}" 2>&1 > /dev/null
 
     # Check for software updates daily, not just once per week
     defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
@@ -153,12 +153,12 @@ ssd_preferences() {
 
 set_preferences() {
     start_spinner "Setting basic preferences"
-    general_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    general_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting basic preferences"
     exit_on_fail "basic preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting ssd preferences"
-    ssd_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    ssd_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting ssd preferences"
     exit_on_fail "ssd preferences failed" "${E_PREFERENCE_FAILURE}"
 }

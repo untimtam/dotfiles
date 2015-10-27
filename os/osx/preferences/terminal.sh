@@ -38,12 +38,12 @@ iterm_preferences() {
 
 set_preferences() {
     start_spinner "Setting Terminal preferences"
-    terminal_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    terminal_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Terminal preferences"
     exit_on_fail "Terminal preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting iTerm preferences"
-    iterm_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    iterm_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting iTerm preferences"
     exit_on_fail "iTerm preferences failed" "${E_PREFERENCE_FAILURE}"
 }

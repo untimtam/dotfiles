@@ -46,19 +46,19 @@ install_rbenv() {
     if cmd_exists 'brew'; then
         # install
         start_spinner "Installing rbenv"
-        brew install "rbenv" "ruby-build" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+        brew install "rbenv" "ruby-build" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status_stop_spinner "Finished installing rbenv"
         exit_on_fail "rbenv installation failed" "${E_BREW_FAILURE}"
         if status_code; then
             printf "%s" "${CONFIGS}" >> "${EXTRAS}" \
-                && source "${HOME}/.bash_profile"
+                && source "${EXTRAS}"
             status_no_exit "rbenv (update ${EXTRAS})"
         fi
 
         # Install ruby versionsg
         for i in "${RUBY_VERSIONS[@]}"; do
             start_spinner "Installing ruby $i"
-            rbenv install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+            rbenv install "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
             status_stop_spinner "Finished installing ruby $i"
             exit_on_fail "ruby $i installation failed" "${E_RBENV_FAILURE}"
         done

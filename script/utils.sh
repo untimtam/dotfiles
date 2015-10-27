@@ -2,6 +2,9 @@
 #
 # General utils for dotfiles
 
+declare -r ERROR_FILE="${HOME}/dotfiles/dot_error.log"
+declare -r INFO_FILE="${HOME}/dotfiles/dot_info.log"
+
 # -----------------------------------------------------------------------------
 # | Print                                                                      |
 # -----------------------------------------------------------------------------
@@ -57,11 +60,21 @@ print_info() {
     print_in_blue "  [ ! ] $1\n"
 }
 
+_print_info() {
+    printf "[ ! ] $1\n" >> "${INFO_FILE}"
+    print_in_blue "  [ ! ] $1\n"
+}
+
 print_success() {
     print_in_green "  [ ✔ ] $1\n"
 }
 
 print_error() {
+    print_in_red "  [ ✖ ] $1\n"
+}
+
+_print_error() {
+    printf "[ ✖ ] $1\n" >> "${INFO_FILE}"
     print_in_red "  [ ✖ ] $1\n"
 }
 
@@ -87,7 +100,7 @@ print_status() {
         # failed
         if [[ ("$#" -eq 4) && "$4" -eq 0 ]]; then
             # no exit
-            print_error "$2"
+            _print_error "$2"
         else
             # exit on failure
             errexit "$2" "$3"

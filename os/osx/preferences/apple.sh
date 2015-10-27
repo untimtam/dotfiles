@@ -71,9 +71,9 @@ spotlight_preferences() {
     # Load new settings before rebuilding the index
     killall mds &> /dev/null
     # Make sure indexing is enabled for the main volume
-    sudo mdutil -i on / >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    sudo mdutil -i on / >> "${ERROR_FILE}" 2>&1 > /dev/null
     # Rebuild the index from scratch
-    sudo mdutil -E / >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    sudo mdutil -E / >> "${ERROR_FILE}" 2>&1 > /dev/null
 }
 
 mail_preferences() {
@@ -160,37 +160,37 @@ messages_preferences() {
 
 set_preferences() {
     start_spinner "Setting Spotlight preferences"
-    spotlight_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    spotlight_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Spotlight preferences"
     exit_on_fail "Spotlight preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Mail preferences"
-    mail_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    mail_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Mail preferences"
     exit_on_fail "Mail preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Time Machine preferences"
-    timemachine_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    timemachine_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Time Machine preferences"
     exit_on_fail "Time Machine preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Activity Monitor preferences"
-    activity_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    activity_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Activity Monitor preferences"
     exit_on_fail "Activity Monitor preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting utility preferences"
-    utility_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    utility_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting utility preferences"
     exit_on_fail "utility preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Appstore preferences"
-    appstore_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    appstore_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Appstore preferences"
     exit_on_fail "Appstore preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Messages preferences"
-    messages_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    messages_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Messages preferences"
     exit_on_fail "Messages preferences failed" "${E_PREFERENCE_FAILURE}"
 }

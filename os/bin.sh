@@ -31,7 +31,7 @@ main() {
 
     print_section "Syncing scripts"
 
-    rsync -avh --no-perms "../bin" "${HOME}" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    rsync -avh --no-perms "../bin" "${HOME}" >> "${ERROR_FILE}" 2>&1 > /dev/null
     status "Finished syncing scripts" "${E_RSYNC_FAILURE}"
 }
 

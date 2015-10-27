@@ -84,6 +84,17 @@ verify_os() {
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
+remove_logs() {
+    if [[ -e "${ERROR_FILE}" ]]; then
+        rm -rf "${ERROR_FILE}"
+        status_no_exit "Removed error log"
+    fi
+    if [[ -e "${INFO_FILE}" ]]; then
+        rm -rf "${INFO_FILE}"
+        status_no_exit "removed info log"
+    fi
+}
+
 # end_prompt(): pause program before termination if no automatic restart
 end_prompt() {
     print_in_blue "\n Press any key to continue... "
@@ -114,6 +125,9 @@ main() {
     if [[ "$#" -ge 1 ]]; then
         bootstrap_section="$1"
     fi
+
+    # if boostrap was run before, remove existing log
+    remove_logs
 
     # Confirm fresh or existing install
     local fresh=1
@@ -200,6 +214,8 @@ main() {
         print_separator_large
         ((bootstrap_section+=1))
     fi
+
+    echo "$(cat "${INFO_FILE}")"
 
     print_section "Bootstrap script complete"
     confirm "Do you want to restart?"

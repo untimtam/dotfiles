@@ -52,7 +52,7 @@ install_homebrew_apps() {
             print_success "cask already installed"
         else
             start_spinner "Installing cask"
-            brew install "caskroom/cask/brew-cask" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+            brew install "caskroom/cask/brew-cask" >> "${ERROR_FILE}" 2>&1 > /dev/null
             status_stop_spinner "Finished installing cask"
             exit_on_fail "cask installation failed" "${E_BREW_FAILURE}"
         fi
@@ -63,7 +63,7 @@ install_homebrew_apps() {
                     print_success "$i already installed"
                 else
                     start_spinner "Installing $i"
-                    brew cask install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+                    brew cask install --appdir=/Applications "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
                     status_stop_spinner "Finished installing $i"
                     exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
                 fi

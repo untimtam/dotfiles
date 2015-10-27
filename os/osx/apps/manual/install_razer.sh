@@ -35,7 +35,7 @@ main() {
     download_dmg "${NAME}" "${URL}"
     status_stop_spinner "Finished downloading ${NAME}"
     exit_on_fail "${NAME} download failed" "${E_DOWNLOAD_FAILURE}"
-    print_info "${NAME} needs to be installed manually"
+    _print_info "${NAME} needs to be installed manually"
 }
 
 main

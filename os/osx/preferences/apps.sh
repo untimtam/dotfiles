@@ -74,17 +74,17 @@ archive_preferences() {
 
 set_preferences() {
     start_spinner "Setting Transmission preferences"
-    transmission_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    transmission_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Transmission preferences"
     exit_on_fail "Transmission preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Spectacle preferences"
-    spectacle_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    spectacle_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Spectacle preferences"
     exit_on_fail "Spectacle preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Archive preferences"
-    archive_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    archive_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Archive preferences"
     exit_on_fail "Archive preferences failed" "${E_PREFERENCE_FAILURE}"
 }

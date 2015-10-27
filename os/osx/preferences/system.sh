@@ -335,32 +335,32 @@ language_preferences() {
     defaults write NSGlobalDomain AppleMetricUnits -bool true
 
     # Set the timezone; see `sudo systemsetup -listtimezones` for other values
-    sudo systemsetup -settimezone "America/Montreal" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    sudo systemsetup -settimezone "America/Montreal" >> "${ERROR_FILE}" 2>&1 > /dev/null
 }
 
 set_preferences() {
     start_spinner "Setting i/o preferences"
-    io_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    io_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting i/o preferences"
     exit_on_fail "i/o preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting screen preferences"
-    screen_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    screen_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting screen preferences"
     exit_on_fail "screen preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Finder preferences"
-    finder_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    finder_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Finder preferences"
     exit_on_fail "Finder preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Dock preferences"
-    dock_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    dock_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Dock preferences"
     exit_on_fail "Dock preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting language preferences"
-    language_preferences >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    language_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting language preferences"
     exit_on_fail "language preferences failed" "${E_PREFERENCE_FAILURE}"
 }

@@ -106,8 +106,8 @@ is_dotfile_repo() {
 
 # set_git_remote(repo): set remote origin to repo
 set_git_remote() {
-    git init >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
-        && git remote add origin "$1" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    git init >> "${ERROR_FILE}" 2>&1 > /dev/null \
+        && git remote add origin "$1" >> "${ERROR_FILE}" 2>&1 > /dev/null
 
     return "$?"
 }
@@ -116,11 +116,11 @@ set_git_remote() {
 update_dotfiles() {
     if [[ ("$#" -eq 1) && ("$1" -eq 0) ]]; then
         # Update content and remove untracked files
-        git fetch --all >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
-            && git reset --hard origin/master >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null \
-            && git clean -fd  >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+        git fetch --all >> "${ERROR_FILE}" 2>&1 > /dev/null \
+            && git reset --hard origin/master >> "${ERROR_FILE}" 2>&1 > /dev/null \
+            && git clean -fd  >> "${ERROR_FILE}" 2>&1 > /dev/null
     else
-        git pull origin master >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+        git pull origin master >> "${ERROR_FILE}" 2>&1 > /dev/null
     fi
 
     return "$?"
@@ -128,7 +128,7 @@ update_dotfiles() {
 
 # update_submodules(): update git submodules
 update_submodules() {
-    git submodule update --init --recursive >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    git submodule update --init --recursive >> "${ERROR_FILE}" 2>&1 > /dev/null
 
     return "$?"
 }

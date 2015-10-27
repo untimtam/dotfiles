@@ -77,7 +77,7 @@ install_nvm() {
     if status_code; then
         # nvm.sh should work in both bash and zsh
         printf "%s" "${CONFIGS}" >> "${EXTRAS}" \
-            && source "${HOME}/.bash_profile"
+            && source "${EXTRAS}"
         status_no_exit "nvm (update ${EXTRAS})"
     fi
 }
@@ -94,19 +94,19 @@ update_nvm() {
     # Install node versions
     for i in "${NODE_VERSIONS[@]}"; do
         start_spinner "Installing node"
-        nvm install "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+        nvm install "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status_stop_spinner "Finished installing node"
         exit_on_fail "nvm installation failed" "${E_NVM_NODE_FAILURE}"
     done
 
     # Use `Node.js` by default
-    nvm alias default node >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    nvm alias default node >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_no_exit "nvm (set default)"
 }
 
 update_npm() {
     start_spinner "Updating npm"
-    npm install -g npm >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+    npm install -g npm >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished updating npm"
     exit_on_fail "npm update failed" "${E_NODE_NPM_FAILURE}"
 }
@@ -116,7 +116,7 @@ install_npm_packages() {
     for i in "${NPM_PACKAGES[@]}"; do
         if [[ -n "$i" ]]; then
             start_spinner "Installing $i"
-            npm install -g "$i" >> "${HOME}/dotfiles/dot_stderr.log" 2>&1 > /dev/null
+            npm install -g "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
             status_stop_spinner "Finished installing $i"
             exit_on_fail "$i installation failed" "${E_NPM_INSTALL_FAILURE}"
         fi
