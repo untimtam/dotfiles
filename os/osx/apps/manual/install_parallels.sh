@@ -7,6 +7,7 @@
 # -----------------------------------------------------------------------------
 
 declare -r E_DOWNLOAD_FAILURE=101
+declare -r E_MV_FAILURE=102
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
@@ -32,10 +33,12 @@ main() {
     fi
 
     start_spinner "Downloading ${NAME}"
-    download_dmg "${NAME}" "${URL}"
+    download "${NAME}.dmg" "${URL}"
     status_stop_spinner "Finished downloading ${NAME}"
     exit_on_fail "${NAME} download failed" "${E_DOWNLOAD_FAILURE}"
-    _print_info "${NAME} needs to be installed manually"
+    mv "${NAME}.dmg" "${HOME}/Downloads"
+    exit_on_fail "Coudlnt move ${NAME}.dmg to ${HOME}/Downloads" "${E_MV_FAILURE}"
+    _print_info "${NAME} needs to be installed manually (from ${HOME}/Downloads)"
 }
 
 main
