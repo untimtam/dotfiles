@@ -93,7 +93,7 @@ tell application "Terminal"
     local allOpenedWindows
     local initialOpenedWindows
     local windowID
-    set themeName to "Hellowor1d"
+    set themeName to "Hellowor1d2"
 
     (* Store the IDs of all the open terminal windows. *)
     set initialOpenedWindows to id of every window
@@ -183,6 +183,16 @@ main() {
     # if boostrap was run before, remove existing log
     remove_logs
 
+    local pretty_terminal=1
+    if [[ "$(get_os)" == "osx" ]]; then
+        confirm "Use custom Terminal.app prompt?"
+        if status_code; then
+            pretty_terminal=0
+            set_terminal
+            exit_on_fail "Error setting up terminal app"
+        fi
+    fi
+
     # Confirm fresh or existing install
     local fresh=1
     confirm "Is this a fresh install?"
@@ -210,14 +220,6 @@ main() {
         exit_on_fail "Repository check failed"
         print_separator_large
         ((bootstrap_section+=1))
-    fi
-
-    if [[ "$(get_os)" == "osx" ]]; then
-        confirm "Use custom Terminal.app prompt?"
-        if status_code; then
-            set_terminal
-            exit_on_fail "Error setting up terminal app"
-        fi
     fi
 
     # create directories
