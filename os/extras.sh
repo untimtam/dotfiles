@@ -152,13 +152,13 @@ set_sublime() {
         local st3="${HOME}/Library/Application Support/Sublime Text 3"
         local name="Package Control"
         # sublime settings
-        cp -Rf "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/Preferences.sublime-settings" >> "${ERROR_FILE}" 2>&1 > /dev/null
+        cp -R "${HOME}/dotfiles/resources/Preferences.sublime-settings" "${st3}/Packages/User/Preferences.sublime-settings" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status "Copy sublime preferences" "${E_COPY_SETTING_FAILURE}"
         # install package control
-        curl -LsSo "${st3}/Installed Packages/${name}.sublime-package" "https://packagecontrol.io/Package%20Control.sublime-package" >> "${ERROR_FILE}" 2>&1 > /dev/null
+        curl -LsS -o "${st3}/Installed Packages/${name}.sublime-package" "https://packagecontrol.io/Package%20Control.sublime-package" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status "Download package control" "${E_DL_PACKAGE_CONTROL_FAILURE}"
         # install packages
-        cp -Rf "${HOME}/dotfiles/resources/${name}.sublime-settings" "${st3}/Packages/User/${name}.sublime-settings" >> "${ERROR_FILE}" 2>&1 > /dev/null
+        cp -R "${HOME}/dotfiles/resources/${name}.sublime-settings" "${st3}/Packages/User/${name}.sublime-settings" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status "write package control settings" "${E_PACKAGES_FAILURE}"
     fi
 }
@@ -173,6 +173,8 @@ main() {
         && source "../script/utils.sh"
 
     print_section "Extras: "
+
+    # TODO: check os and then do os x specific things in a funciton?
 
     set_git_config
     exit_on_fail "Error setting up git config"
