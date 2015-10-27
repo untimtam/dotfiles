@@ -185,7 +185,7 @@ main() {
 
     local pretty_terminal=1
     if [[ "$(get_os)" == "osx" ]]; then
-        confirm "Use custom Terminal.app prompt?"
+        confirm "Use terminal Terminal.app theme?"
         if status_code; then
             pretty_terminal=0
             set_terminal
