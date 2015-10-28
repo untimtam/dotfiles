@@ -18,7 +18,15 @@
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
-
+change_shell() {
+    chsh -s "$1"
+    if ! status_code; then
+        confirm "Try changing shell again?"
+        if status_code; then
+            change_shell "$1"
+        fi
+    fi
+}
 
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
@@ -65,12 +73,12 @@ main() {
     if [[ -e "/usr/local/bin/bash" ]]; then
         sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
         # set shell to updated bash
-        chsh -s '/usr/local/bin/bash'
+        change_shell "/usr/local/bin/bash"
     fi
     if [[ -e "/usr/local/bin/zsh" ]]; then
         sudo bash -c 'echo /usr/local/bin/zsh >> /etc/shells'
         # set shell to updated zsh (preferred over bash)
-        chsh -s '/usr/local/bin/zsh'
+        change_shell "/usr/local/bin/zsh"
     fi
 }
 

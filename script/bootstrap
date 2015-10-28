@@ -212,7 +212,7 @@ main() {
     remove_logs
 
     if [[ "$(get_os)" == "osx" ]]; then
-        confirm "Use terminal Terminal.app theme?"
+        confirm "Use Terminal.app theme?"
         if status_code; then
             set_terminal
             exit_on_fail "Error setting up terminal app"
