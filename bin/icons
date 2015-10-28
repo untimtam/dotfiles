@@ -53,6 +53,18 @@ replace_app_icon() {
     fi
 }
 
+# rename_icons(icon_dir)
+rename_icons() {
+    cp -R "$1/sublime text 2.icns" "$1/sublime text 3.icns"
+    cp -R "$1/sublime text 2.icns" "$1/sublime text.icns"
+    cp -R "$1/1password.icns" "$1/1password 5.icns"
+    cp -R "$1/android.icns" "$1/android file transfer.icns"
+    cp -R "$1/transmission-1.icns" "$1/transmission.icns"
+    cp -R "$1/github.icns" "$1/github desktop.icns"
+    cp -R "$1/unarchiver.icns" "$1/the unarchiver.icns"
+    cp -R "$1/colors.icns" "$1/couleurs.icns"
+}
+
 main() {
     # switch path to script source
     cd "$(dirname "${BASH_SOURCE}")"
@@ -67,22 +79,31 @@ main() {
         exit 1
     fi
 
-    local -r ICON_URL='https://github.com/tinalatif/flat.icns/archive/master.zip'
-    local -r ICON_ZIP='/tmp/tinalatif-zip'
-    local -r ICON_DIR='/tmp/tinalatif-icns'
+    declare -r ICON_URL='https://github.com/tinalatif/flat.icns/archive/master.zip'
+    declare -r ICON_ZIP='/tmp/tinalatif-zip'
+    declare -r ICON_DIR='/tmp/tinalatif-icns'
 
     request_sudo
 
     curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
     unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
 
-    cp -R "${ICON_DIR}/sublime text 2.icns" "${ICON_DIR}/sublime text 3.icns"
-    cp -R "${ICON_DIR}/sublime text 2.icns" "${ICON_DIR}/sublime text.icns"
+    # some apps icons arent named the same as the app itself
+    rename_icons "${ICON_DIR}"
 
     print_info "Updating app icons"
+
+    # replace icons
     for file in ${ICON_DIR}/*.icns; do
         replace_app_icon "${file}"
     done
+
+    # clean up
+    rm -rf $ICON_ZIP
+    rm -rf $ICON_DIR
+    rm -rf /tmp/*icns
+    rm -rf /tmp/*rscs
+
     print_success "Finished updating app icons"
 
     killall 'Dock'
