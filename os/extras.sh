@@ -170,7 +170,7 @@ set_sublime() {
 set_file_associations() {
     if cmd_exists 'duti'; then
         local -r DUTI_FILE="${HOME}/dotfiles/tools/duti/duti"
-        duti "${DUTI_FILE}"
+        duti "${DUTI_FILE}" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status_no_exit "Set file associations according to ${DUTI_FILE}"
     fi
 }
@@ -220,7 +220,7 @@ replace_icons() {
 
     # TODO: need sudo?
     print_info "Updating app icons"
-    for file in "${ICON_DIR}/*.icns"; do
+    for file in ${ICON_DIR}/*.icns; do
       replace_app_icon "${file}"
     done
     print_success "Finished updating app icons"
@@ -243,15 +243,19 @@ main() {
     local extra=1
     if [[ "$1" -eq 0 ]]; then
         extra=0
+        set_git_config
+        exit_on_fail "Error setting up git config"
     else
         confirm "Install extras?"
         extra="$?"
+        confirm "Set up git config?"
+        if status_code; then
+            set_git_config
+            exit_on_fail "Error setting up git config"
+        fi
     fi
 
     if [[ "${extra}" -eq 0 ]]; then
-        set_git_config
-        exit_on_fail "Error setting up git config"
-
         local -r OS="$(get_os)"
         if [[ "${OS}" == "osx" ]]; then
             set_terminal

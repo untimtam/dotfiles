@@ -30,6 +30,7 @@ This will:
 * install manual apps
 * install appstore apps
 * set up emails
+* sublime: "color_scheme": "Packages/Material Theme/schemes/Material-Theme.tmTheme"
 
 ### Settings
 

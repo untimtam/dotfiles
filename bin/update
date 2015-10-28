@@ -99,6 +99,11 @@ main() {
     # Keep-alive: update existing `sudo` time stamp until the script has finished
     while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+    # TODO: update all when no argument is provided
+    if [[ "$#" -eq 0 ]]; then
+        errexit "No update arguement provided" 1
+    fi
+
     # Run sections based on command line arguments
     # update all|osx|brew|npm|gem|pip|pip3
     for ARG in "$@"; do
