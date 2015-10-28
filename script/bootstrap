@@ -211,20 +211,19 @@ main() {
     # if boostrap was run before, remove existing log
     remove_logs
 
-    if [[ "$(get_os)" == "osx" ]]; then
-        confirm "Use Terminal.app theme?"
-        if status_code; then
-            set_terminal
-            exit_on_fail "Error setting up terminal app"
-        fi
-    fi
-
     # Confirm fresh or existing install
     local fresh=1
     confirm "Is this a fresh install?"
     if status_code; then
         fresh=0
         print_fix "Installing all components!"
+        if [[ "$(get_os)" == "osx" ]]; then
+            confirm "Use Terminal.app theme?"
+            if status_code; then
+                set_terminal
+                exit_on_fail "Error setting up terminal app"
+            fi
+        fi
     else
         fresh=1
         print_fix "Running updates..."
