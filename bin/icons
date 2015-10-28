@@ -12,13 +12,31 @@ replace_icon() {
 
     # generate rsrc
     cp "${file}" "${icon}"
+    if ! status_code; then
+        sudo cp "${file}" "${icon}"
+    fi
     sips -i "${icon}" > /dev/null
+    if ! status_code; then
+        sudo sips -i "${icon}" > /dev/null
+    fi
     DeRez -only icns "${icon}" > "${rsrc}"
+    if ! status_code; then
+        sudo DeRez -only icns "${icon}" > "${rsrc}"
+    fi
 
     # set icon
     Rez -append "${rsrc}" -o "$dest"$'/Icon\r'
+    if ! status_code; then
+        sudo Rez -append "${rsrc}" -o "$dest"$'/Icon\r'
+    fi
     SetFile -a C "${dest}"
+    if ! status_code; then
+        sudo SetFile -a C "${dest}"
+    fi
     SetFile -a V "$dest"$'/Icon\r'
+    if ! status_code; then
+        sudo SetFile -a V "$dest"$'/Icon\r'
+    fi
 }
 
 # replace_app_icon(icns):
@@ -64,9 +82,6 @@ main() {
     print_info "Updating app icons"
     for file in ${ICON_DIR}/*.icns; do
         replace_app_icon "${file}"
-        if ! status_code; then
-            sudo replace_app_icon "${file}"
-        fi
     done
     print_success "Finished updating app icons"
 
