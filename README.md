@@ -1,8 +1,6 @@
 [Tim](https://github.com/hellowor1dn)'s dotfiles
 =====
 
-# :warning: IN PROGRESS :warning:
-
 ## Setup
 
 To setup the [dotfiles](dotfiles) just run the appropriate snippet in the terminal:
@@ -30,17 +28,18 @@ This will:
 * install manual apps
 * install appstore apps
 * set up emails
-* sublime: "color_scheme": "Packages/Material Theme/schemes/Material-Theme.tmTheme"
 
 ### Settings
 
-* set preferences: Mission Control > shortcuts
-* set preferences: Trackpad > Swipe preferences
-* set preferences: Notifications > set notifications
-* set preferences: Users & Groups > set login items
-* set preferences: Extensions > remove from share menu
-* set preferences: Keyboard > Shortcuts
-* set preferences: set Desktop & Screen Saver > set desktop
+* system preferences: Language and region 24-hour time
+* system preferences: Mission Control > shortcuts
+* system preferences: Trackpad > Swipe preferences
+* system preferences: Notifications > set notifications
+* system preferences: Users & Groups > set login items
+* system preferences: Extensions > remove from share menu
+* system preferences: Keyboard > Shortcuts
+* system preferences: set Desktop & Screen Saver > set desktop
+* sublime preferences: "color_scheme": "Packages/Material Theme/schemes/Material-Theme.tmTheme"
 
 ## Update
 
@@ -62,6 +61,7 @@ To update the dotfiles, run the [bootstrap](script/bootstrap) script.
 * finish update script
 * vim and vim packges
 * verification step
+* add post-install preferences to install
 * extra packages for some tools (python, ruby, ocaml, etc)
 * These dotfiles only work from `~/dotfiles`?
 

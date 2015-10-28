@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+#
+# Set custom icons
+# Using: Tina Latif's  http://flaticns.com/
+
+# replace_icon(icns, app):
+replace_icon() {
+    file="$1"
+    dest="$2"
+    icon=/tmp/$(basename "${file}")
+    rsrc=/tmp/icon.rsrc
+
+    # generate rsrc
+    cp "${file}" "${icon}"
+    sips -i "${icon}" > /dev/null
+    DeRez -only icns "${icon}" > "${rsrc}"
+
+    # set icon
+    Rez -append "${rsrc}" -o "$dest"$'/Icon\r'
+    SetFile -a C "${dest}"
+    SetFile -a V "$dest"$'/Icon\r'
+}
+
+# replace_app_icon(icns):
+replace_app_icon() {
+    icon="$1"
+    name=$(basename "${icon}" .icns)
+    app="/Applications/${name}.app"
+    if [[ -d "${app}" ]]; then
+        replace_icon "${icon}" "${app}" >> "${ERROR_FILE}" 2>&1 > /dev/null
+        status_no_exit "Replaced ${name} icon"
+        return "$?"
+    else
+        return 1
+    fi
+}
+
+main() {
+    # switch path to script source
+    cd "$(dirname "${BASH_SOURCE}")"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Error: Could not find script"
+        exit 1
+    fi
+
+    source "../script/utils.sh" || source "${DOTS}/script/utils.sh"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Error: dotfile utils not found"
+        exit 1
+    fi
+
+    local -r ICON_URL='https://github.com/tinalatif/flat.icns/archive/master.zip'
+    local -r ICON_ZIP='/tmp/tinalatif-zip'
+    local -r ICON_DIR='/tmp/tinalatif-icns'
+
+    request_sudo
+
+    curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
+    unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
+
+    cp -R "${ICON_DIR}/sublime text 2.icns" "${ICON_DIR}/sublime text 3.icns"
+    cp -R "${ICON_DIR}/sublime text 2.icns" "${ICON_DIR}/sublime text.icns"
+
+    print_info "Updating app icons"
+    for file in ${ICON_DIR}/*.icns; do
+        replace_app_icon "${file}"
+        if ! status_code; then
+            sudo replace_app_icon "${file}"
+        fi
+    done
+    print_success "Finished updating app icons"
+
+    killall 'Dock'
+}
+
+main

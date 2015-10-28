@@ -176,60 +176,6 @@ set_file_associations() {
 }
 
 # -----------------------------------------------------------------------------
-# | Custom Icons                                                               |
-# | Using: Tina Latif's  http://flaticns.com/                                  |
-# -----------------------------------------------------------------------------
-
-# replace_icon(icns, app):
-replace_icon() {
-  file="$1"
-  dest="$2"
-  icon=/tmp/$(basename "${file}")
-  rsrc=/tmp/icon.rsrc
-
-  # generate rsrc
-  cp "${file}" "${icon}"
-  sips -i "${icon}" > /dev/null
-  DeRez -only icns "${icon}" > "${rsrc}"
-
-  # set icon
-  Rez -append "${rsrc}" -o "$dest"$'/Icon\r'
-  SetFile -a C "${dest}"
-  SetFile -a V "$dest"$'/Icon\r'
-}
-
-# replace_app_icon(icns):
-replace_app_icon() {
-  icon="$1"
-  name=$(basename "${icon}" .icns)
-  app="/Applications/${name}.app"
-  if [[ -d "${app}" ]]; then
-    replace_icon "${icon}" "${app}"
-    status_no_exit "Replaced ${name} icon"
-  fi
-}
-
-# replace_icons(): replace app icons for installed apps (flat ui theme)
-replace_icons() {
-    local -r ICON_URL='https://github.com/tinalatif/flat.icns/archive/master.zip'
-    local -r ICON_ZIP='/tmp/tinalatif-zip'
-    local -r ICON_DIR='/tmp/tinalatif-icns'
-
-    curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
-    unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
-
-    # TODO: need sudo?
-    print_info "Updating app icons"
-    for file in ${ICON_DIR}/*.icns; do
-      replace_app_icon "${file}"
-    done
-    print_success "Finished updating app icons"
-
-    killall 'Dock'
-    return 0
-}
-
-# -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
 
@@ -269,7 +215,7 @@ main() {
 
             set_file_associations
 
-            replace_icons
+            ../bin/icons
         elif [[ "${OS}" == "ununtu" ]]; then
             errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
         else
