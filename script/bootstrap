@@ -198,9 +198,9 @@ main() {
                 bootstrap_section="${TOOL_SECTION}"
             elif [[ "$1" == "apps" ]]; then
                 bootstrap_section="${APPS_SECTION}"
-            elif [[ "$1" == "pref" ]]; then
+            elif [[ "$1" == "prefs" ]]; then
                 bootstrap_section="${PREF_SECTION}"
-            elif [[ "$1" == "extr" ]]; then
+            elif [[ "$1" == "extra" ]]; then
                 bootstrap_section="${EXTR_SECTION}"
             elif [[ "$1" == "test" ]]; then
                 bootstrap_section="${TEST_SECTION}"
