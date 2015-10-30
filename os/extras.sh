@@ -176,6 +176,23 @@ set_file_associations() {
 }
 
 # -----------------------------------------------------------------------------
+# | League Preferences                                                         |
+# -----------------------------------------------------------------------------
+
+set_league_preferences() {
+    if [[ -e "/Applications/League of Legends.app" ]]; then
+        local -r LEAGUE="/Applications/League of Legends.app"
+        cp -R "${HOME}/dotfiles/resources/game.cfg" "${LEAGUE}/Contents/LoL/Config"
+        cp -R "${HOME}/dotfiles/resources/input.ini" "${LEAGUE}/Contents/LoL/Config"
+    fi
+    if [[ -e "/Applications/League of Legends PBE.app" ]]; then
+        local -r LEAGUE_PBE="/Applications/League of Legends PBE.app"
+        cp -R "${HOME}/dotfiles/resources/game.cfg" "${LEAGUE_PBE}/Contents/LoL/Config"
+        cp -R "${HOME}/dotfiles/resources/input.ini" "${LEAGUE_PBE}/Contents/LoL/Config"
+    fi
+}
+
+# -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
 
@@ -214,6 +231,8 @@ main() {
             exit_on_fail "Error setting up sublime"
 
             set_file_associations
+
+            set_league_preferences
 
             ../bin/icons
         elif [[ "${OS}" == "ununtu" ]]; then
