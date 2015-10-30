@@ -195,6 +195,7 @@ err() {
 
 # errexit(message, err_code): print out error message and exit
 errexit() {
+    kill_sudo
     err "$1"
     exit "$2"
 }
