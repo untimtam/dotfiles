@@ -13,19 +13,16 @@ declare -r E_INSTALL_FAILURE=101
 # -----------------------------------------------------------------------------
 
 declare -r -a APPSTORE=(
+    'xcode'
     'keynote'
     'pages'
     'numbers'
 
-    'dash'
+    'pushbullet'
     'pocket'
     'slack'
-    'pushbullet'
 
-    'evernote'
-    'onenote'
-
-    'encrypto'
+    'dash'
 )
 
 # -----------------------------------------------------------------------------
