@@ -19,19 +19,10 @@ declare -r E_NPM_INSTALL_FAILURE=107
 # -----------------------------------------------------------------------------
 
 # NVM
-declare -r EXTRAS="${HOME}/dotfiles/shell/extra"
 declare -r NVM_DIRECTORY="${HOME}/.nvm"
 declare -r -a NODE_VERSIONS=(
     "node"
 )
-declare -r CONFIGS='
-# -----------------------------------------------------------------------------
-# | NVM                                                                        |
-# -----------------------------------------------------------------------------
-
-export NVM_DIR="'${NVM_DIRECTORY}'"
-[[ -f "${NVM_DIR}/nvm.sh" ]] && source "${NVM_DIR}/nvm.sh"
-'
 
 # NPM
 declare -r -a NPM_PACKAGES=(
@@ -74,12 +65,6 @@ install_nvm() {
     git clone https://github.com/creationix/nvm.git "${NVM_DIRECTORY}" &> /dev/null
     status_stop_spinner "Finished installing nvm"
     exit_on_fail "nvm installation failed" "${E_NVM_CLONE_FAILURE}"
-    if status_code; then
-        # nvm.sh should work in both bash and zsh
-        printf "%s" "${CONFIGS}" >> "${EXTRAS}" \
-            && source "${EXTRAS}"
-        status_no_exit "nvm (update ${EXTRAS})"
-    fi
 }
 
 update_nvm() {
@@ -115,10 +100,14 @@ install_npm_packages() {
     # Install the `npm` packages
     for i in "${NPM_PACKAGES[@]}"; do
         if [[ -n "$i" ]]; then
-            start_spinner "Installing $i"
-            npm install -g "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
-            status_stop_spinner "Finished installing $i"
-            exit_on_fail "$i installation failed" "${E_NPM_INSTALL_FAILURE}"
+            if npm -g list "$i" &> /dev/null; then
+                print_success "$i is already installed"
+            else
+                start_spinner "Installing $i"
+                npm -g install "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
+                status_stop_spinner "Finished installing $i"
+                exit_on_fail "$i installation failed" "${E_NPM_INSTALL_FAILURE}"
+            fi
         fi
     done
 }
@@ -150,7 +139,7 @@ main() {
     fi
 
     # Update NPM
-    [[ -z "${NVM_DIR}" ]] && source "${EXTRAS}"
+    [[ -z "${NVM_DIR}" ]] && source "${HOME}/dotfiles/shell/extra"
     # Check if `npm` is installed
     if ! cmd_exists 'npm'; then
         errexit "npm is required, please install it!\n" "${E_NPM_NOT_FOUND}"
