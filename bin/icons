@@ -3,6 +3,20 @@
 # Set custom icons
 # Using: Tina Latif's  http://flaticns.com/
 
+# rename_icons(icon_dir)
+rename_icons() {
+    cp -R "$1/sublime text 2.icns" "$1/sublime text.icns"
+    cp -R "$1/1password.icns" "$1/1password 5.icns"
+    cp -R "$1/android.icns" "$1/android file transfer.icns"
+    cp -R "$1/transmission-1.icns" "$1/transmission.icns"
+    cp -R "$1/github.icns" "$1/github desktop.icns"
+    cp -R "$1/unarchiver.icns" "$1/the unarchiver.icns"
+    cp -R "$1/colors.icns" "$1/couleurs.icns"
+    cp -R "$1/parallels.icns" "$1/parallels desktop.icns"
+    cp -R "$1/alfred.icns" "$1/alfred 2.icns"
+    cp -R "$1/League of Legends.icns" "$1/League of Legends PBE.icns"
+}
+
 # replace_icon(icns, app):
 replace_icon() {
     file="$1"
@@ -53,16 +67,25 @@ replace_app_icon() {
     fi
 }
 
-# rename_icons(icon_dir)
-rename_icons() {
-    cp -R "$1/sublime text 2.icns" "$1/sublime text 3.icns"
-    cp -R "$1/sublime text 2.icns" "$1/sublime text.icns"
-    cp -R "$1/1password.icns" "$1/1password 5.icns"
-    cp -R "$1/android.icns" "$1/android file transfer.icns"
-    cp -R "$1/transmission-1.icns" "$1/transmission.icns"
-    cp -R "$1/github.icns" "$1/github desktop.icns"
-    cp -R "$1/unarchiver.icns" "$1/the unarchiver.icns"
-    cp -R "$1/colors.icns" "$1/couleurs.icns"
+# replace_icons(icon_dir):
+replace_icons() {
+    print_info "Updating app icons"
+
+    # need admin access for some apps
+    request_sudo
+
+    # some apps icons arent named the same as the app itself
+    rename_icons "$1"
+
+    # replace icons
+    for file in $1/*.icns; do
+        replace_app_icon "${file}"
+    done
+
+    # remove sudo
+    kill_sudo
+
+    print_success "Finished updating app icons"
 }
 
 main() {
@@ -73,40 +96,45 @@ main() {
         exit 1
     fi
 
-    source "../script/utils.sh" || source "${DOTS}/script/utils.sh"
+    source "../script/utils.sh" &> /dev/null || source "${DOTS}/script/utils.sh" &> /dev/null
     if [[ "$?" -ne 0 ]]; then
         echo "Error: dotfile utils not found"
         exit 1
     fi
 
-    declare -r ICON_URL='https://github.com/tinalatif/flat.icns/archive/master.zip'
-    declare -r ICON_ZIP='/tmp/tinalatif-zip'
     declare -r ICON_DIR='/tmp/tinalatif-icns'
 
-    request_sudo
+    # use github repo if available
+    if [[ -d "${HOME}/code/flat.icns" ]]; then
+        declare -r ICON_SRC="${HOME}/code/flat.icns"
 
-    curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
-    unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
+        cp -R "${ICON_SRC}" "${ICON_DIR}"
+    else
+        declare -r ICON_URL='https://github.com/tinalatif/flat.icns/archive/master.zip'
+        declare -r ICON_ZIP='/tmp/tinalatif-zip'
 
-    # some apps icons arent named the same as the app itself
-    rename_icons "${ICON_DIR}"
+        curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
+        unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
 
-    print_info "Updating app icons"
+        rm -rf "${ICON_ZIP}"
+    fi
 
-    # replace icons
-    for file in ${ICON_DIR}/*.icns; do
-        replace_app_icon "${file}"
-    done
+    replace_icons "${ICON_DIR}"
 
     # clean up
-    rm -rf $ICON_ZIP
-    rm -rf $ICON_DIR
+    rm -rf "${ICON_DIR}"
     rm -rf /tmp/*icns
     rm -rf /tmp/*rscs
 
-    print_success "Finished updating app icons"
-
-    killall 'Dock'
+    # if script is in home/bin, assume it's being run after bootstrap script
+    if [[ "$(dirname "${BASH_SOURCE}")" == "${HOME}/bin" ]]; then
+        confirm "Restart?"
+        if status_code; then
+            $DOTS/os/restart.sh
+        else
+            print_info "Restart may be necessary for certain changes to take effect."
+        fi
+    fi
 }
 
 main
