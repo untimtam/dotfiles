@@ -13,16 +13,16 @@ declare -r E_TERMINAL_THEME_FAILURE=102
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-declare -r INIT_SECTION=0
-declare -r REPO_SECTION=1
-declare -r DIR_SECTION=2
-declare -r BIN_SECTION=3
-declare -r LINK_SECTION=4
-declare -r TOOL_SECTION=5
-declare -r APPS_SECTION=6
-declare -r PREF_SECTION=7
-declare -r EXTR_SECTION=8
-declare -r TEST_SECTION=9
+declare -r INIT_SECTION=0 # init
+declare -r REPO_SECTION=1 # repo
+declare -r DIR_SECTION=2  # dir
+declare -r BIN_SECTION=3  # bin
+declare -r LINK_SECTION=4 # link
+declare -r TOOL_SECTION=5 # tool
+declare -r APPS_SECTION=6 # app
+declare -r PREF_SECTION=7 # pref
+declare -r EXTR_SECTION=8 # extra
+declare -r TEST_SECTION=9 # test
 
 # -----------------------------------------------------------------------------
 # | System                                                                     |
@@ -56,7 +56,7 @@ is_supported_version() {
 # verify_os(): verify current computer is running a supported os
 #   Supported: OSX
 verify_os() {
-    local -r OS="$(get_os)"
+    declare -r OS="$(get_os)"
     declare OS_VERSION=""
 
     # OSX El Capitan
@@ -169,19 +169,47 @@ main() {
         exit 1
     fi
 
-    source "../script/utils.sh" || source "${DOTS}/script/utils.sh"
+    source "../script/utils.sh" &> /dev/null || source "${DOTS}/script/utils.sh" &> /dev/null
     if [[ "$?" -ne 0 ]]; then
         echo "Error: dotfile utils not found"
         exit 1
     fi
 
+    # verify that the current os is supported
+    # declares global OS (current operating system)
     verify_os || errexit "Error: OS is not suported" "${E_OS_NOT_SUPPORTED}"
 
     clear
     print_section "Beginning bootstrap script"
+
+    # if boostrap was run before, remove existing logs
+    remove_logs
+
+    # Confirm fresh or existing install
+    local fresh=1
+    confirm "Is this a fresh install?"
+    if status_code; then
+        fresh=0
+        print_fix "Installing all components!"
+        if [[ "${OS}" == "osx" ]]; then
+            confirm "Use Terminal.app theme?"
+            if status_code; then
+                set_terminal
+                exit_on_fail "Error setting up terminal app"
+            fi
+        fi
+    else
+        fresh=1
+        print_fix "Running updates..."
+    fi
+    # ask for sudo
+    request_sudo
+
     local bootstrap_section=0
-    if [[ "$#" -ge 1 ]]; then
-        if is_number "$1"; then
+    # if an argument was provided to bootstrap, set the relevant section
+    if [[ "$#" -eq 1 ]]; then
+        if is_number "$1" && [[ "$1" -gt 0 ]]; then
+            # set section to any positive integer
             bootstrap_section="$1"
         else
             if [[ "$1" == "init" ]]; then
@@ -196,9 +224,9 @@ main() {
                 bootstrap_section="${LINK_SECTION}"
             elif [[ "$1" == "tool" ]]; then
                 bootstrap_section="${TOOL_SECTION}"
-            elif [[ "$1" == "apps" ]]; then
+            elif [[ "$1" == "app" ]]; then
                 bootstrap_section="${APPS_SECTION}"
-            elif [[ "$1" == "prefs" ]]; then
+            elif [[ "$1" == "pref" ]]; then
                 bootstrap_section="${PREF_SECTION}"
             elif [[ "$1" == "extra" ]]; then
                 bootstrap_section="${EXTR_SECTION}"
@@ -207,29 +235,6 @@ main() {
             fi
         fi
     fi
-
-    # if boostrap was run before, remove existing log
-    remove_logs
-
-    # Confirm fresh or existing install
-    local fresh=1
-    confirm "Is this a fresh install?"
-    if status_code; then
-        fresh=0
-        print_fix "Installing all components!"
-        if [[ "$(get_os)" == "osx" ]]; then
-            confirm "Use Terminal.app theme?"
-            if status_code; then
-                set_terminal
-                exit_on_fail "Error setting up terminal app"
-            fi
-        fi
-    else
-        fresh=1
-        print_fix "Running updates..."
-    fi
-    # ask for sudo
-    request_sudo
 
     # run init
     if [[ "${bootstrap_section}" -le "${INIT_SECTION}" ]]; then
@@ -308,6 +313,7 @@ main() {
     if [[ "${bootstrap_section}" -le "${TEST_SECTION}" ]]; then
         ../os/test.sh "${fresh}"
         print_separator_large
+        ((bootstrap_section+=1))
     fi
 
     echo ""
@@ -316,6 +322,7 @@ main() {
     print_section "Bootstrap script complete"
     print_info "Use 'cat ${INFO_FILE}' to display extra install information again"
     print_info "Use 'cat ${ERROR_FILE}' to display install errors"
+
     confirm "Do you want to restart?"
     if status_code; then
         print_fix "Restarting now!"
@@ -328,4 +335,5 @@ main() {
     fi
 }
 
+# only pass in the first argument to main, no matter what options are provided
 main "$1"

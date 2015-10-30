@@ -87,7 +87,7 @@ main() {
         exit 1
     fi
 
-    source "../script/utils.sh" || source "${DOTS}/script/utils.sh"
+    source "../script/utils.sh" &> /dev/null || source "${DOTS}/script/utils.sh" &> /dev/null
     if [[ "$?" -ne 0 ]]; then
         echo "Error: dotfile utils not found"
         exit 1
