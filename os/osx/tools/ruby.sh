@@ -10,27 +10,18 @@ declare -r E_BREW_FAILURE=101
 declare -r E_RBENV_FAILURE=102
 declare -r E_RUBY_INSTALL_FAILURE=103
 declare -r E_GEM_INSTALL_FAILURE=104
-declare -r E_GEM_NOT_FOUND=105
+declare -r E_RBENV_REHASH_FAILURE=105
+declare -r E_GEM_NOT_FOUND=106
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
 # rbenv
-declare -r EXTRAS="${HOME}/dotfiles/shell/extra"
 declare -r RBENV_DIRECTORY="${HOME}/.rbenv"
 declare -r -a RUBY_VERSIONS=(
     "2.2.3"
 )
-declare -r CONFIGS='
-# -----------------------------------------------------------------------------
-# | rbenv                                                                      |
-# -----------------------------------------------------------------------------
-
-if which rbenv &> /dev/null; then
-    rbenv init - &> /dev/null
-fi
-'
 
 # gems
 declare -r -a GEMS=(
@@ -49,11 +40,10 @@ install_rbenv() {
         brew install "rbenv" "ruby-build" >> "${ERROR_FILE}" 2>&1 > /dev/null
         status_stop_spinner "Finished installing rbenv"
         exit_on_fail "rbenv installation failed" "${E_BREW_FAILURE}"
-        if status_code; then
-            printf "%s" "${CONFIGS}" >> "${EXTRAS}" \
-                && source "${EXTRAS}"
-            status_no_exit "rbenv (update ${EXTRAS})"
-        fi
+
+        # rbenv init
+        rbenv init - &> /dev/null
+        status "Initializing rbenv" "${E_RBENV_FAILURE}"
 
         # Install ruby versionsg
         for i in "${RUBY_VERSIONS[@]}"; do
@@ -73,12 +63,11 @@ install_gems() {
     for i in "${GEMS[@]}"; do
         if [[ -n "$i" ]]; then
             start_spinner "Installing $i"
-            gem install "$i" &> /dev/null
+            ${HOME}/.rbenv/shims/gem install "$i" &> /dev/null
             status_stop_spinner "Finished installing $i"
+            exit_on_fail "rbenv gem installation failed" "${E_GEM_INSTALL_FAILURE}"
         fi
     done
-    # TODO: exit on fail
-    return 0
 }
 
 # -----------------------------------------------------------------------------
@@ -94,11 +83,14 @@ main() {
         install_rbenv
         exit_on_fail "Install rbenv ruby"
     fi
-    # Check if `gem` is installed
-    if ! cmd_exists 'gem'; then
+
+    # Check if rbenv `gem` is installed at this point
+    if ! cmd_exists "${HOME}/.rbenv/shims/gem" ; then
         errexit "ruby is required, please install it!\n" "${E_GEM_NOT_FOUND}"
     fi
     install_gems
+    rbenv rehash
+    status "Rehash rbenv shims" "${E_RBENV_REHASH_FAILURE}"
 }
 
 main
