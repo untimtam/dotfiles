@@ -1,9 +1,29 @@
 # Extra
 
-# Git credentials
+# -----------------------------------------------------------------------------
+# | git config                                                                 |
+# -----------------------------------------------------------------------------
+
 if [[ -n "$(git config --global user.name)" ]]; then
     export GIT_AUTHOR_NAME="$(git config --global user.name)"
     export GIT_COMMITTER_NAME="${GIT_AUTHOR_NAME}"
     export GIT_AUTHOR_EMAIL="$(git config --global user.email)"
     export GIT_COMMITTER_EMAIL="${GIT_AUTHOR_EMAIL}"
+fi
+
+# -----------------------------------------------------------------------------
+# | rbenv                                                                      |
+# -----------------------------------------------------------------------------
+
+if which rbenv &> /dev/null; then
+    rbenv init - &> /dev/null
+fi
+
+# -----------------------------------------------------------------------------
+# | NVM                                                                        |
+# -----------------------------------------------------------------------------
+
+if [[ -f "${HOME}/.nvm/nvm.sh" ]]; then
+    export NVM_DIR="${HOME}/.nvm"
+    source "${NVM_DIR}/nvm.sh"
 fi
