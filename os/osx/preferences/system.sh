@@ -31,6 +31,7 @@ declare -r -a DOCK_APPS=(
     'Github Desktop'
     'iTunes'
     'League of Legends'
+    'League of Legends PBE'
     'Curse'
 )
 

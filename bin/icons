@@ -106,13 +106,15 @@ main() {
 
     # use github repo if available
     if [[ -d "${HOME}/code/flat.icns" ]]; then
-        declare -r ICON_SRC="${HOME}/code/flat.icns"
+        local -r ICON_SRC="${HOME}/code/flat.icns/icns"
 
+        print_info "Copying flat icons"
         cp -R "${ICON_SRC}" "${ICON_DIR}"
     else
-        declare -r ICON_URL='https://github.com/tinalatif/flat.icns/archive/master.zip'
-        declare -r ICON_ZIP='/tmp/tinalatif-zip'
+        local -r ICON_URL='https://github.com/tinalatif/flat.icns/archive/master.zip'
+        local -r ICON_ZIP='/tmp/tinalatif-zip'
 
+        print_info "Downloading flat icons"
         curl -LsS -o "${ICON_ZIP}" "${ICON_URL}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
         unzip -qq -o -j "${ICON_ZIP}" -d "${ICON_DIR}" >> "${ERROR_FILE}" 2>&1 > /dev/null || return 1
 
@@ -120,11 +122,11 @@ main() {
     fi
 
     replace_icons "${ICON_DIR}"
+    rm -rf /tmp/*icns
+    rm -rf /tmp/*rsrc
 
     # clean up
     rm -rf "${ICON_DIR}"
-    rm -rf /tmp/*icns
-    rm -rf /tmp/*rscs
 
     # if script is in home/bin, assume it's being run after bootstrap script
     if [[ "$(dirname "${BASH_SOURCE}")" == "${HOME}/bin" ]]; then
