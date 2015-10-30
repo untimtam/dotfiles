@@ -24,21 +24,21 @@ This will:
 
 ### Apps
 
-* install tmuxinator
 * install manual apps
+* set up razer and logitech drivers and preferences
 * install appstore apps
 * set up emails
 
 ### Settings
 
 * system preferences: Language and region 24-hour time
-* system preferences: Mission Control > shortcuts
-* system preferences: Trackpad > Swipe preferences
-* system preferences: Notifications > set notifications
-* system preferences: Users & Groups > set login items
+* system preferences: Trackpad > set trackpad preferences
+* system preferences: Keyboard > Shortcuts > set shortcuts
+* system preferences: Notifications > set notification preferences
 * system preferences: Extensions > remove from share menu
-* system preferences: Keyboard > Shortcuts
-* system preferences: set Desktop & Screen Saver > set desktop
+* system preferences: Desktop & Screen Saver > set desktop
+* system preferences: Security & Privacy > Privacy > Accessibility access > set accesibility
+* system preferences: Users & Groups > User > Login Items > set login apps
 * sublime preferences: "color_scheme": "Packages/Material Theme/schemes/Material-Theme.tmTheme"
 
 ## Update

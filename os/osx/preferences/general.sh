@@ -25,6 +25,7 @@ declare -r HD_NAME="Foo"
 general_preferences() {
     # Set computer name (as done via System Preferences → Sharing)
     # ex: Jarvis, Mark I, box, abacus, scud
+    # TODO: ask user for computer and hard drive names?
     sudo scutil --set ComputerName "${COMPUTER_NAME}"
     sudo scutil --set HostName "${COMPUTER_NAME}"
     sudo scutil --set LocalHostName "${COMPUTER_NAME}"
