@@ -139,17 +139,6 @@ EOD
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
-remove_logs() {
-    if [[ -e "${ERROR_FILE}" ]]; then
-        rm -rf "${ERROR_FILE}"
-        status_no_exit "Removed error log"
-    fi
-    if [[ -e "${INFO_FILE}" ]]; then
-        rm -rf "${INFO_FILE}"
-        status_no_exit "removed info log"
-    fi
-}
-
 # end_prompt(): pause program before termination if no automatic restart
 end_prompt() {
     print_in_blue "\n Press any key to continue... "
@@ -183,7 +172,7 @@ main() {
     print_section "Beginning bootstrap script"
 
     # if boostrap was run before, remove existing logs
-    remove_logs
+    ./cleanup_logs.sh
 
     # Confirm fresh or existing install
     local fresh=1

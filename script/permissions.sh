@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Test various functionality
+# Give executable priviledges to os scripts
 
 # set_permissions(directory): set executable permissions to files recursively
 set_permissions() {

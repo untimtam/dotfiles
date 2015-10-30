@@ -47,8 +47,7 @@ verify_symlink() {
 
     if [[ ! -e "${targetFile}" ]]; then
         # create new symbolic link
-        # TODO: ln -fs "${sourceFile}" "${targetFile}"?
-        ln -s "${sourceFile}" "${targetFile}"
+        ln -fs "${sourceFile}" "${targetFile}"
         status "${targetFile} → ${sourceFile}" "${E_SYMLINK_FAILED}"
         return "$?"
     elif [[ "$(readlink "${targetFile}")" == "${sourceFile}" ]]; then
@@ -60,7 +59,7 @@ verify_symlink() {
         confirm "'${targetFile}' already exists, overwrite?"
         if status_code; then
             # overwrite
-            # TODO: rm -rf "${targetFile}"?
+            rm -rf "${targetFile}"
             ln -fs "${sourceFile}" "${targetFile}"
             status "overwrite ${targetFile} → ${sourceFile}" "${E_SYMLINK_FAILED}"
             return "$?"
