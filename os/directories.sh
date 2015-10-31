@@ -20,7 +20,7 @@ declare -a DIRECTORIES=(
     "${HOME}/projects"
     "${HOME}/work"
     "${HOME}/Downloads/torrents"
-    "${HOME}/Pictures/Wallpaper"
+    "${HOME}/Pictures/Wallpapers"
 )
 
 # -----------------------------------------------------------------------------
