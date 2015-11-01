@@ -180,7 +180,7 @@ main() {
     if status_code; then
         fresh=0
         print_fix "Installing all components!"
-        echo "${OS}"
+        declare -r OS="$(get_os)"
         if [[ "${OS}" == "osx" ]]; then
             confirm "Use Terminal.app theme?"
             if status_code; then
