@@ -285,7 +285,7 @@ _spinner() {
             fi
 
             # remove spinner
-            printf "\b\b\n"
+            printf "\r"
 
             kill $4 &> /dev/null
 
