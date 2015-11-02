@@ -38,6 +38,7 @@ system preferences: Users & Groups > User > Login Items > set login apps
 * mail
 * google
 * itunes helper
+* skype
 
 ## Accessibility
 
