@@ -22,24 +22,7 @@ This will:
 
 ## Post-setup
 
-### Apps
-
-* install manual apps
-* set up razer and logitech drivers and preferences
-* install appstore apps
-* set up emails
-
-### Settings
-
-* system preferences: Language and region 24-hour time
-* system preferences: Trackpad > set trackpad preferences
-* system preferences: Keyboard > Shortcuts > set shortcuts
-* system preferences: Notifications > set notification preferences
-* system preferences: Extensions > remove from share menu
-* system preferences: Desktop & Screen Saver > set desktop
-* system preferences: Security & Privacy > Privacy > Accessibility access > set accesibility
-* system preferences: Users & Groups > User > Login Items > set login apps
-* sublime preferences: "color_scheme": "Packages/Material Theme/schemes/Material-Theme.tmTheme"
+See the [Post-Setup](POST_SETUP.md) file.
 
 ## Update
 
