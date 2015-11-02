@@ -12,9 +12,9 @@ declare -r E_PREFERENCE_FAILURE=101
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-# cant close Terminal.app because it is running scripts
-declare -a APPS=(
-    'iTerm'
+# cant close terminals because they could be running this script
+declare -r -a APPS=(
+    ''
 )
 
 # -----------------------------------------------------------------------------

@@ -115,14 +115,14 @@ EOD
 
 set_iterm() {
     if [[ -e "/Applications/iTerm.app" ]]; then
-        print_info "Opening iTerm"
-        open -a "iTerm" >> "${ERROR_FILE}" 2>&1 > /dev/null
-        status_no_exit "Finished opening iTerm"
-        sleep 5
-        # close iterm
-        print_info "Closing iTerm"
-        killall "iTerm" >> "${ERROR_FILE}" 2>&1 > /dev/null
-        status "Finished closing iterm" "${E_CLOSE_ITERM_FAILURE}"
+        # print_info "Opening iTerm"
+        # open -a "iTerm" >> "${ERROR_FILE}" 2>&1 > /dev/null
+        # status_no_exit "Finished opening iTerm"
+        # sleep 5
+        # # close iterm
+        # print_info "Closing iTerm"
+        # killall "iTerm" >> "${ERROR_FILE}" 2>&1 > /dev/null
+        # status "Finished closing iterm" "${E_CLOSE_ITERM_FAILURE}"
 
         # copy preferences
         cp -R "${HOME}/dotfiles/resources/com.googlecode.iterm2.plist" \
