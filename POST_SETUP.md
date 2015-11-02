@@ -40,6 +40,7 @@ system preferences: Users & Groups > User > Login Items > set login apps
 * google
 * itunes helper
 * skype
+* pocket
 
 ## Accessibility
 
