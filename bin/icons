@@ -21,36 +21,26 @@ rename_icons() {
 replace_icon() {
     file="$1"
     dest="$2"
+
+    # allocate temp files
     icon=/tmp/$(basename "${file}")
     rsrc=/tmp/icon.rsrc
 
     # generate rsrc
     cp "${file}" "${icon}"
-    if ! status_code; then
-        sudo cp "${file}" "${icon}"
-    fi
     sips -i "${icon}" > /dev/null
-    if ! status_code; then
-        sudo sips -i "${icon}" > /dev/null
-    fi
     DeRez -only icns "${icon}" > "${rsrc}"
-    if ! status_code; then
-        sudo DeRez -only icns "${icon}" > "${rsrc}"
-    fi
 
     # set icon
     Rez -append "${rsrc}" -o "$dest"$'/Icon\r'
-    if ! status_code; then
-        sudo Rez -append "${rsrc}" -o "$dest"$'/Icon\r'
-    fi
     SetFile -a C "${dest}"
-    if ! status_code; then
-        sudo SetFile -a C "${dest}"
-    fi
     SetFile -a V "$dest"$'/Icon\r'
-    if ! status_code; then
-        sudo SetFile -a V "$dest"$'/Icon\r'
-    fi
+
+    # remove temp files
+    local -r res="$?"
+    rm -rf /tmp/*icns
+    rm -rf /tmp/*rsrc
+    return "${res}"
 }
 
 # replace_app_icon(icns):
@@ -121,9 +111,8 @@ main() {
         rm -rf "${ICON_ZIP}"
     fi
 
+    # go through and replace icons
     replace_icons "${ICON_DIR}"
-    rm -rf /tmp/*icns
-    rm -rf /tmp/*rsrc
 
     # clean up
     rm -rf "${ICON_DIR}"

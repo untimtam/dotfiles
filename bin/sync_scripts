@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#
+# Sync bin scripts
+
+# -----------------------------------------------------------------------------
+# | Errors                                                                     |
+# -----------------------------------------------------------------------------
+
+declare -r E_BIN_NOT_FOUND=101
+
+# -----------------------------------------------------------------------------
+# | Functions                                                                  |
+# -----------------------------------------------------------------------------
+
+# sync_bin(src,dst):
+sync_bin() {
+    print_section "Syncing scripts"
+    rsync -avh --no-perms "$1" "$2" >> "${ERROR_FILE}" 2>&1 > /dev/null
+    status "Finished syncing scripts" "${E_RSYNC_FAILURE}"
+}
+
+# -----------------------------------------------------------------------------
+# | Main                                                                       |
+# -----------------------------------------------------------------------------
+
+main() {
+    # switch path to script source
+    cd "$(dirname "${BASH_SOURCE}")"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Error: Could not find script"
+        exit 1
+    fi
+
+    source "../script/utils.sh" &> /dev/null || source "${DOTS}/script/utils.sh" &> /dev/null
+    if [[ "$?" -ne 0 ]]; then
+        echo "Error: dotfile utils not found"
+        exit 1
+    fi
+
+    if [[ -d "../bin" ]]; then
+        sync_bin "../bin" "${HOME}"
+        return 0
+    elif [[ -n "${DOTS}" ]]; then
+        sync_bin "${DOTS}/bin" "${HOME}"
+        return 0
+    else
+        errexit "dotfiles bin not found" "${E_BIN_NOT_FOUND}"
+    fi
+}
+
+main

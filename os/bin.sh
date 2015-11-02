@@ -6,7 +6,7 @@
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
-declare -r E_RSYNC_FAILURE=101
+
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
@@ -29,10 +29,8 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "../script/utils.sh"
 
-    print_section "Syncing scripts"
-
-    rsync -avh --no-perms "../bin" "${HOME}" >> "${ERROR_FILE}" 2>&1 > /dev/null
-    status "Finished syncing scripts" "${E_RSYNC_FAILURE}"
+    ../bin/sync_scripts
+    exit_on_fail "Unable to sync scripts"
 }
 
 main "$1"
