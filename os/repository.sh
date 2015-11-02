@@ -97,7 +97,6 @@ is_git_repo() {
 
 # is_dotfile_repo(): make sure we're in dotfiles git repo
 is_dotfile_repo() {
-    # TODO: ssh instead?
     is_git_repo && \
         [[ "$(git config --get remote.origin.url)" == "${DOTFILES_SSH_ORIGIN}" ]]
 
@@ -161,7 +160,6 @@ main() {
         fi
     fi
 
-    # TODO: fix git setup and update
     # verify ssh key or set it up
     update_ssh
     status "Set ssh key" "${E_SET_SSH_FAILURE}"
