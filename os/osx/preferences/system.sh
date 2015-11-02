@@ -61,16 +61,13 @@ io_preferences() {
     # (e.g. enable Tab in modal dialogs)
     defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
-    # TODO: is this working?
     # Use scroll gesture with the Ctrl (^) modifier key to zoom
     defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
     defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
 
-    # TODO: ?
     # Follow the keyboard focus while zoomed in
     defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
-    # TODO: ? Paul irish addition?
     # Zoom should use nearest neighbor instead of smoothing.
     defaults write com.apple.universalaccess 'closeViewSmoothImages' -bool false
 
@@ -238,6 +235,9 @@ dock_preferences() {
     # Enable dark menu bar and dock
     defaults write NSGlobalDomain AppleInterfaceStyle Dark
 
+    # Mimize application on double-click
+    defaults write NSGlobalDomain AppleActionOnDoubleClick Minimize
+
     # Enable highlight hover effect for the grid view of a stack (Dock)
     defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
@@ -340,6 +340,9 @@ language_preferences() {
 
     # Set the timezone; see `sudo systemsetup -listtimezones` for other values
     sudo systemsetup -settimezone "America/Montreal" >> "${ERROR_FILE}" 2>&1 > /dev/null
+
+    # set 24 hour time
+    defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
 }
 
 set_preferences() {

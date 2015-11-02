@@ -208,10 +208,10 @@ main() {
     exit_on_fail "homebrew failed (homebrew/versions)"
     print_separator
 
-    # cask apps
-    install_homebrew_cask
-    exit_on_fail "homebrew failed (cask)"
-    print_separator
+    # cask apps TODO: are ql plugins causing crashes?
+    # install_homebrew_cask
+    # exit_on_fail "homebrew failed (cask)"
+    # print_separator
 
     # homebrew fonts
     install_homebrew_font

@@ -12,26 +12,43 @@ declare -r E_PREFERENCE_FAILURE=101
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-declare -a APPS=(
+declare -r -a APPS=(
     ''
 )
-declare -r COMPUTER_NAME="Bar"
-declare -r HD_NAME="Foo"
+declare COMPUTER_NAME="Bar"
+declare HD_NAME="Foo"
 
 # -----------------------------------------------------------------------------
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
+set_computer_name() {
+    confirm "Set computer name to ${COMPUTER_NAME}"
+    if ! status_code; then
+        question_prompt "What would you like instead?"
+        COMPUTER_NAME="${REPLY}"
+    fi
+}
+
+set_hd_name() {
+    confirm "Set primary hard drive name to ${HD_NAME}"
+    if ! status_code; then
+        question_prompt "What would you like instead?"
+        HD_NAME="${REPLY}"
+    fi
+}
+
 general_preferences() {
     # Set computer name (as done via System Preferences → Sharing)
     # ex: Jarvis, Mark I, box, abacus, scud
-    # TODO: ask user for computer and hard drive names?
+    set_computer_name
     sudo scutil --set ComputerName "${COMPUTER_NAME}"
     sudo scutil --set HostName "${COMPUTER_NAME}"
     sudo scutil --set LocalHostName "${COMPUTER_NAME}"
     sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "${COMPUTER_NAME}"
 
     # Set harddrive name
+    set_hd_name
     diskutil rename / "${HD_NAME}"
 
     # Set standby delay to 24 hours (default is 1 hour)

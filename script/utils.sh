@@ -264,10 +264,9 @@ get_os() {
 _spinner() {
     case "$1" in
         start)
-            # TODO: spinner on the side?
-            let col=$(tput cols)-${#2}-7
             # display message
-            printf "\e[0;34m%s%${col}s\e[0m" "  [ ! ] $2"
+            print_info "$2"
+            # printf "\e[0;34m%s%${col}s\e[0m" "  [ ! ] $2"
 
             # start spinner
             local i=1
