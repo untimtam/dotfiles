@@ -149,7 +149,11 @@ install_homebrew_cask() {
             status_stop_spinner "Finished installing cask"
             exit_on_fail "cask installation failed" "${E_BREW_FAILURE}"
         fi
-        print_separator
+    fi
+}
+
+install_homebrew_cask_ql() {
+    if cmd_exists 'brew' && cmd_exists 'brew-cask'; then
         for i in "${HOMEBREW_CASK_QL[@]}"; do
             if [[ -n "$i" ]]; then
                 if brew cask list "$i" &> /dev/null; then
@@ -208,12 +212,17 @@ main() {
     exit_on_fail "homebrew failed (homebrew/versions)"
     print_separator
 
+    # install cask
+    install_homebrew_cask
+    exit_on_fail "homebrew failed (cask)"
+    print_separator
+
     # cask apps TODO: are ql plugins causing crashes?
-    # install_homebrew_cask
-    # exit_on_fail "homebrew failed (cask)"
+    # install_homebrew_cask_ql
+    # exit_on_fail "homebrew failed (cask ql plugins)"
     # print_separator
 
-    # homebrew fonts
+    # homebrew cask fonts
     install_homebrew_font
     exit_on_fail "homebrew failed (cask fonts)"
 }

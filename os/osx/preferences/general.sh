@@ -41,14 +41,12 @@ set_hd_name() {
 general_preferences() {
     # Set computer name (as done via System Preferences → Sharing)
     # ex: Jarvis, Mark I, box, abacus, scud
-    set_computer_name
     sudo scutil --set ComputerName "${COMPUTER_NAME}"
     sudo scutil --set HostName "${COMPUTER_NAME}"
     sudo scutil --set LocalHostName "${COMPUTER_NAME}"
     sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "${COMPUTER_NAME}"
 
     # Set harddrive name
-    set_hd_name
     diskutil rename / "${HD_NAME}"
 
     # Set standby delay to 24 hours (default is 1 hour)
@@ -171,6 +169,8 @@ ssd_preferences() {
 
 set_preferences() {
     start_spinner "Setting basic preferences"
+    set_computer_name
+    set_hd_name
     general_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting basic preferences"
     exit_on_fail "basic preferences failed" "${E_PREFERENCE_FAILURE}"
