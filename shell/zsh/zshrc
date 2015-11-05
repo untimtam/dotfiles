@@ -20,4 +20,3 @@ for file in ${HOME}/dotfiles/shell/zsh/{zshextra,tmuxinator_completions}; do
     [[ (-r "${file}") && (-f "${file}") ]] && source "${file}"
 done
 unset file
-
