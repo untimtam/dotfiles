@@ -45,7 +45,7 @@ To update the dotfiles, run the [bootstrap](script/bootstrap) script.
 * vim and vim packges
 * verification step
 * add post-install preferences to install
-* extra packages for some tools (python, ruby, ocaml, etc)
+* extra packages for some tools (opam init) (python, ruby, ocaml/opam, etc)
 * These dotfiles only work from `~/dotfiles`?
 
 ## [Contributing](CONTRIBUTING.md)
