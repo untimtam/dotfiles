@@ -168,9 +168,9 @@ ssd_preferences() {
 }
 
 set_preferences() {
-    start_spinner "Setting basic preferences"
     set_computer_name
     set_hd_name
+    start_spinner "Setting basic preferences"
     general_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting basic preferences"
     exit_on_fail "basic preferences failed" "${E_PREFERENCE_FAILURE}"

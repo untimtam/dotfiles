@@ -29,7 +29,9 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "../../../script/utils.sh"
 
+    opam init &> /dev/null
     # opam install ocp-index for ocaml autocomplete
+    # opam install utop
 }
 
 main
