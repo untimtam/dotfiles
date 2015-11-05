@@ -12,6 +12,7 @@ declare -r E_NPM_UPDATE_FAILURE=103
 declare -r E_RUBY_UPDATE_FAILURE=104
 declare -r E_PIP_UPDATE_FAILURE=105
 declare -r E_PIP3_UPDATE_FAILURE=106
+declare -r E_OPAM_UPDATE_FAILURE=107
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
@@ -73,6 +74,14 @@ update_pip3() {
     pip3 install --upgrade pip setuptools >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished updating Python 3.x"
     exit_on_fail "Python 3.x update failed" "${E_PIP3_UPDATE_FAILURE}"
+}
+
+update_opam() {
+    start_spinner "Updating Opam"
+    opam update >> "${ERROR_FILE}" 2>&1 > /dev/null \
+       && brew upgrade >> "${ERROR_FILE}" 2>&1 > /dev/null
+    status_stop_spinner "Finished updating Opam"
+    exit_on_fail "Opam update failed" "${E_OPAM_UPDATE_FAILURE}"
 }
 
 # -----------------------------------------------------------------------------
@@ -140,6 +149,12 @@ main() {
             if cmd_exists 'pip3'; then
                 update_pip3
                 exit_on_fail "pip3 update failed"
+            fi
+        fi
+        if [ $ARG == "opam" ] || [ $ARG == "all" ]; then
+            if cmd_exists 'opam'; then
+                update_opam
+                exit_on_fail "opam update failed"
             fi
         fi
     done
