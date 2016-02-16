@@ -16,13 +16,12 @@ declare -r E_TERMINAL_THEME_FAILURE=102
 declare -r INIT_SECTION=0 # init
 declare -r REPO_SECTION=1 # repo
 declare -r DIR_SECTION=2  # dir
-declare -r BIN_SECTION=3  # bin
-declare -r LINK_SECTION=4 # link
-declare -r TOOL_SECTION=5 # tool
-declare -r APPS_SECTION=6 # app
-declare -r PREF_SECTION=7 # pref
-declare -r EXTR_SECTION=8 # extra
-declare -r TEST_SECTION=9 # test
+declare -r LINK_SECTION=3 # link
+declare -r TOOL_SECTION=4 # tool
+declare -r APPS_SECTION=5 # app
+declare -r PREF_SECTION=6 # pref
+declare -r EXTR_SECTION=7 # extra
+declare -r TEST_SECTION=8 # test
 
 # -----------------------------------------------------------------------------
 # | System                                                                     |
@@ -208,8 +207,6 @@ main() {
                 bootstrap_section="${REPO_SECTION}"
             elif [[ "$1" == "dir" ]]; then
                 bootstrap_section="${DIR_SECTION}"
-            elif [[ "$1" == "bin" ]]; then
-                bootstrap_section="${BIN_SECTION}"
             elif [[ "$1" == "link" ]]; then
                 bootstrap_section="${LINK_SECTION}"
             elif [[ "$1" == "tool" ]]; then
@@ -246,14 +243,6 @@ main() {
     if [[ "${bootstrap_section}" -le "${DIR_SECTION}" ]]; then
         ../os/directories.sh "${fresh}"
         exit_on_fail "Directory creation failed"
-        print_separator_large
-        ((bootstrap_section+=1))
-    fi
-
-    # sync scripts
-    if [[ "${bootstrap_section}" -le "${BIN_SECTION}" ]]; then
-        ../os/bin.sh "${fresh}"
-        exit_on_fail "Script synchronization failed"
         print_separator_large
         ((bootstrap_section+=1))
     fi
