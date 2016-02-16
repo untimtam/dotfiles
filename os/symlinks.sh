@@ -34,6 +34,8 @@ declare -a SYMLINK_FILES=(
     "tools/tmux/tmux.conf"
 
     "tools/editor/editorconfig"
+
+    "tools/npm/npmrc"
 )
 
 # -----------------------------------------------------------------------------
@@ -71,6 +73,49 @@ verify_symlink() {
     fi
 }
 
+symlink_shell_dotfiles() {
+    sourceFile=""
+    targetFile=""
+    for file in "${SYMLINK_FILES[@]}"; do
+        if [[ -n "${file}" ]]; then
+            sourceFile="$(cd .. && pwd)/${file}"
+            targetFile="${HOME}/.$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
+            # create symlink if it doesnt already exist
+            verify_symlink "${sourceFile}" "${targetFile}"
+            exit_on_fail "Symbolic link creation error or conflict"
+        fi
+    done
+}
+
+symlink_zsh_prompt() {
+    # Symlink ZSH theme
+    prompt_source="$(cd .. && pwd)/shell/zsh/prompt_hellowor1d_setup"
+    prompt_target="$(cd .. && pwd)/shell/zsh/.zprezto/modules/prompt/functions/prompt_hellowor1d_setup"
+    verify_symlink "${prompt_source}" "${prompt_target}"
+    exit_on_fail "Symbolic link creation error or conflict"
+}
+
+# verify_bin_symlink(source): symlinks `source` to ~/bin
+verify_bin_symlink() {
+    sourceFile="$1"
+    targetFile="${HOME}/bin/$(printf "%s" "$1" | sed "s/.*\/\(.*\)/\1/g")"
+    verify_symlink "${sourceFile}" "${targetFile}"
+}
+
+symlink_bin_scripts() {
+    for file in ../bin/*; do
+        verify_bin_symlink "$(cd .. && pwd)/bin/$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
+    done
+}
+
+symlink_bootstrap_script() {
+    verify_bin_symlink "$(cd .. && pwd)/script/bootstrap"
+}
+
+symlink_sublime() {
+    verify_bin_symlink '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl'
+}
+
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
@@ -82,23 +127,32 @@ main() {
 
     print_section "Creating symbolic links"
 
-    local sourceFile=""
-    local targetFile=""
-    for file in "${SYMLINK_FILES[@]}"; do
-        if [[ -n "${file}" ]]; then
-            sourceFile="$(cd .. && pwd)/${file}"
-            targetFile="${HOME}/.$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
-            # create symlink if it doesnt already exist
-            verify_symlink "${sourceFile}" "${targetFile}"
-            exit_on_fail "Symbolic link creation error or conflict"
-        fi
-    done
+    # symlink shell dotfiles like zshrc
+    symlink_shell_dotfiles
+    exit_on_fail "Error symlinking shell dotfiles"
 
-    # Symlink ZSH theme
-    local prompt_source="$(cd .. && pwd)/shell/zsh/prompt_hellowor1d_setup"
-    local prompt_target="$(cd .. && pwd)/shell/zsh/.zprezto/modules/prompt/functions/prompt_hellowor1d_setup"
-    verify_symlink "${prompt_source}" "${prompt_target}"
-    exit_on_fail "Symbolic link creation error or conflict"
+    # symlink zsh prompt
+    symlink_zsh_prompt
+    exit_on_fail "Error symlinking zsh prompt"
+
+    # symlinks scripts
+    symlink_bin_scripts
+    exit_on_fail "Error symlinking scripts"
+
+    # symlink bootstrap
+    symlink_bootstrap_script
+    exit_on_fail "Error symlinking bootstrap"
+
+    # os specific symlinks
+    local -r OS="$(get_os)"
+    if [[ "${OS}" == "osx" ]]; then
+        symlink_sublime
+        exit_on_fail "Error symlinking sublime"
+    elif [[ "${OS}" == "ubuntu" ]]; then
+        errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+    else
+        errexit "This OS is not supported yet!" "${E_INVALID_OS}"
+    fi
 
     print_success "Finished creating symbolic links"
 }

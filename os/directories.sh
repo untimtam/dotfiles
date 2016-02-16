@@ -12,15 +12,25 @@ declare -r E_MKDIR_FAILED=101
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
+# TODO: set to github user if available?
 declare -r USER="hellowor1dn"
 declare -a DIRECTORIES=(
+    "${HOME}/Desktop"
+
+    "${HOME}/Downloads"
+    "${HOME}/Downloads/torrents"
+
+    "${HOME}/Pictures/Wallpapers"
+    "${HOME}/Pictures/Screenshots"
+
     "${HOME}/bin"
-    "${HOME}/code"
-    "${HOME}/code/Go/src/github.com/${USER}"
     "${HOME}/projects"
     "${HOME}/work"
-    "${HOME}/Downloads/torrents"
-    "${HOME}/Pictures/Wallpapers"
+    "${HOME}/workspaces"
+
+    "${HOME}/code"
+    "${HOME}/code/Go/src/github.com/${USER}"
+    "${HOME}/code/ocaml"
 )
 
 # -----------------------------------------------------------------------------
