@@ -34,7 +34,7 @@ main() {
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
         print_info "Run OSX tests"
-    elif [[ "${OS}" == "ununtu" ]]; then
+    elif [[ "${OS}" == "ubuntu" ]]; then
         errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
     else
         errexit "This OS is not supported yet!" "${E_INVALID_OS}"

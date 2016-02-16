@@ -59,14 +59,15 @@ main() {
 
     print_section "Running initialization"
 
+    # update os
+    ../bin/update os
+
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
-        # update osx
-        ../bin/update osx
         # install xcode command line tools
         install_xcode
         exit_on_fail "Xcode install failed"
-    elif [[ "${OS}" == "ununtu" ]]; then
+    elif [[ "${OS}" == "ubuntu" ]]; then
         errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
     else
         errexit "This OS is not supported yet!" "${E_INVALID_OS}"

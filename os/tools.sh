@@ -42,9 +42,9 @@ main() {
     if [[ "${tool}" -eq 0 ]]; then
         local -r OS="$(get_os)"
         if [[ "${OS}" == "osx" ]]; then
-            ./osx/tools/main.sh
+            ./osx/tools/main.sh "$1"
             exit_on_fail "Error while installing tools"
-        elif [[ "${OS}" == "ununtu" ]]; then
+        elif [[ "${OS}" == "ubuntu" ]]; then
             errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
         else
             errexit "This OS is not supported yet!" "${E_INVALID_OS}"
