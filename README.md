@@ -3,12 +3,13 @@
 
 ## Setup
 
+Please only continue if you know what you're doing...
 To setup the [dotfiles](dotfiles) just run the appropriate snippet in the terminal:
 
 | OS | Snippet |
 |:---:|:---|
-| Ubuntu | :warning: Have not set up dotfiles for ubuntu |
 | OS X | ```bash -c "$(curl -LsS https://raw.github.com/hellowor1dn/dotfiles/master/dotfiles)"``` |
+| Ubuntu | ```bash -c "$(wget -qO - https://raw.github.com/hellowor1dn/dotfiles/master/dotfiles)"``` |
 
 
 This will:
@@ -22,7 +23,7 @@ This will:
 
 ## Post-setup
 
-See the [Post-Setup](POST_SETUP.md) file.
+See the [OSX Post-Setup](POST_SETUP.md) file.
 
 ## Update
 
@@ -47,6 +48,14 @@ To update the dotfiles, run the [bootstrap](script/bootstrap) script.
 * add post-install preferences to install
 * extra packages for some tools (opam init) (python, ruby, ocaml/opam, etc)
 * These dotfiles only work from `~/dotfiles`?
+
+## Adding (?):
+- [] update gnu utils
+- [] teamspeak
+- [] GitUp
+- [] StarUML
+- [] Tor/Torbrowser
+- [] rust packages?
 
 ## [Contributing](CONTRIBUTING.md)
 

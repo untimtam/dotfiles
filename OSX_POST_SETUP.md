@@ -41,6 +41,8 @@ system preferences: Users & Groups > User > Login Items > set login apps
 * itunes helper
 * skype
 * pocket
+* calendar
+* gitify
 
 ## Accessibility
 
@@ -52,3 +54,15 @@ system preferences: Security & Privacy > Privacy > Accessibility access > set ac
 * parallels
 * razer
 * spectacle
+
+
+## Apps on trial
+
+* Spectacle
+* Boost
+* gitify
+* yays
+* Caprine
+* Kaku
+* Yoda
+
