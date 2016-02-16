@@ -1,38 +1,34 @@
 # Aliases
-# TODO: will only work on OSX
 
 # -----------------------------------------------------------------------------
 # | General                                                                    |
 # -----------------------------------------------------------------------------
 
 # Shortcuts for changing directories
-alias ~="cd ~"
-alias cd..="cd ../"
+alias ~='cd ~'
+alias ~~='cd ~ && clear && ls'
+alias cd..='cd ../'
 
 # quickly switch to commonly used directories
-# `~/code`, `~/projects`, `~/work`, `~/Downloads/torrents`
 alias dl="cd ${HOME}/Downloads"
 alias dt="cd ${HOME}/Desktop"
 alias co="cd ${HOME}/code"
 alias pr="cd ${HOME}/projects"
 alias wr="cd ${HOME}/work"
+alias dots="cd ${DOTS}"
 
 # List directories only
 alias ld='ls -l | grep "^d"'
+alias lA='ls -A'
 
 # path
 alias path='echo -e ${PATH//:/\\n}'
 
-# TODO: really delete things?
-# alias rm='rm -rf'
+# really delete things
+alias rmf='rm -rf'
 
-# TODO: update things in script?
-# alias update='sudo softwareupdate -ia \
-#                    && brew update \
-#                    && brew upgrade --all \
-#                    && brew cleanup \
-#                    && npm install -g npm \
-#                    && npm update -g'
+# lazy startup...
+alias start='emptytrash && startup && cleanup'
 
 # -----------------------------------------------------------------------------
 # | Developer                                                                  |
@@ -45,14 +41,14 @@ alias editor='echo "${EDITOR}"'
 # clear
 alias c='clear'
 alias cls='clear && ls'
+alias cla='clear && lA'
+alias ctr='clear && tree'
 
 # Developer shortcuts
-alias edit='vim'
+alias edit="${EDITOR}"
 alias tasks='gulp --tasks'
 alias check='npm-check'
 alias numFiles='echo $(ls -1 | wc -l)'
-# TODO: is this defined in zsh?
-alias f='open -a Finder ./'
 alias m='man'
 alias map='xargs -n1'
 
@@ -65,12 +61,18 @@ alias octal='stat -f %Mp%Lp'
 alias lns='ln -s'
 alias symlink='lns'
 
-# npm list
+# npm
 alias ng='npm list -g --depth=0 2> /dev/null'
 alias nl='npm list --depth=0 2> /dev/null'
+alias npmig='npm i -g'
+alias npmis='npm i -S'
+alias npmid='npm i -D'
+
+# bower
+alias bis='bower install --save'
 
 # tmux
-alias muxls='tmux list-session'
+alias muxls='tmuxl'
 alias muxks='tmux kill-session'
 
 # -----------------------------------------------------------------------------
@@ -97,34 +99,53 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 # | Other                                                                      |
 # -----------------------------------------------------------------------------
 
-alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
-
-# Show/hide hidden files in Finder
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-
-# Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
-# Recursively delete `.DS_Store` files
-alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
-
-# Clean up LaunchServices to remove duplicates in the “Open With” menu
-alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
-
-# Empty the Trash on all mounted volumes and the main HDD.
-# Also, clear Apple’s System Logs to improve shell startup speed.
-# Finally, clear download history from quarantine. https://mths.be/bum
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-
-# Merge PDF files
-# Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
-alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
-
-# Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
-# (useful when executing time-consuming commands)
-alias badge="tput bel"
-
 # Reload the shell (i.e. invoke as a login shell)
-alias reload="exec $SHELL -l"
+alias reload="clear && exec $SHELL -l"
+
+# -----------------------------------------------------------------------------
+# | OSX                                                                        |
+# -----------------------------------------------------------------------------
+
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    # open current directory in Finder
+    alias f='open -a Finder ./'
+
+    # go afk in OSX
+    alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+
+    # Show/hide hidden files in Finder
+    alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+    alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+    # Hide/show all desktop icons (useful when presenting)
+    alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+    alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+    # Recursively delete `.DS_Store` files
+    alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+    # Clean up LaunchServices to remove duplicates in the “Open With” menu
+    alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+
+    # Empty the Trash on all mounted volumes and the main HDD.
+    # Also, clear Apple’s System Logs to improve shell startup speed.
+    # Finally, clear download history from quarantine. https://mths.be/bum
+    alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+    # Merge PDF files
+    # Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
+    alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
+
+    # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
+    # (useful when executing time-consuming commands)
+    # alias badge="tput bel"
+    alias badge="osascript -e 'beep'"
+fi
+
+# -----------------------------------------------------------------------------
+# | Ubuntu                                                                     |
+# -----------------------------------------------------------------------------
+
+# if [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
+#     # ubuntu aliases
+# fi
