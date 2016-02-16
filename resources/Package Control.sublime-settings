@@ -13,6 +13,7 @@
         "CSS3",
         "DocBlockr",
         "EncodingHelper",
+        "EditorConfig",
         "FileDiffs",
         "Git",
         "GitGutter",
