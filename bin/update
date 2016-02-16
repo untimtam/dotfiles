@@ -6,7 +6,7 @@
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
-declare -r E_OSX_UPDATE_FAILURE=101
+declare -r E_OS_UPDATE_FAILURE=101
 declare -r E_BREW_UPDATE_FAILURE=102
 declare -r E_NPM_UPDATE_FAILURE=103
 declare -r E_RUBY_UPDATE_FAILURE=104
@@ -28,7 +28,15 @@ update_osx() {
     start_spinner "Updating OSX (if system restarts during bootstrap, run 'cd ${HOME} && ./dotfiles/script/bootstrap')"
     sudo softwareupdate -ia >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished updating OSX"
-    exit_on_fail "OSX update failed" "${E_OSX_UPDATE_FAILURE}"
+    exit_on_fail "OSX update failed" "${E_OS_UPDATE_FAILURE}"
+}
+
+update_ubuntu() {
+    start_spinner "Updating Ubuntu (if system restarts during bootstrap, run 'cd ${HOME} && ./dotfiles/script/bootstrap')"
+    sudo apt-get update -qqy >> "${ERROR_FILE}" 2>&1 > /dev/null \
+        && sudo apt-get upgrade -qqy >> "${ERROR_FILE}" 2>&1 > /dev/null
+    status_stop_spinner "Finished updating Ubuntu"
+    exit_on_fail "Ubuntu update failed" "${E_OS_UPDATE_FAILURE}"
 }
 
 update_homebrew() {
@@ -40,6 +48,7 @@ update_homebrew() {
     exit_on_fail "Homebrew update failed" "${E_BREW_UPDATE_FAILURE}"
 }
 
+# TODO: update nvm
 update_npm() {
     start_spinner "Updating NodeJS"
     npm install -g npm >> "${ERROR_FILE}" 2>&1 > /dev/null \
@@ -48,6 +57,7 @@ update_npm() {
     exit_on_fail "NodeJS update failed" "${E_NPM_UPDATE_FAILURE}"
 }
 
+# TODO: update rbenv
 update_gems() {
     start_spinner "Updating Ruby"
     gem update >> "${ERROR_FILE}" 2>&1 > /dev/null
@@ -113,12 +123,16 @@ main() {
     fi
 
     # Run sections based on command line arguments
-    # update all|osx|brew|npm|gem|pip|pip3
+    # update all|os|brew|npm|gem|pip|pip3
     for ARG in "$@"; do
-        if [ $ARG == "osx" ] || [ $ARG == "all" ]; then
-            if [[ "$(get_os)" == "osx" ]]; then
+        if [ $ARG == "os" ] || [ $ARG == "all" ]; then
+            local -r OS="$(get_os)"
+            if [[ "${OS}" == "osx" ]]; then
                 update_osx
                 exit_on_fail "OSX update failed"
+            elif [[ "${OS}" == "ubuntu" ]]; then
+                update_ubuntu
+                exit_on_fail "Ubuntu update failed"
             fi
         fi
         if [ $ARG == "brew" ] || [ $ARG == "all" ]; then

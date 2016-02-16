@@ -1,0 +1,54 @@
+#!/bin/sh
+# This script lets you hide a specified application, the Finder, all
+# applications but the Finder, or all applications other than a specified
+# application, as well as bring any application to the front or toggle
+# hidden and visible applications.
+# Script written by Eugene Lee, Kirk McElhearn and Simon Forster.
+#
+# Syntax is as follows:
+#
+# hide [appname]    - hides specified app
+# hide -x [appname] - hides all apps but specified app; if no app is
+#                     specified, Terminal remains visible
+# hide -a [appname] - hides all apps but Finder; if an application is
+#                     specified, it remains visible as well
+# hide -f           - hides Finder
+# hide -v [appname] - brings specified app to the front, whether it
+#                     is hidden or visible already
+# hide -t           - toggles visible/hidden apps
+# hide -s           - shows all apps
+# hide -q [appname] - quits specified app
+#
+# Applications whose names contain spaces must be quoted, i.e.,
+# hide "microsoft word". This command is case-insensitive.
+
+osascript <<END
+  set arg1 to "$1"
+  set arg2 to "$2"
+  tell application "Finder"
+    if arg1 begins with "-" then
+      # the next two if's are supposed to be one line. They've been
+      # broken here for spacing purposes. Enter each as one line!
+      if arg1 contains "o" then set visible of every process whose
+        visible is true and name is not arg2 to false
+      if arg1 contains "a" then set visible of every process whose
+        visible is true and name is not "Finder" and name is not arg2 to false
+      if arg1 contains "f" then set visible of process "Finder" to false
+      if arg1 contains "v" then tell me to tell application arg2 to activate
+      if arg1 contains "q" then tell me to tell application arg2 to quit
+      if arg1 contains "t" then
+        set theVisible to name of every process whose visible is true
+        repeat with theProcess in every process
+          if theVisible contains name of theProcess then
+            set visible of contents of theProcess to false
+          else
+            set visible of contents of theProcess to true
+          end if
+        end repeat
+      end if
+      if arg1 contains "x" then tell application "Terminal" to activate
+      else if exists application process arg1 then
+        set visible of application process arg1 to false
+    end if
+  end tell
+END

@@ -95,8 +95,8 @@ main() {
     declare -r ICON_DIR='/tmp/tinalatif-icns'
 
     # use github repo if available
-    if [[ -d "${HOME}/code/flat.icns" ]]; then
-        local -r ICON_SRC="${HOME}/code/flat.icns/icns"
+    if [[ -d "${HOME}/projects/flat.icns" ]]; then
+        local -r ICON_SRC="${HOME}/projects/flat.icns/icns"
 
         print_info "Copying flat icons"
         cp -R "${ICON_SRC}" "${ICON_DIR}"
@@ -128,4 +128,4 @@ main() {
     fi
 }
 
-main
+main "$@"
