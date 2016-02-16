@@ -1,0 +1,8 @@
+# .npmrc
+init-license=MIT
+init-version=0.0.1
+
+init-author-name=Timothee Flichy
+init-author-email=timflichy@gmail.com
+# init-author-url=http://timflichy.com
+
