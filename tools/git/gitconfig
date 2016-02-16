@@ -1,1 +1,14 @@
 # .gitconfig
+[user]
+	name = Tim Flichy
+	email = timothee.flichy@mail.mcgill.ca
+[credential]
+	helper = osxkeychain
+[color]
+	ui = true
+[core]
+	excludesfile = /Users/hellowor1d/.gitignore_global
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
