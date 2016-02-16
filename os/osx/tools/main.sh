@@ -42,7 +42,7 @@ main() {
     exit_on_fail "Update failed"
     print_separator
 
-    # xcode installed in init
+    # xcode already installed in init
 
     # TODO: check for install dependencies
     # install homebrew
@@ -69,17 +69,26 @@ main() {
     ../../../bin/update brew npm gem pip pip3
     exit_on_fail "Update failed"
 
-    # update shells
-    if [[ -e "/usr/local/bin/bash" ]]; then
-        sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
-        # set shell to updated bash
-        change_shell "/usr/local/bin/bash"
+    local do_change_shell=1
+    if [[ "$1" -eq 0 ]]; then
+        do_change_shell=0
+    else
+        confirm "Install tools?"
+        do_change_shell="$?"
     fi
-    if [[ -e "/usr/local/bin/zsh" ]]; then
+    # update shells
+    if [[ do_change_shell -eq 0 ]]; then
+        # TODO: should only run once now but make sure we dont polute /etc/shells?
+        sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
         sudo bash -c 'echo /usr/local/bin/zsh >> /etc/shells'
-        # set shell to updated zsh (preferred over bash)
-        change_shell "/usr/local/bin/zsh"
+        if [[ -e "/usr/local/bin/zsh" ]]; then
+            # set shell to updated zsh (preferred over bash)
+            change_shell "/usr/local/bin/zsh"
+        elif [[ -e "/usr/local/bin/bash" ]]; then
+            # set shell to updated bash
+            change_shell "/usr/local/bin/bash"
+        fi
     fi
 }
 
-main
+main "$1"

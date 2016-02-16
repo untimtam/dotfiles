@@ -25,6 +25,8 @@ declare -r -a HOMEBREW_CASK_APPS=(
     'appcleaner'
     'liteicon'
     'spectacle'
+
+    'caprine'
 )
 
 # -----------------------------------------------------------------------------

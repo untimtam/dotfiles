@@ -46,14 +46,19 @@ declare -r -a NPM_PACKAGES=(
     'express-generator'
 
     'yo'
+    'vmd'
+    'tldr'
 
     'resume-cli'
-
-    'vmd'
+    'hackmyresume'
 
     'vulcanize'
     'generator-polymer'
     'web-component-tester'
+
+    'electron-prebuilt'
+    'electron-packager'
+    'electron-builder'
 )
 
 # -----------------------------------------------------------------------------
@@ -100,6 +105,7 @@ install_npm_packages() {
     # Install the `npm` packages
     for i in "${NPM_PACKAGES[@]}"; do
         if [[ -n "$i" ]]; then
+            # TODO: is there a better way of detecting installed package?
             if npm -g list "$i" &> /dev/null; then
                 print_success "$i is already installed"
             else
@@ -126,7 +132,7 @@ main() {
         errexit "Git is required, please install it!\n" "${E_GIT_NOT_FOUND}"
     fi
 
-    # Install `nvm` and add the necessary configs to `~/dotfiles/shell/extra`
+    # Install `nvm`
     if [[ ! -d "${NVM_DIRECTORY}" ]]; then
         install_nvm
         exit_on_fail "NVM install failed"

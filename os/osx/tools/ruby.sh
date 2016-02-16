@@ -62,6 +62,7 @@ install_rbenv() {
 install_gems() {
     for i in "${GEMS[@]}"; do
         if [[ -n "$i" ]]; then
+            # TODO: detect gems that are already installed
             start_spinner "Installing $i"
             ${HOME}/.rbenv/shims/gem install "$i" &> /dev/null
             status_stop_spinner "Finished installing $i"

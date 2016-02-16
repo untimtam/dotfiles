@@ -47,6 +47,14 @@ declare -r -a HOMEBREW=(
     'rename'
     'zopfli'
     'duti'
+    'acrogenesis/macchanger/macchanger'
+    'mtr'
+    'mackup'
+    'rename'
+    # 'wine' # use wineskin?
+    'aspell'
+    # 'wine' # TODO: needs xquartz from cask
+    # TODO: updated gnu utils?
 )
 declare -r -a HOMEBREW_OPTS=(
     ['vim']='--override-system-vi'
@@ -56,17 +64,20 @@ declare -r -a HOMEBREW_OPTS=(
 declare -r -a HOMEBREW_VERSIONS=(
     'bash-completion2'
 )
-declare -r -a HOMEBREW_CASK_QL=(
-    'qlcolorcode'
-    'qlstephen'
-    'qlmarkdown'
-    'quicklook-json'
-    'betterzipql'
-    'suspicious-package'
-)
+# TODO: causing crashes??
+# declare -r -a HOMEBREW_CASK_QL=(
+#     'qlcolorcode'
+#     'qlstephen'
+#     'qlmarkdown'
+#     'quicklook-json'
+#     'betterzipql'
+#     'suspicious-package'
+# )
 declare -r -a HOMEBREW_FONTS=(
     'font-source-code-pro-for-powerline'
     'font-source-code-pro'
+    'font-fontawesome'
+    'font-roboto'
 )
 
 # -----------------------------------------------------------------------------

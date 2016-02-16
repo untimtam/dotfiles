@@ -21,9 +21,11 @@ declare -r -a DOCK_APPS=(
     'System Preferences'
     'Mail'
     'Skype'
+    'Caprine'
+    'Pocket'
     'Google Chrome'
     'Calendar'
-    'Reminders'
+    'Boost'
     'Notes'
     'TextEdit'
     'iTerm'
@@ -33,6 +35,7 @@ declare -r -a DOCK_APPS=(
     'League of Legends'
     'League of Legends PBE'
     'Curse'
+    'Parallels Desktop'
 )
 
 # -----------------------------------------------------------------------------

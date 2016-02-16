@@ -15,8 +15,8 @@ declare -r E_PREFERENCE_FAILURE=101
 declare -r -a APPS=(
     ''
 )
-declare COMPUTER_NAME="Bar"
-declare HD_NAME="Foo"
+declare COMPUTER_NAME="null"
+declare HD_NAME="void"
 
 # -----------------------------------------------------------------------------
 # | Functions                                                                  |
