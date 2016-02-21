@@ -90,6 +90,11 @@ sftp-config.json
 # Other
 # ****************************************
 
+# zsh files
+.zhistory
+.zcompdump
+.zprezto
+
 # Temp
 ~*
 .tmp

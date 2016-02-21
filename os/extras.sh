@@ -11,21 +11,23 @@
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
+declare -r E_INVALID_OS=101
+
 # git config
-declare -r E_GIT_CONFIG_FAILURE=101
+declare -r E_GIT_CONFIG_FAILURE=102
 
 # terminal app
-declare -r E_TERMINAL_THEME_FAILURE=102
+declare -r E_TERMINAL_THEME_FAILURE=103
 
 # iTerm app
-declare -r E_CLOSE_ITERM_FAILURE=103
-declare -r E_COPY_PREFERENCE_FAILURE=104
-declare -r E_READ_PREFERENCE_FAILURE=105
+declare -r E_CLOSE_ITERM_FAILURE=104
+declare -r E_COPY_PREFERENCE_FAILURE=105
+declare -r E_READ_PREFERENCE_FAILURE=106
 
 # sublime app
-declare -r E_COPY_SETTING_FAILURE=106
-declare -r E_DL_PACKAGE_CONTROL_FAILURE=107
-declare -r E_PACKAGES_FAILURE=108
+declare -r E_COPY_SETTING_FAILURE=107
+declare -r E_DL_PACKAGE_CONTROL_FAILURE=108
+declare -r E_PACKAGES_FAILURE=109
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |

@@ -154,6 +154,8 @@ if [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
     # Update and Upgrade Packages
     alias update='sudo apt-get update'
     alias upgrade='sudo apt-get upgrade'
+    alias dist-upgrade='sudo apt-get dist-upgrade'
+    alias upgrade-all='update && dist-upgrade'
     # Install and Remove Packages
     alias install='sudo apt-get install'
     alias uninstall='sudo apt-get remove'
@@ -171,7 +173,6 @@ if [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
     alias shutdown='sudo shutdown -h now'
     alias reboot='sudo reboot'
     # SSH
-    alias sshdrestart='sudo service sshd restart'
     alias sshrestart='sudo service ssh restart'
     # Network Start, Stop, and Restart
     alias networkrestart='sudo service networking restart'

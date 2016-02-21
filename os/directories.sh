@@ -30,7 +30,7 @@ declare -a DIRECTORIES=(
 
     "${HOME}/code"
     "${HOME}/code/Go/src/github.com/${USER}"
-    "${HOME}/code/ocaml"
+    # "${HOME}/code/ocaml"
 )
 
 # -----------------------------------------------------------------------------
