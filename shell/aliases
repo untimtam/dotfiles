@@ -146,6 +146,50 @@ fi
 # | Ubuntu                                                                     |
 # -----------------------------------------------------------------------------
 
-# if [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
-#     # ubuntu aliases
-# fi
+if [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
+    alias startunity='sudo service lightdm start'
+    # Grub
+    alias grubu='sudo update-grub' #update grub
+    alias grubi='sudo grub-install' #install grub
+    # Update and Upgrade Packages
+    alias update='sudo apt-get update'
+    alias upgrade='sudo apt-get upgrade'
+    # Install and Remove Packages
+    alias install='sudo apt-get install'
+    alias uninstall='sudo apt-get remove'
+    alias finstall='sudo apt-get -f install' #force install
+    alias frinstall='sudo apt-get -f install --reinstall' #force reinstall
+    # Add repository keys (usage: addkey XXXXXXXX - last 8 digits of the key)
+    alias addkey='sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com'
+    # Search apt repository
+    alias search='sudo apt-cache search'
+    # Cleaning
+    alias clean='sudo apt-get clean && sudo apt-get autoclean'
+    alias remove='sudo apt-get remove && sudo apt-get autoremove'
+    alias purge='sudo apt-get purge'
+    # Shutdown and Reboot
+    alias shutdown='sudo shutdown -h now'
+    alias reboot='sudo reboot'
+    # Network Start, Stop, and Restart
+    alias networkrestart='sudo service networking restart'
+    alias networkstop='sudo service networking stop'
+    alias networkstart='sudo service networking start'
+    # SAMBA Start, Stop, and Restart
+    alias sambarestart='sudo service smbd restart'
+    alias sambastop='sudo service smbd stop'
+    alias sambastart='sudo service smbd start'
+    # Misellaneous
+    alias fdisk='sudo fdisk -l'
+    alias uuid='sudo vol_id -u' #list UUIDs
+    alias rfind='sudo find / -name' #find a file. Usage: rfind 'filename'
+    alias rd='sudo rm -R' #remove directory
+    alias imount='sudo mount -o loop -t iso9660' #mount iso. Usage: imount 'filename.iso'
+    alias dirsize='sudo du -hx --max-depth=1' #directory size. Usage: dirsize directoryname
+    # Commands
+    alias rrsync='rsync --verbose -rtvogp --progress'
+    alias scp='scp -c blowfish'
+    alias nano='sudo nano -iSw$'
+    alias cp='cp --verbose'
+    alias mv='mv --verbose'
+    alias make='make -j4'
+fi
