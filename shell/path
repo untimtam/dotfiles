@@ -28,4 +28,9 @@ if which cargo &> /dev/null; then
     PATH="${PATH}:${HOME}/.cargo/bin"
 fi
 
+if which rbenv &> /dev/null; then
+    export RBENVPATH="${HOME}/.rbenv"
+    PATH="${PATH}:${RBENVPATH}/bin"
+fi
+
 export PATH
