@@ -170,6 +170,9 @@ if [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
     # Shutdown and Reboot
     alias shutdown='sudo shutdown -h now'
     alias reboot='sudo reboot'
+    # SSH
+    alias sshdrestart='sudo service sshd restart'
+    alias sshrestart='sudo service ssh restart'
     # Network Start, Stop, and Restart
     alias networkrestart='sudo service networking restart'
     alias networkstop='sudo service networking stop'
