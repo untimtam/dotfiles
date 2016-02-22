@@ -93,7 +93,6 @@ sftp-config.json
 # zsh files
 .zhistory
 .zcompdump
-.zprezto
 
 # logs
 *.log
@@ -101,6 +100,9 @@ sftp-config.json
 # Temp
 ~*
 .tmp
+
+# Test
+test.sh
 
 # sublime workspace folder
 workspace
