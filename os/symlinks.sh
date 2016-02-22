@@ -39,6 +39,20 @@ declare -a SYMLINK_FILES=(
     "tools/npm/npmrc"
 )
 
+declare -a COMMON_BIN=(
+    "bin/update"
+)
+
+declare -a USER_BIN=(
+    "bin/osx/hide"
+    "bin/osx/icons"
+    "bin/osx/startup"
+)
+
+declare -a SERVER_BIN=(
+    ""
+)
+
 # -----------------------------------------------------------------------------
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
@@ -103,9 +117,51 @@ verify_bin_symlink() {
     verify_symlink "${sourceFile}" "${targetFile}"
 }
 
+# symlink_bin_scripts() {
+#     for file in ../bin/*; do
+#         verify_bin_symlink "$(cd .. && pwd)/bin/$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
+#     done
+# }
+
 symlink_bin_scripts() {
-    for file in ../bin/*; do
-        verify_bin_symlink "$(cd .. && pwd)/bin/$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
+    sourceFile=""
+    targetFile=""
+    for file in "${COMMON_BIN[@]}"; do
+        if [[ -n "${file}" ]]; then
+            sourceFile="$(cd .. && pwd)/${file}"
+            targetFile="${HOME}/bin/$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
+            # create symlink if it doesnt already exist
+            verify_symlink "${sourceFile}" "${targetFile}"
+            exit_on_fail "Symbolic link creation error or conflict"
+        fi
+    done
+}
+
+symlink_bin_user_scripts() {
+    sourceFile=""
+    targetFile=""
+    for file in "${USER_BIN[@]}"; do
+        if [[ -n "${file}" ]]; then
+            sourceFile="$(cd .. && pwd)/${file}"
+            targetFile="${HOME}/bin/$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
+            # create symlink if it doesnt already exist
+            verify_symlink "${sourceFile}" "${targetFile}"
+            exit_on_fail "Symbolic link creation error or conflict"
+        fi
+    done
+}
+
+symlink_bin_server_scripts() {
+    sourceFile=""
+    targetFile=""
+    for file in "${SERVER_BIN[@]}"; do
+        if [[ -n "${file}" ]]; then
+            sourceFile="$(cd .. && pwd)/${file}"
+            targetFile="${HOME}/bin/$(printf "%s" "${file}" | sed "s/.*\/\(.*\)/\1/g")"
+            # create symlink if it doesnt already exist
+            verify_symlink "${sourceFile}" "${targetFile}"
+            exit_on_fail "Symbolic link creation error or conflict"
+        fi
     done
 }
 
@@ -147,10 +203,15 @@ main() {
     # os specific symlinks
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
+        symlink_bin_user_scripts
+        exit_on_fail "Error symlinking scripts"
+
         symlink_sublime
         exit_on_fail "Error symlinking sublime"
     elif [[ "${OS}" == "ubuntu" ]]; then
-        errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+        symlink_bin_server_scripts
+        exit_on_fail "Error symlinking scripts"
+        # print_info "No extra symlinks on Ubuntu"
     else
         errexit "This OS is not supported yet!" "${E_INVALID_OS}"
     fi

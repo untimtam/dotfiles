@@ -8,7 +8,7 @@
 
 declare -r E_OSX_UPDATE_FAILURE=101
 declare -r E_INVALID_OS=102
-declare -r E_XCODE_INSTALL_FAILED=103
+declare -r E_TOOL_INSTALL_FAILED=103
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
@@ -20,7 +20,7 @@ declare -r E_XCODE_INSTALL_FAILED=103
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
-install_xcode() {
+osx_init() {
     if ! xcode-select -p &> /dev/null; then
         print_info "Installing XCode command line tools"
 
@@ -31,7 +31,7 @@ install_xcode() {
             sleep 5
         done
 
-        status "Command line tools" "${E_XCODE_INSTALL_FAILED}"
+        status "Command line tools" "${E_TOOL_INSTALL_FAILED}"
 
         # point xcode-select developer directory to appropriate directory
         # https://github.com/alrra/dotfiles/issues/13
@@ -44,8 +44,17 @@ install_xcode() {
         sudo xcodebuild -license &> /dev/null
         status_no_exit "Agree with the XCode Command Line Tools licence"
 
-        print_success "Finished installing XCode tools"
+        print_success "Finished installing pre-req tools"
     fi
+}
+
+ubuntu_init() {
+    request_sudo
+
+    sudo apt-get install git xclip xdg-open
+    status "Command line tools" "${E_TOOL_INSTALL_FAILED}"
+
+    print_success "Finished installing pre-req tools"
 }
 
 # -----------------------------------------------------------------------------
@@ -65,10 +74,11 @@ main() {
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
         # install xcode command line tools
-        install_xcode
-        exit_on_fail "Xcode install failed"
+        osx_init
+        exit_on_fail "OSX init failed"
     elif [[ "${OS}" == "ubuntu" ]]; then
-        errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+        # install pre-req tools
+        ubuntu_init
     else
         errexit "This OS is not supported yet!" "${E_INVALID_OS}"
     fi

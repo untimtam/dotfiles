@@ -100,7 +100,7 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 # -----------------------------------------------------------------------------
 
 # Reload the shell (i.e. invoke as a login shell)
-alias reload="clear && exec $SHELL -l"
+alias reload="clear && exec ${SHELL} -l"
 
 # -----------------------------------------------------------------------------
 # | OSX                                                                        |
@@ -173,7 +173,10 @@ if [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
     alias shutdown='sudo shutdown -h now'
     alias reboot='sudo reboot'
     # SSH
+    alias sshstart='sudo service ssh start'
+    alias sshstop='sudo service ssh stop'
     alias sshrestart='sudo service ssh restart'
+    alias sshstatus='sudo service ssh status'
     # Network Start, Stop, and Restart
     alias networkrestart='sudo service networking restart'
     alias networkstop='sudo service networking stop'

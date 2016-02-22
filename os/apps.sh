@@ -45,7 +45,8 @@ main() {
             ./osx/apps/main.sh "$1"
             exit_on_fail "Error while installing apps"
         elif [[ "${OS}" == "ubuntu" ]]; then
-            errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+            ./ubuntu/apps/main.sh "$1"
+            exit_on_fail "Error while installing apps"
         else
             errexit "This OS is not supported yet!" "${E_INVALID_OS}"
         fi

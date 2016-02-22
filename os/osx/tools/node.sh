@@ -59,6 +59,8 @@ declare -r -a NPM_PACKAGES=(
     'electron-prebuilt'
     'electron-packager'
     'electron-builder'
+
+    'termcolors'
 )
 
 # -----------------------------------------------------------------------------

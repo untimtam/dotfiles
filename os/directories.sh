@@ -6,14 +6,18 @@
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
-declare -r E_MKDIR_FAILED=101
+declare -r E_INVALID_OS=101
+declare -r E_MKDIR_FAILED=102
+declare -r E_COMMON_FAILED=103
+declare -r E_USER_FAILED=104
+declare -r E_SERVER_FAILED=105
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-# TODO: set to github user if available?
 declare -r USER="hellowor1dn"
+
 declare -a DIRECTORIES=(
     "${HOME}/Desktop"
 
@@ -24,13 +28,20 @@ declare -a DIRECTORIES=(
     "${HOME}/Pictures/Screenshots"
 
     "${HOME}/bin"
+)
+
+declare -a USER_DIRECTORIES=(
     "${HOME}/projects"
     "${HOME}/work"
     "${HOME}/workspaces"
 
     "${HOME}/code"
     "${HOME}/code/Go/src/github.com/${USER}"
-    # "${HOME}/code/ocaml"
+)
+
+declare -a SERVER_DIRECTORIES=(
+    "${HOME}/.config"
+    "${HOME}/.fonts"
 )
 
 # -----------------------------------------------------------------------------
@@ -40,7 +51,7 @@ declare -a DIRECTORIES=(
 # verify_directory(directory): verify directory existence
 verify_directory() {
     if [[ ! -e "$1" ]]; then
-        # TODO: icons?
+        # TODO: directory icons?
         mkdir -p "$1"
         status "$1 created" "${E_MKDIR_FAILED}"
         return "$?"
@@ -62,6 +73,18 @@ verify_directory() {
     fi
 }
 
+# make_directories(directories): verify all directories in the array
+make_directories() {
+    declare -a directories=("${!1}")
+    for directory in "${directories[@]}"; do
+        if [[ -n "${directory}" ]]; then
+            # create directory if it doesnt already exist
+            verify_directory "${directory}"
+            exit_on_fail "Directory creation error or conflict"
+        fi
+    done
+}
+
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
@@ -73,13 +96,19 @@ main() {
 
     print_section "Creating directories"
 
-    for directory in "${DIRECTORIES[@]}"; do
-        if [[ -n "${directory}" ]]; then
-            # create directory if it doesnt already exist
-            verify_directory "${directory}"
-            exit_on_fail "Directory creation error or conflict"
-        fi
-    done
+    make_directories "${DIRECTORIES[@]}"
+    status "Finished creating common directories" "${E_COMMON_FAILED}"
+
+    local -r OS="$(get_os)"
+    if [[ "${OS}" == "osx" ]]; then
+        make_directories "${USER_DIRECTORIES[@]}"
+        status "Finished creating user directories" "${E_USER_FAILED}"
+    elif [[ "${OS}" == "ubuntu" ]]; then
+        make_directories "${SERVER_DIRECTORIES[@]}"
+        status "Finished creating server directories" "${E_SERVER_FAILED}"
+    else
+        errexit "This OS is not supported yet!" "${E_INVALID_OS}"
+    fi
 
     print_success "Finished creating directories"
 }

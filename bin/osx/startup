@@ -1,0 +1,14 @@
+# without running at the same time as regular startup programs
+
+# Open utility apps
+# open -ja "1Password 5" # opens automatically
+# open -ja "Pushbullet" # opens automatically
+open -ja "Spectacle"
+
+# Open productivity apps
+open -ja "Mail"
+open -ja "Calendar"
+
+# Open menubar apps
+open -ja "Gitify"
+open -ja "Loading"

@@ -95,10 +95,12 @@ sftp-config.json
 .zcompdump
 .zprezto
 
+# logs
+*.log
+
 # Temp
 ~*
 .tmp
-*.log
 
-# workspace folder
+# sublime workspace folder
 workspace

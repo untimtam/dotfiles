@@ -88,8 +88,8 @@ verify_os() {
 
     # OSX El Capitan
     declare -r MINIMUM_OS_X_VERSION="10.11"
-    # TODO: Ubuntu Trusty
-    # declare -r MINIMUM_UBUNTU_VERSION="14.04"
+    # Ubuntu Trusty
+    declare -r MINIMUM_UBUNTU_VERSION="14.04"
 
     if [[ "${OS_NAME}" == "Darwin" ]]; then
         OS_VERSION="$(sw_vers -productVersion)"
@@ -97,11 +97,10 @@ verify_os() {
             && return 0 \
             || printf "Sorry, this script is intended only for OS X ${MINIMUM_OS_X_VERSION}+\n"
     elif [[ ("${OS_NAME}" == "Linux") && (-e "/etc/lsb-release") ]]; then
-        # OS_VERSION="$(lsb_release -d | cut -f2 | cut -d' ' -f2)"
-        # is_supported_version "${OS_VERSION}" "${MINIMUM_UBUNTU_VERSION}" \
-        #     && return 0 \
-        #     || printf "Sorry, this script is intended only for Ubuntu ${MINIMUM_UBUNTU_VERSION}+\n"
-        printf 'Sorry, this script is intended only for OS X!\n'
+        OS_VERSION="$(lsb_release -d | cut -f2 | cut -d' ' -f2)"
+        is_supported_version "${OS_VERSION}" "${MINIMUM_UBUNTU_VERSION}" \
+            && return 0 \
+            || printf "Sorry, this script is intended only for Ubuntu ${MINIMUM_UBUNTU_VERSION}+\n"
     else
         printf 'Sorry, this script is intended only for OS X!\n'
     fi

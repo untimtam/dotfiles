@@ -45,7 +45,8 @@ main() {
             ./osx/tools/main.sh "$1"
             exit_on_fail "Error while installing tools"
         elif [[ "${OS}" == "ubuntu" ]]; then
-            errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+            ./ubuntu/tools/main.sh "$1"
+            exit_on_fail "Error while installing tools"
         else
             errexit "This OS is not supported yet!" "${E_INVALID_OS}"
         fi

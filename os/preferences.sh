@@ -45,7 +45,8 @@ main() {
             ./osx/preferences/main.sh "$1"
             exit_on_fail "Error while setting preferences"
         elif [[ "${OS}" == "ubuntu" ]]; then
-            errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+            ./ubuntu/preferences/main.sh "$1"
+            exit_on_fail "Error while setting preferences"
         else
             errexit "This OS is not supported yet!" "${E_INVALID_OS}"
         fi

@@ -11,7 +11,6 @@ declare -r E_SET_SSH_FAILURE=102
 declare -r E_UPDATE_FAILURE=103
 declare -r E_UPDATE_SUBMODULE_FAILURE=104
 
-
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
@@ -19,7 +18,6 @@ declare -r E_UPDATE_SUBMODULE_FAILURE=104
 # dotfiles repository
 declare -r GITHUB_REPOSITORY="hellowor1dn/dotfiles"
 declare -r DOTFILES_SSH_ORIGIN="git@github.com:${GITHUB_REPOSITORY}.git"
-# declare -r DOTFILES_HTTPS_ORIGIN="https://github.com/${GITHUB_REPOSITORY}.git"
 
 # github ssh settings
 declare -r GITHUB_SET_SSH_URL="https://github.com/settings/ssh"
