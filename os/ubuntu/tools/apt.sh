@@ -1,27 +1,62 @@
 #!/usr/bin/env bash
 #
-# Install chrome
+# Install apt tools
 
 # -----------------------------------------------------------------------------
 # | Errors                                                                     |
 # -----------------------------------------------------------------------------
 
 declare -r E_APT_FAILURE=101
-declare -r E_KEY_FAILURE=102
-declare -r E_SOURCE_FAILURE=103
-declare -r E_UPDATE_FAILURE=104
 
 # -----------------------------------------------------------------------------
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-declare -r NAME='google-chrome-stable'
+declare -r -a APT=(
+    'build-essential'
+
+    'git'
+    'curl'
+    'xclip'
+    'tree'
+    'tmux'
+
+    'imagemagick'
+    'gparted'
+    'zopfli'
+    'tar'
+    'zip'
+    'unzip'
+
+    'exfat-utils'
+    'exfat-fuse'
+
+    'vim'
+
+    'ssh-agent'
+    'libssl-dev'
+    'openssh-server'
+
+    'transmission'
+    'vlc'
+)
 
 # -----------------------------------------------------------------------------
 # | Functions                                                                  |
 # -----------------------------------------------------------------------------
 
-
+install_apt_packages() {
+    if cmd_exists 'apt-get'; then
+        for i in "${APT[@]}"; do
+            if [[ -n "$i" ]]; then
+                start_spinner "Installing $i"
+                install_package "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
+                status_stop_spinner "Finished installing $i"
+                exit_on_fail "$i installation failed" "${E_APT_FAILURE}"
+            fi
+        done
+    fi
+}
 
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
@@ -33,23 +68,15 @@ main() {
         && source "../../../script/utils.sh" \
         && source "../util.sh"
 
-    if ! package_is_installed "${NAME}"; then
-        add_key 'https://dl-ssl.google.com/linux/linux_signing_key.pub' >> "${ERROR_FILE}" 2>&1 > /dev/null
-        status "" "${E_KEY_FAILURE}"
+    update >> "${ERROR_FILE}" 2>&1 > /dev/null
+    upgrade >> "${ERROR_FILE}" 2>&1 > /dev/null
 
-        add_to_source_list 'http://dl.google.com/linux/chrome/deb/ stable main' 'google.list' >> "${ERROR_FILE}" 2>&1 > /dev/null
-        status "" "${E_SOURCE_FAILURE}"
+    install_apt_packages
+    exit_on_fail "APT package installations failed"
 
-        start_spinner "Updating apt"
-        update >> "${ERROR_FILE}" 2>&1 > /dev/null
-        status_stop_spinner "Finished updating apt"
-        exit_on_fail "Update failed" "${E_UPDATE_FAILURE}"
-    fi
-
-    start_spinner "Installing ${NAME}"
-    install_package "${NAME}"
-    status_stop_spinner "Finished installing ${NAME}"
-    exit_on_fail "${NAME} installation failed" "${E_APT_FAILURE}"
+    update >> "${ERROR_FILE}" 2>&1 > /dev/null
+    upgrade >> "${ERROR_FILE}" 2>&1 > /dev/null
+    autoremove >> "${ERROR_FILE}" 2>&1 > /dev/null
 }
 
 main "$1"

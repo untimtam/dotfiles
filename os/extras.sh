@@ -52,7 +52,6 @@ set_git_config() {
 
     git config --global user.name "${author}" >> "${ERROR_FILE}" 2>&1 > /dev/null \
         && git config --global user.email "${email}" >> "${ERROR_FILE}" 2>&1 > /dev/null \
-        && git config --global credential.helper osxkeychain >> "${ERROR_FILE}" 2>&1 > /dev/null \
         && git config --global color.ui true >> "${ERROR_FILE}" 2>&1 > /dev/null \
         && git config --global core.excludesfile "${HOME}/.gitignore_global" >> "${ERROR_FILE}" 2>&1 > /dev/null
     status "Git config" "${E_GIT_CONFIG_FAILURE}"
@@ -223,6 +222,9 @@ main() {
     if [[ "${extra}" -eq 0 ]]; then
         local -r OS="$(get_os)"
         if [[ "${OS}" == "osx" ]]; then
+            git config --global credential.helper osxkeychain >> "${ERROR_FILE}" 2>&1 > /dev/null
+            status "Git config" "${E_GIT_CONFIG_FAILURE}"
+
             set_terminal
             exit_on_fail "Error setting up terminal app"
 
@@ -238,7 +240,7 @@ main() {
 
             ../bin/icons
         elif [[ "${OS}" == "ubuntu" ]]; then
-            errexit "Ubuntu not supported yet!" "${E_INVALID_OS}"
+            print_success "No extras for Ubuntu"
         else
             errexit "This OS is not supported yet!" "${E_INVALID_OS}"
         fi

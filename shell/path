@@ -31,6 +31,8 @@ fi
 if which rbenv &> /dev/null; then
     export RBENVPATH="${HOME}/.rbenv"
     PATH="${PATH}:${RBENVPATH}/bin"
+    export RBENVPLUGINPATH="${HOME}/.rbenv/plugins"
+    PATH="${PATH}:${RBENVPLUGINPATH}/ruby-build/bin"
 fi
 
 export PATH

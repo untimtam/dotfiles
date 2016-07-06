@@ -24,19 +24,17 @@ declare -a DIRECTORIES=(
     "${HOME}/Downloads"
     "${HOME}/Downloads/torrents"
 
-    "${HOME}/Pictures/Wallpapers"
-    "${HOME}/Pictures/Screenshots"
-
     "${HOME}/bin"
 )
 
 declare -a USER_DIRECTORIES=(
+    "${HOME}/code"
     "${HOME}/projects"
     "${HOME}/work"
     "${HOME}/workspaces"
 
-    "${HOME}/code"
-    "${HOME}/code/Go/src/github.com/${USER}"
+    "${HOME}/Pictures/Wallpapers"
+    "${HOME}/Pictures/Screenshots"
 )
 
 declare -a SERVER_DIRECTORIES=(
@@ -96,15 +94,15 @@ main() {
 
     print_section "Creating directories"
 
-    make_directories "${DIRECTORIES[@]}"
+    make_directories DIRECTORIES[@]
     status "Finished creating common directories" "${E_COMMON_FAILED}"
 
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
-        make_directories "${USER_DIRECTORIES[@]}"
+        make_directories USER_DIRECTORIES[@]
         status "Finished creating user directories" "${E_USER_FAILED}"
     elif [[ "${OS}" == "ubuntu" ]]; then
-        make_directories "${SERVER_DIRECTORIES[@]}"
+        make_directories SERVER_DIRECTORIES[@]
         status "Finished creating server directories" "${E_SERVER_FAILED}"
     else
         errexit "This OS is not supported yet!" "${E_INVALID_OS}"
