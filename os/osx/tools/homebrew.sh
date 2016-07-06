@@ -31,48 +31,31 @@ declare -r -a HOMEBREW=(
     'tree'
     'fasd'
     'tmux'
-    'pandoc'
 
+    'duti'
+    'pandoc'
+    'aspell'
     'vim'
     'git'
     'git-lfs'
+    'wget'
+    'ack'
+    'zopfli'
 
     'speedtest_cli'
     'heroku-toolbelt'
-
-    # Still evaluating these
-    'imagemagick'
-    'wget'
-    'ack'
-    'rename'
-    'zopfli'
-    'duti'
-    'acrogenesis/macchanger/macchanger'
-    'mtr'
-    'mackup'
-    'rename'
-    # 'wine' # use wineskin?
-    'aspell'
-    # 'wine' # TODO: needs xquartz from cask
     # TODO: updated gnu utils?
 )
+
 declare -r -a HOMEBREW_OPTS=(
     ['vim']='--override-system-vi'
-    ['imagemagick']='--with-webp'
     ['wget']='--with-iri'
 )
+
 declare -r -a HOMEBREW_VERSIONS=(
     'bash-completion2'
 )
-# TODO: causing crashes??
-# declare -r -a HOMEBREW_CASK_QL=(
-#     'qlcolorcode'
-#     'qlstephen'
-#     'qlmarkdown'
-#     'quicklook-json'
-#     'betterzipql'
-#     'suspicious-package'
-# )
+
 declare -r -a HOMEBREW_FONTS=(
     'font-source-code-pro-for-powerline'
     'font-source-code-pro'
@@ -163,23 +146,6 @@ install_homebrew_cask() {
     fi
 }
 
-install_homebrew_cask_ql() {
-    if cmd_exists 'brew' && cmd_exists 'brew-cask'; then
-        for i in "${HOMEBREW_CASK_QL[@]}"; do
-            if [[ -n "$i" ]]; then
-                if brew cask list "$i" &> /dev/null; then
-                    print_success "$i already installed"
-                else
-                    start_spinner "Installing $i"
-                    brew cask install "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
-                    status_stop_spinner "Finished installing $i"
-                    exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
-                fi
-            fi
-        done
-    fi
-}
-
 # Homebrew Cask Fonts
 # https://github.com/caskroom/homebrew-fonts
 install_homebrew_font() {
@@ -227,11 +193,6 @@ main() {
     install_homebrew_cask
     exit_on_fail "homebrew failed (cask)"
     print_separator
-
-    # cask apps TODO: are ql plugins causing crashes?
-    # install_homebrew_cask_ql
-    # exit_on_fail "homebrew failed (cask ql plugins)"
-    # print_separator
 
     # homebrew cask fonts
     install_homebrew_font

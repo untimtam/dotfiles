@@ -27,8 +27,10 @@ alias path='echo -e ${PATH//:/\\n}'
 # really delete things
 alias rmf='rm -rf'
 
-# lazy startup...
-alias start='emptytrash && startup && cleanup'
+# Shutdown and Reboot
+alias shutdown='sudo shutdown -h now'
+alias reboot='sudo shutdown -r now'
+alias hardreboot='sudo reboot'
 
 # -----------------------------------------------------------------------------
 # | Developer                                                                  |
@@ -75,6 +77,12 @@ alias bis='bower install --save'
 alias muxls='tmuxl'
 alias muxks='tmux kill-session'
 
+# validate json
+alias vjson='cat | python -m json.tool'
+
+# mongodb
+alias mongol='mongod --dbpath ./data/db'
+
 # -----------------------------------------------------------------------------
 # | Network                                                                    |
 # -----------------------------------------------------------------------------
@@ -107,6 +115,9 @@ alias reload="clear && exec ${SHELL} -l"
 # -----------------------------------------------------------------------------
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
+    # lazy startup...
+    alias start='sudo -v && startup && emptytrash && cleanup && cls'
+
     # open current directory in Finder
     alias f='open -a Finder ./'
 
@@ -160,18 +171,16 @@ if [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
     alias install='sudo apt-get install'
     alias uninstall='sudo apt-get remove'
     alias finstall='sudo apt-get -f install' #force install
-    alias frinstall='sudo apt-get -f install --reinstall' #force reinstall
+    alias freinstall='sudo apt-get -f install --reinstall' #force reinstall
     # Add repository keys (usage: addkey XXXXXXXX - last 8 digits of the key)
     alias addkey='sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com'
     # Search apt repository
     alias search='sudo apt-cache search'
+    alias show='sudo apt-cache show'
     # Cleaning
     alias clean='sudo apt-get clean && sudo apt-get autoclean'
     alias remove='sudo apt-get remove && sudo apt-get autoremove'
     alias purge='sudo apt-get purge'
-    # Shutdown and Reboot
-    alias shutdown='sudo shutdown -h now'
-    alias reboot='sudo reboot'
     # SSH
     alias sshstart='sudo service ssh start'
     alias sshstop='sudo service ssh stop'
