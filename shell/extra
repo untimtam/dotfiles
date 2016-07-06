@@ -71,6 +71,6 @@ alias focal="${HOME}/work/focal/"
 # | notify on long tasks on osx                                                |
 # -----------------------------------------------------------------------------
 
-if [[ "$(uname -s)" == "Darwin" ]]; then
-    export PS1="$(f_notifyme)${PS1}"
-fi
+# if [[ "$(uname -s)" == "Darwin" ]]; then
+#     export PS1="$(f_notifyme)${PS1}"
+# fi
