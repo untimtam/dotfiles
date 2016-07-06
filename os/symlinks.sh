@@ -47,6 +47,7 @@ declare -a USER_BIN=(
     "bin/osx/hide"
     "bin/osx/icons"
     "bin/osx/startup"
+    "bin/osx/notifyme"
 )
 
 declare -a SERVER_BIN=(

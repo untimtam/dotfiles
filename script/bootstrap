@@ -196,6 +196,7 @@ main() {
                 # set section to any positive integer
                 bootstrap_section="$1"
             else
+                # TODO add --cont flag otherwise run just 1 section
                 if [[ "$1" == "init" ]]; then
                     bootstrap_section="${INIT_SECTION}"
                 elif [[ "$1" == "repo" ]]; then
