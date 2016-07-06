@@ -4,7 +4,6 @@ open -ja "Spectacle"
 # Open productivity apps
 open -ja "Mail"
 open -ja "Calendar"
-open -ja "Queue"
 
 # Open menubar apps
 open -ja "Gitify"

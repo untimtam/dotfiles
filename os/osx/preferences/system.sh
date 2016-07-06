@@ -19,23 +19,18 @@ declare -r -a APPS=(
 )
 declare -r -a DOCK_APPS=(
     'System Preferences'
+    'Calendar'
     'Mail'
-    'Skype'
-    'Caprine'
     'Pocket'
     'Google Chrome'
-    'Calendar'
-    'Boost'
-    'Notes'
+    'Franz'
+    'Skype'
     'TextEdit'
-    'iTerm'
     'Sublime Text'
-    'Github Desktop'
-    'iTunes'
-    'League of Legends'
-    'League of Legends PBE'
-    'Curse'
+    'Gitkraken'
+    'iTerm'
     'Parallels Desktop'
+    'League of Legends'
 )
 
 # -----------------------------------------------------------------------------
@@ -107,6 +102,7 @@ screen_preferences() {
     defaults write com.apple.screencapture disable-shadow -bool true
 
     # Enable subpixel font rendering on non-Apple LCDs
+    # TODO is this what messes up retina antialiasing on non-apple monitors?
     defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
     # Enable HiDPI display modes (requires restart)

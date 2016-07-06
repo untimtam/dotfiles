@@ -55,11 +55,11 @@ general_preferences() {
     # Disable the sound effects on boot
     sudo nvram SystemAudioVolume=" "
 
-    # Enable transparency in the menu bar and elsewhere on Yosemite
-    defaults write com.apple.universalaccess reduceTransparency -bool false
+    # Disable transparency in the menu bar and elsewhere on Yosemite
+    defaults write com.apple.universalaccess reduceTransparency -bool true
 
     # Disable high contrast mode in Yosemite
-    defaults write com.apple.universalaccess increaseContrast -bool false
+    # defaults write com.apple.universalaccess increaseContrast -bool false
 
     # Menu bar: hide the User icon
     for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
@@ -70,6 +70,7 @@ general_preferences() {
         "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
         "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
         "/System/Library/CoreServices/Menu Extras/Battery.menu" \
+        "/System/Library/CoreServices/Menu Extras/Volume.menu" \
         "/System/Library/CoreServices/Menu Extras/Clock.menu"
 
     # hide remaining battery time, show percentage.
@@ -124,7 +125,6 @@ general_preferences() {
     # Restart automatically if the computer freezes
     sudo systemsetup -setrestartfreeze on
 
-    # TODO: ? use caffeine?
     # Never go into computer sleep mode
     sudo systemsetup -setcomputersleep Off >> "${ERROR_FILE}" 2>&1 > /dev/null
 
@@ -132,20 +132,13 @@ general_preferences() {
     defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
     # Disable Notification Center and remove the menu bar icon
-    launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
+    # launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
 
     # Disable smart quotes
     defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
     # Disable smart dashes
     defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-
-    # TODO: Set wallpaper?
-    # Set a custom wallpaper image. `DefaultDesktop.jpg` is already a symlink, and
-    # all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
-    #rm -rf ~/Library/Application Support/Dock/desktoppicture.db
-    #sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
-    #sudo ln -s /path/to/your/image /System/Library/CoreServices/DefaultDesktop.jpg
 }
 
 ssd_preferences() {
@@ -154,14 +147,6 @@ ssd_preferences() {
 
     # Disable hibernation (speeds up entering sleep mode)
     sudo pmset -a hibernatemode 0
-
-    # TODO: ? Paul Irish turns this off too?
-    # Remove the sleep image file to save disk space
-    # sudo rm /private/var/vm/sleepimage
-    # Create a zero-byte file instead…
-    # sudo touch /private/var/vm/sleepimage
-    # …and make sure it can’t be rewritten
-    # sudo chflags uchg /private/var/vm/sleepimage
 
     # Disable the sudden motion sensor as it’s not useful for SSDs
     sudo pmset -a sms 0
