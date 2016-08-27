@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# Adb ninja
+
+for DEVICE in $(adb devices | grep [0-9] | tr -s "\t " " " | cut -d " " -f 1)
+do
+  adb -s ${DEVICE} "$@"
+done

@@ -6,6 +6,4 @@ open -ja "Mail"
 open -ja "Calendar"
 
 # Open menubar apps
-open -ja "Gitify"
 open -ja "Loading"
-open -ja "Airtool"

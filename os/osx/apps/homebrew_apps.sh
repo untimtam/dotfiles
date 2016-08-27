@@ -26,7 +26,7 @@ declare -r -a HOMEBREW_CASK_APPS=(
     'liteicon'
     'spectacle'
 
-    'caprine'
+    'franz'
 )
 
 # -----------------------------------------------------------------------------
