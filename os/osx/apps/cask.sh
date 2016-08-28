@@ -22,6 +22,7 @@ declare -r -a HOMEBREW_CASK_APPS=(
     'heroku-toolbelt'
     'docker'
     'postman'
+    'gitkraken'
 
     'alfred'
     'bartender'
