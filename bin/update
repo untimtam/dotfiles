@@ -125,16 +125,6 @@ main() {
     # Run sections based on command line arguments
     # update all|os|brew|npm|gem|pip|pip3
     for ARG in "$@"; do
-        if [ $ARG == "os" ] || [ $ARG == "all" ]; then
-            local -r OS="$(get_os)"
-            if [[ "${OS}" == "osx" ]]; then
-                update_osx
-                exit_on_fail "OSX update failed"
-            elif [[ "${OS}" == "ubuntu" ]]; then
-                update_ubuntu
-                exit_on_fail "Ubuntu update failed"
-            fi
-        fi
         if [ $ARG == "brew" ] || [ $ARG == "all" ]; then
             if cmd_exists 'brew'; then
                 update_homebrew
@@ -169,6 +159,16 @@ main() {
             if cmd_exists 'opam'; then
                 update_opam
                 exit_on_fail "opam update failed"
+            fi
+        fi
+        if [ $ARG == "os" ] || [ $ARG == "all" ]; then
+            local -r OS="$(get_os)"
+            if [[ "${OS}" == "osx" ]]; then
+                update_osx
+                exit_on_fail "OSX update failed"
+            elif [[ "${OS}" == "ubuntu" ]]; then
+                update_ubuntu
+                exit_on_fail "Ubuntu update failed"
             fi
         fi
     done
