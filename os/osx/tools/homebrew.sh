@@ -38,7 +38,7 @@ declare -r -a HOMEBREW=(
 )
 
 declare -r -a HOMEBREW_OPTS=(
-    ['vim']='--override-system-vi'
+    ['vim']='--with-override-system-vi'
     ['wget']='--with-iri'
 )
 
