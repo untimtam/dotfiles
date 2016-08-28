@@ -95,7 +95,7 @@ install_homebrew_formulae() {
                         brew install "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
                     fi
                     status_stop_spinner "Finished installing $i"
-                    exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
+                    # exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
                 fi
             fi
         done
@@ -114,7 +114,7 @@ install_homebrew_formulae_versions() {
                     start_spinner "Installing $i"
                     brew install "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
                     status_stop_spinner "Finished installing $i"
-                    exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
+                    # exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
                 fi
             fi
         done
@@ -148,7 +148,7 @@ install_homebrew_font() {
                     start_spinner "Installing $i"
                     brew cask install "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
                     status_stop_spinner "Finished installing $i"
-                    exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
+                    # exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
                 fi
             fi
         done
