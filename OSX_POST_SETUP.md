@@ -66,3 +66,17 @@ system preferences: Security & Privacy > Privacy > Accessibility access > set ac
 * Kaku
 * Yoda
 
+## missing apps
+league pbe
+league alpha
+hextech repair tool
+championify
+bastion
+alloy browser
+cgoban
+goban
+gog galaxy client
+open emu
+pocket
+stockfish chess
+todoist
