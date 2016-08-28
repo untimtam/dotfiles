@@ -19,7 +19,6 @@ declare -r -a HOMEBREW_CASK_APPS=(
     'github-desktop'
     'iterm2'
     'mou'
-    'heroku-toolbelt'
     'docker'
     'postman'
     'gitkraken'
