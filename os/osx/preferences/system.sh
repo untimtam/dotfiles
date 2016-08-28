@@ -79,7 +79,7 @@ io_preferences() {
     defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
     # Stop iTunes from responding to the keyboard media keys
-    #launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
+    launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
     # Automatically illuminate built-in MacBook keyboard in low light
     defaults write com.apple.BezelServices kDim -bool true
@@ -134,7 +134,7 @@ finder_preferences() {
     # Finder: show all filename extensions
     defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
-    # Finder: show status bar
+    # Finder: hide status bar
     defaults write com.apple.finder ShowStatusBar -bool false
 
     # Finder: show path bar
@@ -206,7 +206,7 @@ finder_preferences() {
 
     # TODO: ?
     # Enable the MacBook Air SuperDrive on any Mac
-    sudo nvram boot-args="mbasd=1"
+    # sudo nvram boot-args="mbasd=1"
 
     # Show the ~/Library folder
     chflags nohidden ~/Library

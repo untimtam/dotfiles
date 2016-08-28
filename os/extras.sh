@@ -236,7 +236,7 @@ main() {
 
             set_file_associations
 
-            set_league_preferences
+            # set_league_preferences
 
             ../bin/icons
         elif [[ "${OS}" == "ubuntu" ]]; then

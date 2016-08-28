@@ -29,36 +29,21 @@ declare -r -a NPM_PACKAGES=(
     'npm-check'
 
     'gulp'
-    'grunt-cli'
 
     'bower'
 
     'stylus'
-    'jade'
+    'pug'
     'coffee-script'
 
     'jscs'
     'jsonlint'
-    'coffeelint'
 
     'nodemon'
     'browser-sync'
-    'express-generator'
 
-    'yo'
     'vmd'
     'tldr'
-
-    'resume-cli'
-    'hackmyresume'
-
-    'vulcanize'
-    'generator-polymer'
-    'web-component-tester'
-
-    'electron-prebuilt'
-    'electron-packager'
-    'electron-builder'
 
     'termcolors'
 )

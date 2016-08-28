@@ -14,7 +14,6 @@ declare -r E_PREFERENCE_FAILURE=101
 
 declare -a APPS=(
     'Google Chrome'
-    'Google Chrome Canary'
     'Safari'
 )
 

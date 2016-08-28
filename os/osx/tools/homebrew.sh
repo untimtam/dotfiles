@@ -19,14 +19,9 @@ declare -r -a HOMEBREW=(
     'zsh'
     'zsh-completions'
 
-    # TODO: some more setup for some of these tools after? i.e. go, python, etc
     'python'
     'python3'
     'lua'
-    'ocaml'
-    'opam'
-    'rust'
-    'go'
 
     'tree'
     'fasd'
@@ -40,11 +35,6 @@ declare -r -a HOMEBREW=(
     'git-lfs'
     'wget'
     'ack'
-    'zopfli'
-
-    'speedtest_cli'
-    'heroku-toolbelt'
-    # TODO: updated gnu utils?
 )
 
 declare -r -a HOMEBREW_OPTS=(

@@ -89,9 +89,9 @@ mail_preferences() {
 
     # TODO: ?
     # Display emails in threaded mode, sorted by date (oldest at the top)
-    defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
-    defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
-    defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
+    # defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
+    # defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
+    # defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
 
     # Disable inline attachments (just show the icons)
     defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
@@ -155,7 +155,7 @@ messages_preferences() {
     defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
 
     # Disable continuous spell checking
-    defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
+    # defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 }
 
 set_preferences() {

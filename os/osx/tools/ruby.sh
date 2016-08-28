@@ -20,7 +20,7 @@ declare -r E_GEM_NOT_FOUND=105
 declare -r RBENV_DIRECTORY="${HOME}/.rbenv"
 declare -r -a RUBY_VERSIONS=(
     '2.2.3'
-    '2.3.0'
+    '2.3.1'
 )
 
 # gems

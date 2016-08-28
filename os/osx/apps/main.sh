@@ -18,11 +18,7 @@ declare -r -a APPSTORE=(
     'pages'
     'numbers'
 
-    'pushbullet'
     'pocket'
-    'slack'
-
-    'dash'
 )
 
 # -----------------------------------------------------------------------------
@@ -75,19 +71,19 @@ main() {
     install_apps
     exit_on_fail "App install failed"
 
-    if [[ "$1" -eq 0 ]]; then
-        declare -r -a MAN_INSTALL_FILES=(manual/install_*.sh)
-        manual_apps
-        exit_on_fail "Manual app install failed"
-    else
-        confirm "Install manual apps (cant check if they are installed already)?"
-        if status_code; then
-            manual_apps
-            exit_on_fail "Manual app install failed"
-        fi
-    fi
+    # if [[ "$1" -eq 0 ]]; then
+    #     declare -r -a MAN_INSTALL_FILES=(manual/install_*.sh)
+    #     manual_apps
+    #     exit_on_fail "Manual app install failed"
+    # else
+    #     confirm "Install manual apps (cant check if they are installed already)?"
+    #     if status_code; then
+    #         manual_apps
+    #         exit_on_fail "Manual app install failed"
+    #     fi
+    # fi
 
-    ./homebrew_apps.sh
+    ./cask.sh
     exit_on_fail "Homebrew app install failed"
 
     list_appstore

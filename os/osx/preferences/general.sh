@@ -56,7 +56,7 @@ general_preferences() {
     sudo nvram SystemAudioVolume=" "
 
     # Disable transparency in the menu bar and elsewhere on Yosemite
-    defaults write com.apple.universalaccess reduceTransparency -bool true
+    # defaults write com.apple.universalaccess reduceTransparency -bool true
 
     # Disable high contrast mode in Yosemite
     # defaults write com.apple.universalaccess increaseContrast -bool false

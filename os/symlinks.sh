@@ -45,9 +45,6 @@ declare -a COMMON_BIN=(
 
 declare -a USER_BIN=(
     "bin/osx/adb-ninja"
-    "bin/osx/hide"
-    "bin/osx/icons"
-    "bin/osx/notifyme"
     "bin/osx/startup"
 )
 

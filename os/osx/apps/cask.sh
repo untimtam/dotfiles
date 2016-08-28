@@ -13,21 +13,51 @@ declare -r E_BREW_FAILURE=101
 # -----------------------------------------------------------------------------
 
 declare -r -a HOMEBREW_CASK_APPS=(
-    'macvim'
-    'basictex'
+    'android-file-transfer'
+    'android-studio'
+    'sublime-text'
+    'github-desktop'
+    'iterm2'
+    'mou'
     'heroku-toolbelt'
+    'docker'
+    'postman'
 
+    'alfred'
+    'bartender'
+    'parallels-desktop'
+    'transmission'
+    'teamviewer'
+    '1password'
+    'keyboard-cleaner'
+    'wireshark'
     'caffeine'
     'flux'
     'grandperspective'
     'the-unarchiver'
     'couleurs'
     'appcleaner'
-    'liteicon'
     'spectacle'
+    'deluge'
+    'logitech-gaming-software'
 
+    'google-chrome'
+    'firefox'
+    'torbrowser'
+
+    'skype'
     'franz'
+    'slack'
+
+    'vlc'
+    'curse'
+    'league-of-legends'
+    'razer-synapse'
+    'steam'
+    'sonos'
 )
+
+
 
 # -----------------------------------------------------------------------------
 # | Homebrew                                                                   |
@@ -65,7 +95,7 @@ install_homebrew_apps() {
                     print_success "$i already installed"
                 else
                     start_spinner "Installing $i"
-                    brew cask install --appdir=/Applications "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
+                    brew cask install "$i" >> "${ERROR_FILE}" 2>&1 > /dev/null
                     status_stop_spinner "Finished installing $i"
                     exit_on_fail "$i installation failed" "${E_BREW_FAILURE}"
                 fi

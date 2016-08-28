@@ -6,4 +6,4 @@ open -ja "Mail"
 open -ja "Calendar"
 
 # Open menubar apps
-open -ja "Loading"
+
