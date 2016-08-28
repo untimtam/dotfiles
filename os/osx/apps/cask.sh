@@ -41,6 +41,7 @@ declare -r -a HOMEBREW_CASK_APPS=(
     'spectacle'
     'deluge'
     'logitech-gaming-software'
+    'razer-synapse'
 
     'google-chrome'
     'firefox'
@@ -53,7 +54,6 @@ declare -r -a HOMEBREW_CASK_APPS=(
     'vlc'
     'curse'
     'league-of-legends'
-    'razer-synapse'
     'steam'
     'sonos'
 )
