@@ -328,6 +328,10 @@ dock_preferences() {
     # Bottom left screen corner → Start screen saver
     # defaults write com.apple.dock wvous-bl-corner -int 5
     # defaults write com.apple.dock wvous-bl-modifier -int 0
+
+    # Lock dock size and position
+    # defaults write com.apple.Dock position-immutable -bool yes
+    defaults write com.apple.Dock size-immutable -bool yes
 }
 
 language_preferences() {

@@ -1,5 +1,4 @@
 # Open utility apps
-open -ja "Spectacle"
 
 # Open productivity apps
 open -ja "Mail"

@@ -74,3 +74,12 @@ alias focal="${HOME}/work/focal/"
 # if [[ "$(uname -s)" == "Darwin" ]]; then
 #     export PS1="$(f_notifyme)${PS1}"
 # fi
+
+# -----------------------------------------------------------------------------
+# | java                                                                       |
+# -----------------------------------------------------------------------------
+
+if which java &> /dev/null; then
+    export JDK_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk'
+    export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk'
+fi
