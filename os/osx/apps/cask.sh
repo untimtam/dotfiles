@@ -19,7 +19,6 @@ declare -r -a HOMEBREW_CASK_APPS=(
     'github-desktop'
     'iterm2'
     'mou'
-    'heroku-toolbelt'
     'docker'
     'postman'
     'gitkraken'
@@ -41,6 +40,7 @@ declare -r -a HOMEBREW_CASK_APPS=(
     'spectacle'
     'deluge'
     'logitech-gaming-software'
+    'razer-synapse'
 
     'google-chrome'
     'firefox'
@@ -53,7 +53,6 @@ declare -r -a HOMEBREW_CASK_APPS=(
     'vlc'
     'curse'
     'league-of-legends'
-    'razer-synapse'
     'steam'
     'sonos'
 )

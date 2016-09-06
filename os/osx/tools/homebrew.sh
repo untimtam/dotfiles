@@ -35,10 +35,11 @@ declare -r -a HOMEBREW=(
     'git-lfs'
     'wget'
     'ack'
+    'heroku-toolbelt'
 )
 
 declare -r -a HOMEBREW_OPTS=(
-    ['vim']='--override-system-vi'
+    ['vim']='--with-override-system-vi'
     ['wget']='--with-iri'
 )
 

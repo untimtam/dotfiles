@@ -55,28 +55,17 @@ system preferences: Security & Privacy > Privacy > Accessibility access > set ac
 * razer
 * spectacle
 
-
-## Apps on trial
-
-* Spectacle
-* Boost
-* gitify
-* yays
-* Caprine
-* Kaku
-* Yoda
-
 ## missing apps
-league pbe
-league alpha
-hextech repair tool
-championify
-bastion
-alloy browser
-cgoban
-goban
-gog galaxy client
-open emu
-pocket
-stockfish chess
-todoist
+* league pbe
+* league alpha
+* hextech repair tool
+* championify
+* bastion
+* alloy browser
+* cgoban
+* goban
+* gog galaxy client
+* open emu
+* pocket
+* stockfish chess
+* todoist
