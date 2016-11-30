@@ -81,7 +81,7 @@ is_supported_version() {
 }
 
 # verify_os(): verify current computer is running a supported os
-#   Supported: OSX
+#   Supported: macOS
 verify_os() {
     declare -r OS_NAME="$(uname -s)"
     declare OS_VERSION=""

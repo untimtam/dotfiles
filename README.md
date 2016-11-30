@@ -8,7 +8,7 @@ To setup the [dotfiles](dotfiles) just run the appropriate snippet in the termin
 
 | OS | Snippet |
 |:---:|:---|
-| OS X | ```bash -c "$(curl -LsS https://raw.github.com/hellowor1dn/dotfiles/master/dotfiles)"``` |
+| macOS | ```bash -c "$(curl -LsS https://raw.github.com/hellowor1dn/dotfiles/master/dotfiles)"``` |
 | Ubuntu | ```bash -c "$(wget -qO - https://raw.github.com/hellowor1dn/dotfiles/master/dotfiles)"``` |
 
 Warning: Ubuntu configuration is not completed!  
@@ -24,7 +24,7 @@ This will:
 
 ## Post-setup
 
-See the [OSX Post-Setup](POST_SETUP.md) file.
+See the [macOS Post-Setup](POST_SETUP.md) file.
 
 ## Update
 

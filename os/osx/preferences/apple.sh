@@ -87,12 +87,6 @@ mail_preferences() {
     # Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
     defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" -string "@\\U21a9"
 
-    # TODO: ?
-    # Display emails in threaded mode, sorted by date (oldest at the top)
-    # defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
-    # defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
-    # defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
-
     # Disable inline attachments (just show the icons)
     defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 
@@ -127,6 +121,9 @@ utility_preferences() {
     # Enable the debug menu in Address Book
     defaults write com.apple.addressbook ABShowDebugMenu -bool true
 
+    # Enable Dashboard dev mode (allows keeping widgets on the desktop)
+    defaults write com.apple.dashboard devmode -bool true
+
     # Use plain text mode for new TextEdit documents
     defaults write com.apple.TextEdit RichText -int 0
 
@@ -145,6 +142,32 @@ appstore_preferences() {
 
     # Enable Debug Menu in the Mac App Store
     defaults write com.apple.appstore ShowDebugMenu -bool true
+
+    # Enable the automatic update check
+    defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
+
+    # Check for software updates daily, not just once per week
+    defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+    # Download newly available updates in background
+    defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
+
+    # Install System data files & security updates
+    defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+
+    # Automatically download apps purchased on other Macs
+    # defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1
+
+    # Turn on app auto-update
+    defaults write com.apple.commerce AutoUpdate -bool true
+
+    # Allow the App Store to reboot machine on macOS updates
+    # defaults write com.apple.commerce AutoUpdateRestartRequired -bool true
+}
+
+photos_preferences() {
+    # Prevent Photos from opening automatically when devices are plugged in
+    defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 }
 
 messages_preferences() {
@@ -188,6 +211,11 @@ set_preferences() {
     appstore_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Appstore preferences"
     exit_on_fail "Appstore preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting Photos preferences"
+    photos_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
+    status_stop_spinner "Finished setting Photos preferences"
+    exit_on_fail "Photos preferences failed" "${E_PREFERENCE_FAILURE}"
 
     start_spinner "Setting Messages preferences"
     messages_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null

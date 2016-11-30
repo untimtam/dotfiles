@@ -32,6 +32,10 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "../../../script/utils.sh"
 
+    # Close any open System Preferences panes, to prevent them from overriding
+    # settings we’re about to change
+    osascript -e 'tell application "System Preferences" to quit'
+
     # TODO: break up large preferences into smaller chunks internally
     # general prefs
     ./general.sh

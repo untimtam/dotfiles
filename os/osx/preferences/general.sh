@@ -15,8 +15,8 @@ declare -r E_PREFERENCE_FAILURE=101
 declare -r -a APPS=(
     ''
 )
-declare COMPUTER_NAME="null"
-declare HD_NAME="void"
+declare COMPUTER_NAME="foo"
+declare HD_NAME="bar"
 
 # -----------------------------------------------------------------------------
 # | Functions                                                                  |
@@ -54,12 +54,6 @@ general_preferences() {
 
     # Disable the sound effects on boot
     sudo nvram SystemAudioVolume=" "
-
-    # Disable transparency in the menu bar and elsewhere on Yosemite
-    # defaults write com.apple.universalaccess reduceTransparency -bool true
-
-    # Disable high contrast mode in Yosemite
-    # defaults write com.apple.universalaccess increaseContrast -bool false
 
     # Menu bar: hide the User icon
     for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
@@ -112,9 +106,6 @@ general_preferences() {
     # Disable automatic termination of inactive apps
     defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 
-    # Disable the crash reporter
-    defaults write com.apple.CrashReporter DialogType -string "none"
-
     # Set Help Viewer windows to non-floating mode
     defaults write com.apple.helpviewer DevMode -bool true
 
@@ -127,12 +118,6 @@ general_preferences() {
 
     # Never go into computer sleep mode
     sudo systemsetup -setcomputersleep Off >> "${ERROR_FILE}" 2>&1 > /dev/null
-
-    # Check for software updates daily, not just once per week
-    defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
-
-    # Disable Notification Center and remove the menu bar icon
-    # launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
 
     # Disable smart quotes
     defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false

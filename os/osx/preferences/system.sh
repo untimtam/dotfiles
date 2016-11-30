@@ -21,15 +21,14 @@ declare -r -a DOCK_APPS=(
     'System Preferences'
     'Calendar'
     'Mail'
-    'Pocket'
+    'iTerm'
+    'Gitkraken'
+    'Sublime Text'
+    'TextEdit'
     'Google Chrome'
     'Franz'
+    'Messages'
     'Skype'
-    'TextEdit'
-    'Sublime Text'
-    'Gitkraken'
-    'iTerm'
-    'Parallels Desktop'
     'League of Legends'
 )
 
@@ -38,17 +37,6 @@ declare -r -a DOCK_APPS=(
 # -----------------------------------------------------------------------------
 
 io_preferences() {
-    # Trackpad: enable tap to click for this user and for the login screen
-    # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-    # defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-    # defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-
-    # Trackpad: map bottom right corner to right-click
-    # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
-    # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-    # defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
-    # defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
-
     # Disable “natural” (Lion-style) scrolling
     defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
@@ -73,7 +61,8 @@ io_preferences() {
     defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
     # Set a blazingly fast keyboard repeat rate
-    defaults write NSGlobalDomain KeyRepeat -int 0
+    defaults write NSGlobalDomain KeyRepeat -int 1
+    defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
     # Disable auto-correct
     defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -143,6 +132,9 @@ finder_preferences() {
     # Display full POSIX path as Finder window title
     defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
+    # Keep folders on top when sorting by name
+    defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
     # When performing a search, search the current folder by default
     defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
@@ -157,6 +149,10 @@ finder_preferences() {
 
     # Avoid creating .DS_Store files on network volumes
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+    # Avoid creating .DS_Store files on network or USB volumes
+    defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+    defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
     # Disable disk image verification
     defaults write com.apple.frameworks.diskimages skip-verify -bool true
@@ -198,15 +194,8 @@ finder_preferences() {
     # Disable the warning before emptying the Trash
     defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
-    # Empty Trash securely by default
-    # defaults write com.apple.finder EmptyTrashSecurely -bool true
-
     # Enable AirDrop over Ethernet and on unsupported Macs running Lion
     defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
-
-    # TODO: ?
-    # Enable the MacBook Air SuperDrive on any Mac
-    # sudo nvram boot-args="mbasd=1"
 
     # Show the ~/Library folder
     chflags nohidden ~/Library
@@ -257,10 +246,6 @@ dock_preferences() {
 
     # Don’t animate opening applications from the Dock
     defaults write com.apple.dock launchanim -bool false
-
-    # TODO: enable bouncing for visibility?
-    # Don't bounce icons in the Dock
-    defaults write com.apple.dock no-bouncing -bool true
 
     # Speed up Mission Control animations
     defaults write com.apple.dock expose-animation-duration -float 0.1
@@ -330,7 +315,7 @@ dock_preferences() {
     # defaults write com.apple.dock wvous-bl-modifier -int 0
 
     # Lock dock size and position
-    # defaults write com.apple.Dock position-immutable -bool yes
+    defaults write com.apple.Dock position-immutable -bool yes
     defaults write com.apple.Dock size-immutable -bool yes
 }
 
@@ -342,7 +327,7 @@ language_preferences() {
     defaults write NSGlobalDomain AppleMetricUnits -bool true
 
     # Set the timezone; see `sudo systemsetup -listtimezones` for other values
-    sudo systemsetup -settimezone "America/Montreal" >> "${ERROR_FILE}" 2>&1 > /dev/null
+    sudo systemsetup -settimezone "America/Los_Angeles" >> "${ERROR_FILE}" 2>&1 > /dev/null
 
     # set 24 hour time
     defaults write NSGlobalDomain AppleICUForce24HourTime -bool true

@@ -22,14 +22,13 @@ declare -a APPS=(
 # -----------------------------------------------------------------------------
 
 chrome_preferences() {
-    # Allow installing user scripts via GitHub Gist or Userscripts.org
-    defaults write com.google.Chrome ExtensionInstallSources -array "https://gist.githubusercontent.com/" "http://userscripts.org/*"
-    defaults write com.google.Chrome.canary ExtensionInstallSources -array "https://gist.githubusercontent.com/" "http://userscripts.org/*"
+    # Disable the all too sensitive backswipe on trackpads
+    # defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
+    # defaults write com.google.Chrome.canary AppleEnableSwipeNavigateWithScrolls -bool false
 
-    # TODO: ? Actually use chrome print preview?
-    # Use the system-native print preview dialog
-    # defaults write com.google.Chrome DisablePrintPreview -bool true
-    # defaults write com.google.Chrome.canary DisablePrintPreview -bool true
+    # Disable the all too sensitive backswipe on Magic Mouse
+    # defaults write com.google.Chrome AppleEnableMouseSwipeNavigateWithScrolls -bool false
+    # defaults write com.google.Chrome.canary AppleEnableMouseSwipeNavigateWithScrolls -bool false
 
     # Expand the print dialog by default
     defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
@@ -82,6 +81,38 @@ safari_preferences() {
 
     # Add a context menu item for showing the Web Inspector in web views
     defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+    # Enable continuous spellchecking
+    defaults write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
+    # Disable auto-correct
+    defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
+
+    # Disable AutoFill
+    defaults write com.apple.Safari AutoFillFromAddressBook -bool false
+    defaults write com.apple.Safari AutoFillPasswords -bool false
+    defaults write com.apple.Safari AutoFillCreditCardData -bool false
+    defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
+
+    # Warn about fraudulent websites
+    defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
+
+    # Disable plug-ins
+    defaults write com.apple.Safari WebKitPluginsEnabled -bool false
+    defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2PluginsEnabled -bool false
+
+    # Disable Java
+    defaults write com.apple.Safari WebKitJavaEnabled -bool false
+    defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled -bool false
+
+    # Block pop-up windows
+    defaults write com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
+    defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
+
+    # Enable “Do Not Track”
+    defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
+
+    # Update extensions automatically
+    defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
 }
 
 set_preferences() {
