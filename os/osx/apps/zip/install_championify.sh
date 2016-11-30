@@ -16,7 +16,7 @@ declare -r E_REMOVE_FAILURE=103
 
 # Dowload
 declare -r NAME="Championify"
-declare -r URL="https://github.com/dustinblackman/Championify/releases/download/1.3.6/Championify.OSX.1.3.6.zip"
+declare -r URL="https://github.com/dustinblackman/Championify/releases/download/1.3.8/Championify.OSX.1.3.8.zip"
 
 # -----------------------------------------------------------------------------
 # | Main                                                                       |

@@ -26,26 +26,17 @@ declare -r -a NODE_VERSIONS=(
 
 # NPM
 declare -r -a NPM_PACKAGES=(
-    'npm-check'
-
-    'gulp'
-
     'bower'
-
-    'stylus'
-    'pug'
-    'coffee-script'
-
-    'jscs'
-    'jsonlint'
-
-    'nodemon'
     'browser-sync'
-
-    'vmd'
-    'tldr'
-
+    'gulp'
+    'jscs'
+    'nodemon'
+    'npm-check'
+    'pug'
+    'stylus'
     'termcolors'
+    'tldr'
+    'vmd'
 )
 
 # -----------------------------------------------------------------------------

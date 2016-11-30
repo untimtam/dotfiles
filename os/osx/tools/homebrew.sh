@@ -15,27 +15,33 @@ declare -r E_BREW_FAILURE=102
 
 # TODO: clean up installs with taps (i.e. homebrew/dupes)
 declare -r -a HOMEBREW=(
+    # shells
     'bash'
     'zsh'
     'zsh-completions'
 
+    # languages
     'python'
     'python3'
     'lua'
+    'perl'
 
-    'tree'
-    'fasd'
-    'tmux'
-
+    # tools
     'duti'
-    'pandoc'
-    'aspell'
-    'vim'
+    'fasd'
+    'fb-adb'
     'git'
     'git-lfs'
+    'gradle'
+    'heroku'
+    'libav'
+    'libidn'
+    'pandoc'
+    'tmux'
+    'tree'
+    'vim'
     'wget'
-    'ack'
-    'heroku-toolbelt'
+    'youtube-dl'
 )
 
 declare -r -a HOMEBREW_OPTS=(
