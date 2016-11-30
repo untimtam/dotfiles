@@ -62,12 +62,6 @@ fi
 alias league_ping="ping 104.160.131.3"
 
 # -----------------------------------------------------------------------------
-# | focal                                                                      |
-# -----------------------------------------------------------------------------
-
-alias focal="${HOME}/work/focal/"
-
-# -----------------------------------------------------------------------------
 # | notify on long tasks on osx                                                |
 # -----------------------------------------------------------------------------
 
@@ -83,3 +77,31 @@ alias focal="${HOME}/work/focal/"
 #     export JDK_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk'
 #     export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk'
 # fi
+
+# -----------------------------------------------------------------------------
+# | notebook                                                                   |
+# -----------------------------------------------------------------------------
+
+if which jupyter &> /dev/null; then
+    alias note="jupyter notebook"
+fi
+
+# -----------------------------------------------------------------------------
+# | focal                                                                      |
+# -----------------------------------------------------------------------------
+alias focal="${HOME}/work/focal/"
+alias lib="${HOME}/work/focal/Repositories/focal-library"
+alias repo="${HOME}/work/focal/Repositories"
+alias launcher="${HOME}/work/focal/Repositories/focal-launcher"
+alias shopper="${HOME}/work/focal/Repositories/focal-shopper"
+alias cashier="${HOME}/work/focal/Repositories/focal-cashier"
+alias fde="${HOME}/work/focal/Repositories/focal-fde"
+alias thorpc="ssh tim@192.168.1.34"
+alias cartiq="ssh ubuntu@cartiq.io"
+alias fadb="fb-adb"
+
+
+# Youtube dl
+if which youtube-dl &> /dev/null; then
+    alias ydl="youtube-dl"
+fi
