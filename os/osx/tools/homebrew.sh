@@ -13,7 +13,8 @@ declare -r E_BREW_FAILURE=102
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
-# TODO: clean up installs with taps (i.e. homebrew/dupes)
+# TODO: install dependencies first (bash, zsh, cask, java, etc)
+# TODO: reorganize and combine homebrew and cask installations
 declare -r -a HOMEBREW=(
     # shells
     'bash'
