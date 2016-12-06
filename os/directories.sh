@@ -30,6 +30,7 @@ declare -a DIRECTORIES=(
 declare -a USER_DIRECTORIES=(
     "${HOME}/Code"
     "${HOME}/Projects"
+    "${HOME}/Repositories"
     "${HOME}/Work"
     "${HOME}/Workspaces"
 
