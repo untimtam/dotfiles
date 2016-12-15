@@ -88,7 +88,7 @@ alias launcher="${HOME}/Repositories/focal-launcher"
 alias shopper="${HOME}/Repositories/focal-shopper"
 alias cashier="${HOME}/Repositories/focal-cashier"
 alias fde="${HOME}/Repositories/focal-fde"
-alias thorpc="ssh tim@192.168.1.5"
+alias thorpc="ssh tim@192.168.1.5 -Y"
 alias cartiq="ssh ubuntu@cartiq.io"
 alias fadb="fb-adb"
 

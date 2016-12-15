@@ -50,7 +50,8 @@ alias ctr='clear && tree'
 alias edit="${EDITOR}"
 alias tasks='gulp --tasks'
 alias check='npm-check'
-alias numFiles='echo $(ls -1 | wc -l)'
+alias count='ls -la | wc -l'
+alias count_files='ls -la | grep ^[-,l] | wc -l'
 alias m='man'
 alias map='xargs -n1'
 
@@ -76,6 +77,7 @@ alias bis='bower install --save'
 # tmux
 alias muxls='tmuxl'
 alias muxks='tmux kill-session'
+alias mux='tmuxinator'
 
 # validate json
 alias vjson='cat | python -m json.tool'
