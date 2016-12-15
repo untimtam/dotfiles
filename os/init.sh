@@ -51,7 +51,7 @@ osx_init() {
 ubuntu_init() {
     request_sudo
 
-    sudo apt-get install git xclip xdg-open
+    sudo apt-get install git xclip
     status "Command line tools" "${E_TOOL_INSTALL_FAILED}"
 
     print_success "Finished installing pre-req tools"
