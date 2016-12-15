@@ -15,6 +15,8 @@ declare -r E_APT_FAILURE=101
 declare -r -a APT=(
     'build-essential'
 
+    'zsh'
+
     'git'
     'curl'
     'wget'

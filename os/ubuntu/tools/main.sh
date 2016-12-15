@@ -67,7 +67,7 @@ main() {
     if [[ "$1" -eq 0 ]]; then
         do_change_shell=0
     else
-        confirm "Install tools?"
+        confirm "Use zsh?"
         do_change_shell="$?"
     fi
     # update shells
