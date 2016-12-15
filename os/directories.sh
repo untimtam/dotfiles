@@ -24,16 +24,16 @@ declare -a DIRECTORIES=(
     "${HOME}/Downloads"
     "${HOME}/Downloads/torrents"
 
-    "${HOME}/bin"
-)
-
-declare -a USER_DIRECTORIES=(
     "${HOME}/Code"
     "${HOME}/Projects"
     "${HOME}/Repositories"
     "${HOME}/Work"
     "${HOME}/Workspaces"
 
+    "${HOME}/bin"
+)
+
+declare -a USER_DIRECTORIES=(
     "${HOME}/Pictures/Wallpapers"
     "${HOME}/Pictures/Screenshots"
 )

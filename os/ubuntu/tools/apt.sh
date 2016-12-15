@@ -17,6 +17,7 @@ declare -r -a APT=(
 
     'git'
     'curl'
+    'wget'
     'xclip'
     'tree'
     'tmux'
