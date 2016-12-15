@@ -21,9 +21,6 @@ declare -r -a APT=(
     'tree'
     'tmux'
 
-    'imagemagick'
-    'gparted'
-    'zopfli'
     'tar'
     'zip'
     'unzip'

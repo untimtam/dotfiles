@@ -39,9 +39,9 @@ main() {
         && source "../../../script/utils.sh"
 
     # text boot
-    ./boot.sh
-    exit_on_fail "Boot script failed"
-    print_separator
+    # ./boot.sh
+    # exit_on_fail "Boot script failed"
+    # print_separator
 
     # install apt
     ./apt.sh
@@ -49,19 +49,19 @@ main() {
     print_separator
 
     # install ruby with rbenv
-    ./ruby.sh
-    exit_on_fail "Ruby script failed"
-    print_separator
+    # ./ruby.sh
+    # exit_on_fail "Ruby script failed"
+    # print_separator
 
     # install node with nvm
-    ./node.sh
-    exit_on_fail "Node script failed"
-    print_separator
+    # ./node.sh
+    # exit_on_fail "Node script failed"
+    # print_separator
 
     # install python with pyenv
-    ./python.sh
-    exit_on_fail "Node script failed"
-    print_separator
+    # ./python.sh
+    # exit_on_fail "Node script failed"
+    # print_separator
 
     local do_change_shell=1
     if [[ "$1" -eq 0 ]]; then
