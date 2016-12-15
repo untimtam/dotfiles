@@ -31,7 +31,7 @@ declare -r -a APT=(
 
     'vim'
 
-    'ssh-agent'
+    # 'ssh-agent'
     'libssl-dev'
     'openssh-server'
 
