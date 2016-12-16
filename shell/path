@@ -35,7 +35,12 @@ if which rbenv &> /dev/null; then
     PATH="${PATH}:${RBENVPLUGINPATH}/ruby-build/bin"
 fi
 
-if which nvcc &> /dev/null; then
+if which pyenv &> /dev/null; then
+    export PYENVPATH="${HOME}/.pyenv"
+    PATH="${PATH}:${PYENVPATH}/bin"
+fi
+
+if [[ -e "/usr/local/cuda" ]]; then
     export CUDAPATH='/usr/local/cuda'
     PATH="${PATH}:${CUDAPATH}/bin"
     LD_LIBRARY_PATH="${CUDAPATH}/lib64:${LD_LIBRARY_PATH}"
