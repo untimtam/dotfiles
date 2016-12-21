@@ -43,8 +43,23 @@ fi
 if [[ -e "/usr/local/cuda" ]]; then
     export CUDAPATH='/usr/local/cuda'
     PATH="${PATH}:${CUDAPATH}/bin"
+    # LD_LIBRARY_PATH
+    LD_LIBRARY_PATH="/usr/local/lib"
+    # CUDA
     LD_LIBRARY_PATH="${CUDAPATH}/lib64:${LD_LIBRARY_PATH}"
+    # MKL
+    export INTELPATH="/opt/intel/lib/intel64"
+    export MKLPATH="/opt/intel/mkl/lib/intel64"
+    # Note: bugfix because the above didnt work
+    # added intel64_lin to path to get libiomp5.a in the path
+    LD_LIBRARY_PATH="${INTELPATH}:/opt/intel/lib/intel64_lin:${MKLPATH}:${LD_LIBRARY_PATH}"
     export LD_LIBRARY_PATH
+fi
+
+if [[ -e "${HOME}/caffe" ]]; then
+    export CAFFE_ROOT="${HOME}/caffe"
+    PYTHONPATH="${CAFFE_ROOT}/python:${PYTHONPATH}"
+    export PYTHONPATH
 fi
 
 export PATH
