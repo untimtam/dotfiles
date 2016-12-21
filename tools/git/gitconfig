@@ -8,7 +8,7 @@
 	ui = true
 [core]
 	excludesfile = /Users/hellowor1d/.gitignore_global
-	attributesfile = /home/hellowor1d/.gitattributes
+	attributesfile = /Users/hellowor1d/.gitattributes
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
