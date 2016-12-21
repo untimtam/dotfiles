@@ -41,6 +41,7 @@ declare -a SYMLINK_FILES=(
 
 declare -a COMMON_BIN=(
     "bin/update"
+    "bin/ipynb_drop_output"
 )
 
 declare -a USER_BIN=(
