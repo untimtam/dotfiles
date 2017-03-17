@@ -26,6 +26,7 @@ declare -a SYMLINK_FILES=(
 
     "tools/git/gitattributes"
     "tools/git/gitconfig"
+    "tools/git/gitmessage"
     "tools/git/gitignore_global"
 
     "tools/vim/vim"

@@ -9,6 +9,8 @@
 [core]
 	excludesfile = /Users/hellowor1d/.gitignore_global
 	attributesfile = /Users/hellowor1d/.gitattributes
+[commit]
+    template = ~/.gitmessage
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
