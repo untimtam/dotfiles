@@ -25,9 +25,7 @@ declare -r -a RUBY_VERSIONS=(
 )
 
 # gems
-declare -r -a GEMS=(
-    'tmuxinator'
-)
+declare -r -a GEMS=()
 
 # -----------------------------------------------------------------------------
 # | Functions                                                                  |

@@ -5,8 +5,7 @@ Procedure after a fresh dotfiles setup
 
 ## Apps
 
-* install manual apps
-* set up razer and logitech drivers and preferences
+* set up logitech drivers and preferences
 * install appstore apps
 * set up emails
 
@@ -25,7 +24,6 @@ Procedure after a fresh dotfiles setup
 
 system preferences: Users & Groups > User > Login Items > set login apps
 
-* razer
 * spectacle
 * alfred
 * bartender

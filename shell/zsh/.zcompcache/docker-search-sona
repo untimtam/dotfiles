@@ -1,0 +1,4 @@
+result=( ${(Q)"${(z)$(<<\EO:result
+'sonarqube' 'sonatype/nexus' 'linuxserver/sonarr' 'sonatype/docker-nexus3' 'tpires/sonar-server' 'freenas/sonarr' 'binhex/arch-sonarr' 'travix/sonatype-nexus' 'orangesignal/sonar' 'timhaak/sonarr-alpine' 'wlsc/sonarqube' 'dreamcat4/sonarr' 'aexea/sonarscanner' 'zbozzo/docker-sonarqube-gitlab' 'cantara/sonarqube' 'letsdeal/sonar-scanner' 'oblique/sonarr' 'mattsch/fedora-sonarr' 'ccin2p3/php-xdebug-sonar' 'scharch/sonar' 'ciandtsoftware/sonar' 'sonalnikam/sona' 'twanislas/sonarr' 'nicocoffo/sonarr_sickbeard_mp4_automator' 'elct9620/gitlab-sonar-scanner'
+EO:result
+)}"} )

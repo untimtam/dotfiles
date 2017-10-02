@@ -1,8 +1,0 @@
-# Open utility apps
-
-# Open productivity apps
-open -ja "Mail"
-open -ja "Calendar"
-
-# Open menubar apps
-

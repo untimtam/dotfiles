@@ -21,28 +21,31 @@ declare -r -a HOMEBREW=(
     'zsh'
     'zsh-completions'
 
+    # command line python
+    'brew-pip'
+
     # languages
     'python'
     'python3'
-    'lua'
-    'perl'
 
     # tools
-    'duti'
     'fasd'
-    'fb-adb'
     'git'
     'git-lfs'
-    'gradle'
-    'heroku'
-    'libav'
-    'libidn'
     'pandoc'
     'tmux'
     'tree'
     'vim'
     'wget'
-    'youtube-dl'
+    'openvpn'
+
+    # android
+    'pidcat'
+    'fb-adb'
+    'gradle'
+    'proguard'
+    'infer'
+    'jadx'
 )
 
 declare -r -a HOMEBREW_OPTS=(

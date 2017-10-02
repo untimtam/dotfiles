@@ -37,11 +37,6 @@ main() {
     cd "$(dirname "${BASH_SOURCE}")" \
         && source "../../../script/utils.sh"
 
-    # run updates: skip osx
-    ../../../bin/update gem pip
-    exit_on_fail "Update failed"
-    print_separator
-
     # xcode already installed in init
 
     # TODO: check for install dependencies
@@ -49,25 +44,6 @@ main() {
     ./homebrew.sh
     exit_on_fail "Homebrew script failed"
     print_separator
-
-    # install ruby (rbenv+packages)
-    ./ruby.sh
-    exit_on_fail "Ruby script failed"
-    print_separator
-
-    # install node (nvm+packages)
-    ./node.sh
-    exit_on_fail "Node script failed"
-    print_separator
-
-    # extra setup for tools
-    # ./extras.sh
-    # exit_on_fail "Extras script failed"
-    # print_separator
-
-    # run updates: skip osx
-    ../../../bin/update brew npm gem pip pip3
-    exit_on_fail "Update failed"
 
     local do_change_shell=1
     if [[ "$1" -eq 0 ]]; then

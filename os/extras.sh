@@ -165,18 +165,6 @@ set_sublime() {
 }
 
 # -----------------------------------------------------------------------------
-# | File extensions                                                            |
-# -----------------------------------------------------------------------------
-
-set_file_associations() {
-    if cmd_exists 'duti'; then
-        local -r DUTI_FILE="${HOME}/dotfiles/tools/duti/duti"
-        duti "${DUTI_FILE}" >> "${ERROR_FILE}" 2>&1 > /dev/null
-        status_no_exit "Set file associations according to ${DUTI_FILE}"
-    fi
-}
-
-# -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
 
@@ -216,10 +204,6 @@ main() {
 
             set_sublime
             exit_on_fail "Error setting up sublime"
-
-            set_file_associations
-
-            ../bin/icons
         elif [[ "${OS}" == "ubuntu" ]]; then
             print_success "No extras for Ubuntu"
         else

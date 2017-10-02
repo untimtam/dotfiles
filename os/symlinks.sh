@@ -24,30 +24,22 @@ declare -a SYMLINK_FILES=(
     "shell/other/inputrc"
     "shell/other/hushlogin"
 
-    "tools/git/gitattributes"
     "tools/git/gitconfig"
     "tools/git/gitmessage"
     "tools/git/gitignore_global"
 
-    "tools/vim/vim"
-    "tools/vim/vimrc"
-    "tools/vim/gvimrc"
-
     "tools/tmux/tmux.conf"
 
     "tools/editor/editorconfig"
-
-    "tools/npm/npmrc"
 )
 
 declare -a COMMON_BIN=(
     "bin/update"
-    "bin/ipynb_drop_output"
+    "bin/sync_repos"
 )
 
 declare -a USER_BIN=(
-    "bin/osx/adb-ninja"
-    "bin/osx/startup"
+    ""
 )
 
 declare -a SERVER_BIN=(

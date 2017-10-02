@@ -11,15 +11,36 @@ if [[ -n "$(git config --global user.name)" ]]; then
     export GIT_COMMITTER_EMAIL="${GIT_AUTHOR_EMAIL}"
 fi
 
-## java
+# -----------------------------------------------------------------------------
+# | server                                                                     |
+# -----------------------------------------------------------------------------
+
+alias fizz="ssh hellowor1d@192.168.86.8 -Y"
+alias fizzr="ssh -p 2777 hellowor1d@aquiroga1.ddns.net"
+
+# -----------------------------------------------------------------------------
+# | focal                                                                      |
+# -----------------------------------------------------------------------------
+
+alias focal="${HOME}/work/focal/"
+
+## -----------------------------------------------------------------------------
+# | java                                                                       |
+# -----------------------------------------------------------------------------
+
 export JAVA_HOME="$(/usr/libexec/java_home)"
 
-## android
+# -----------------------------------------------------------------------------
+# | android                                                                    |
+# -----------------------------------------------------------------------------
+
 if [[ -e "${HOME}/Library/Android/sdk" ]]; then
     export SDK_ROOT="${HOME}/Library/Android/sdk"
     export NDK_ROOT="${HOME}/Library/Android/sdk/ndk-bundle"
     export ANDROID_HOME="${HOME}/Library/Android/sdk"
     export ANDROID_NDK_HOME="${HOME}/Library/Android/sdk/ndk-bundle"
+    # /usr/local/share/android-sdk
+    # /usr/local/opt/android-ndk
 
     launchctl setenv ANDROID_HOME "$ANDROID_HOME"
     launchctl setenv ANDROID_NDK_HOME "$ANDROID_NDK_HOME"
@@ -51,80 +72,11 @@ if [[ -f "${HOME}/.nvm/nvm.sh" ]]; then
 fi
 
 # -----------------------------------------------------------------------------
-# | spark                                                                      |
-# -----------------------------------------------------------------------------
-
-if which pyspark &> /dev/null; then
-    alias pys='pyspark'
-    alias ss='spark-submit'
-fi
-
-# -----------------------------------------------------------------------------
-# | docker                                                                     |
-# -----------------------------------------------------------------------------
-
-# if which docker-machine &> /dev/null; then
-#     docker-machine env default &> /dev/null
-# fi
-
-# if which docker &> /dev/null; then
-#     # TODO
-# fi
-
-# -----------------------------------------------------------------------------
-# | lua/torch/itorch                                                           |
-# -----------------------------------------------------------------------------
-
-# . ${HOME}/torch/install/bin/torch-activate
-
-# -----------------------------------------------------------------------------
-# | league                                                                     |
-# -----------------------------------------------------------------------------
-
-alias league_ping="ping 104.160.131.3"
-
-# -----------------------------------------------------------------------------
-# | java                                                                       |
-# -----------------------------------------------------------------------------
-
-# if which java &> /dev/null; then
-#     export JDK_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk'
-#     export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_102.jdk'
-# fi
-
-# -----------------------------------------------------------------------------
 # | notebook                                                                   |
 # -----------------------------------------------------------------------------
 
 if which jupyter &> /dev/null; then
     alias note="jupyter notebook"
-fi
-
-# -----------------------------------------------------------------------------
-# | server                                                                     |
-# -----------------------------------------------------------------------------
-
-alias fizz="ssh hellowor1d@192.168.1.17 -Y"
-alias fizzr="ssh -p 2777 hellowor1d@aquiroga1.ddns.net"
-
-# -----------------------------------------------------------------------------
-# | focal                                                                      |
-# -----------------------------------------------------------------------------
-alias thorpc="ssh tim@192.168.1.5 -Y"
-alias thorpcr="ssh -p 2222 tim@aquiroga1.ddns.net"
-alias cartiq="ssh ubuntu@cartiq.io"
-alias focal="${HOME}/work/focal/"
-alias lib="${HOME}/Repositories/focal-library"
-alias repo="${HOME}/Repositories"
-alias launcher="${HOME}/Repositories/focal-launcher"
-alias shopper="${HOME}/Repositories/focal-shopper"
-alias cashier="${HOME}/Repositories/focal-cashier"
-alias fde="${HOME}/Repositories/focal-fde"
-alias fadb="fb-adb"
-
-if [[ -e "${HOME}/Repositories/torch_training" ]]; then
-    PYTHONPATH="${PYTHONPATH}:${HOME}/Repositories/torch_training"
-    export PYTHONPATH
 fi
 
 # -----------------------------------------------------------------------------

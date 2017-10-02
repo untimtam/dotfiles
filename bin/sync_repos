@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# sync all repos
+
+for dir in $(ls "${HOME}/Repositories"); do
+    echo $dir
+    cd $dir
+    if [[ -e .git ]]; then
+        git pull 2>/dev/null
+    fi
+    cd ..
+done

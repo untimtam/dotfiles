@@ -16,7 +16,7 @@ for file in ${HOME}/dotfiles/shell/{path,exports,aliases,functions,extra}; do
 done
 unset file
 # load zsh specifc dotfiles
-for file in ${HOME}/dotfiles/shell/zsh/{zshextra,tmuxinator_completions}; do
+for file in ${HOME}/dotfiles/shell/zsh/{zshextra}; do
     [[ (-r "${file}") && (-f "${file}") ]] && source "${file}"
 done
 unset file

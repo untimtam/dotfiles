@@ -16,7 +16,7 @@ declare -r -a APPS=(
     ''
 )
 declare COMPUTER_NAME="foo"
-declare HD_NAME="bar"
+declare HD_NAME="box"
 
 # -----------------------------------------------------------------------------
 # | Functions                                                                  |

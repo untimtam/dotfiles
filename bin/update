@@ -48,52 +48,6 @@ update_homebrew() {
     exit_on_fail "Homebrew update failed" "${E_BREW_UPDATE_FAILURE}"
 }
 
-# TODO: update nvm
-update_npm() {
-    start_spinner "Updating NodeJS"
-    npm install -g npm >> "${ERROR_FILE}" 2>&1 > /dev/null \
-        && npm update -g >> "${ERROR_FILE}" 2>&1 > /dev/null
-    status_stop_spinner "Finished updating NodeJS"
-    exit_on_fail "NodeJS update failed" "${E_NPM_UPDATE_FAILURE}"
-}
-
-# TODO: update rbenv
-update_gems() {
-    start_spinner "Updating Ruby"
-    gem update >> "${ERROR_FILE}" 2>&1 > /dev/null
-    status_stop_spinner "Finished updating Ruby"
-    if [[ "$?" -ne 0 ]]; then
-        # Only use sudo for system ruby
-        start_spinner "Updating system Ruby"
-        sudo gem update >> "${ERROR_FILE}" 2>&1 > /dev/null
-        status_stop_spinner "Finished updating Ruby"
-        exit_on_fail "Ruby update failed" "${E_RUBY_UPDATE_FAILURE}"
-    fi
-}
-
-# TODO: update other packages?
-update_pip() {
-    start_spinner "Updating Python 2.x"
-    pip install --upgrade pip setuptools >> "${ERROR_FILE}" 2>&1 > /dev/null
-    status_stop_spinner "Finished updating Python 2.x"
-    exit_on_fail "Python 2.x update failed" "${E_PIP_UPDATE_FAILURE}"
-}
-
-update_pip3() {
-    start_spinner "Updating python 3.x"
-    pip3 install --upgrade pip setuptools >> "${ERROR_FILE}" 2>&1 > /dev/null
-    status_stop_spinner "Finished updating Python 3.x"
-    exit_on_fail "Python 3.x update failed" "${E_PIP3_UPDATE_FAILURE}"
-}
-
-update_opam() {
-    start_spinner "Updating Opam"
-    opam update >> "${ERROR_FILE}" 2>&1 > /dev/null \
-       && brew upgrade >> "${ERROR_FILE}" 2>&1 > /dev/null
-    status_stop_spinner "Finished updating Opam"
-    exit_on_fail "Opam update failed" "${E_OPAM_UPDATE_FAILURE}"
-}
-
 # -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
@@ -129,36 +83,6 @@ main() {
             if cmd_exists 'brew'; then
                 update_homebrew
                 exit_on_fail "Homebrew update failed"
-            fi
-        fi
-        if [ $ARG == "npm" ] || [ $ARG == "all" ]; then
-            if cmd_exists 'npm'; then
-                update_npm
-                exit_on_fail "NPM update failed"
-            fi
-        fi
-        if [ $ARG == "gem" ] || [ $ARG == "all" ]; then
-            if cmd_exists 'gem'; then
-                update_gems
-                exit_on_fail "gem update failed"
-            fi
-        fi
-        if [ $ARG == "pip" ] || [ $ARG == "all" ]; then
-            if cmd_exists 'pip'; then
-                update_pip
-                exit_on_fail "pip update failed"
-            fi
-        fi
-        if [ $ARG == "pip3" ] || [ $ARG == "all" ]; then
-            if cmd_exists 'pip3'; then
-                update_pip3
-                exit_on_fail "pip3 update failed"
-            fi
-        fi
-        if [ $ARG == "opam" ] || [ $ARG == "all" ]; then
-            if cmd_exists 'opam'; then
-                update_opam
-                exit_on_fail "opam update failed"
             fi
         fi
         if [ $ARG == "os" ] || [ $ARG == "all" ]; then

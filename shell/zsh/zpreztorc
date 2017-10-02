@@ -39,10 +39,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
         'tmux' \
         'homebrew' \
         'git' \
-        'node' \
         'python' \
-        'ocaml' \
-        'ruby' \
         'utility' \
         'completion' \
         'fasd' \
@@ -67,10 +64,7 @@ elif [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
         'archive' \
         'tmux' \
         'git' \
-        'node' \
         'python' \
-        'ocaml' \
-        'ruby' \
         'ssh' \
         'utility' \
         'completion' \

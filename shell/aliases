@@ -16,6 +16,7 @@ alias co="cd ${HOME}/code"
 alias pr="cd ${HOME}/projects"
 alias wr="cd ${HOME}/work"
 alias dots="cd ${DOTS}"
+alias repo="${HOME}/Repositories"
 
 # List directories only
 alias ld='ls -l | grep "^d"'
@@ -48,8 +49,6 @@ alias ctr='clear && tree'
 
 # Developer shortcuts
 alias edit="${EDITOR}"
-alias tasks='gulp --tasks'
-alias check='npm-check'
 alias count='ls -la | wc -l'
 alias count_files='ls -la | grep ^[-,l] | wc -l'
 alias m='man'
@@ -64,26 +63,9 @@ alias octal='stat -f %Mp%Lp'
 alias lns='ln -s'
 alias symlink='lns'
 
-# npm
-alias ng='npm list -g --depth=0 2> /dev/null'
-alias nl='npm list --depth=0 2> /dev/null'
-alias npmig='npm i -g'
-alias npmis='npm i -S'
-alias npmid='npm i -D'
-
-# bower
-alias bis='bower install --save'
-
 # tmux
 alias muxls='tmuxl'
 alias muxks='tmux kill-session'
-alias mux='tmuxinator'
-
-# validate json
-alias vjson='cat | python -m json.tool'
-
-# mongodb
-alias mongol='mongod --dbpath ./data/db'
 
 # -----------------------------------------------------------------------------
 # | Network                                                                    |
@@ -153,6 +135,9 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     # (useful when executing time-consuming commands)
     # alias badge="tput bel"
     alias badge="osascript -e 'beep'"
+
+    # run homebrew updates
+    alias brewup="brew update && brew upgrade && brew cleanup"
 fi
 
 # -----------------------------------------------------------------------------
