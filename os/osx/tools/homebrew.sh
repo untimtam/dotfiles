@@ -27,6 +27,7 @@ declare -r -a HOMEBREW=(
     # languages
     'python'
     'python3'
+    'java'
 
     # tools
     'fasd'
