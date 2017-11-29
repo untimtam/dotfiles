@@ -5,8 +5,6 @@ Procedure after a fresh dotfiles setup
 
 ## Apps
 
-* set up logitech drivers and preferences
-* install appstore apps
 * set up emails
 
 ## Settings
@@ -27,43 +25,16 @@ system preferences: Users & Groups > User > Login Items > set login apps
 * spectacle
 * alfred
 * bartender
-* android file transfer
 * caffeine
 * 1password 5
-* pushbullet
 * iterm
-* curse
-* logitech
 * mail
 * google
 * itunes helper
-* skype
-* pocket
 * calendar
-* gitify
 
 ## Accessibility
 
 system preferences: Security & Privacy > Privacy > Accessibility access > set accesibility
 
-* curse
-* dash
-* logitech
-* parallels
-* razer
 * spectacle
-
-## missing apps
-* league pbe
-* league alpha
-* hextech repair tool
-* championify
-* bastion
-* alloy browser
-* cgoban
-* goban
-* gog galaxy client
-* open emu
-* pocket
-* stockfish chess
-* todoist

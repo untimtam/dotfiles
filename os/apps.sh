@@ -42,9 +42,11 @@ main() {
     if [[ "${app}" -eq 0 ]]; then
         local -r OS="$(get_os)"
         if [[ "${OS}" == "osx" ]]; then
-            ./osx/apps/main.sh "$1"
+            ./macos/apps/main.sh "$1"
             exit_on_fail "Error while installing apps"
         elif [[ "${OS}" == "ubuntu" ]]; then
+            ./ubuntu/tools/main.sh "$1"
+            exit_on_fail "Error while installing tools"
             ./ubuntu/apps/main.sh "$1"
             exit_on_fail "Error while installing apps"
         else

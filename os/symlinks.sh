@@ -34,8 +34,7 @@ declare -a SYMLINK_FILES=(
 )
 
 declare -a COMMON_BIN=(
-    "bin/update"
-    "bin/sync_repos"
+    ""
 )
 
 declare -a USER_BIN=(

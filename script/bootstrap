@@ -205,16 +205,12 @@ main() {
                     bootstrap_section="${DIR_SECTION}"
                 elif [[ "$1" == "link" ]]; then
                     bootstrap_section="${LINK_SECTION}"
-                elif [[ "$1" == "tool" ]]; then
-                    bootstrap_section="${TOOL_SECTION}"
                 elif [[ "$1" == "app" ]]; then
                     bootstrap_section="${APPS_SECTION}"
                 elif [[ "$1" == "pref" ]]; then
                     bootstrap_section="${PREF_SECTION}"
                 elif [[ "$1" == "extra" ]]; then
                     bootstrap_section="${EXTR_SECTION}"
-                elif [[ "$1" == "test" ]]; then
-                    bootstrap_section="${TEST_SECTION}"
                 fi
             fi
         fi
@@ -260,14 +256,6 @@ main() {
 
     # ---
 
-    # download/install tools
-    if [[ "${bootstrap_section}" -le "${TOOL_SECTION}" ]]; then
-        ../os/tools.sh "${fresh}"
-        exit_on_fail "Tool installation failed"
-        print_separator_large
-        ((bootstrap_section+=1))
-    fi
-
     # download/install applications
     if [[ "${bootstrap_section}" -le "${APPS_SECTION}" ]]; then
         ../os/apps.sh "${fresh}"
@@ -287,13 +275,6 @@ main() {
     # perform additional operations
     if [[ "${bootstrap_section}" -le "${EXTR_SECTION}" ]]; then
         ../os/extras.sh "${fresh}"
-        print_separator_large
-        ((bootstrap_section+=1))
-    fi
-
-    # perform tests
-    if [[ "${bootstrap_section}" -le "${TEST_SECTION}" ]]; then
-        ../os/test.sh "${fresh}"
         print_separator_large
         ((bootstrap_section+=1))
     fi

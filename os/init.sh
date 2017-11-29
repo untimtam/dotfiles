@@ -68,9 +68,6 @@ main() {
 
     print_section "Running initialization"
 
-    # update os
-    ../bin/update os
-
     local -r OS="$(get_os)"
     if [[ "${OS}" == "osx" ]]; then
         # install xcode command line tools

@@ -24,11 +24,7 @@ declare -a DIRECTORIES=(
     "${HOME}/Downloads"
     "${HOME}/Downloads/torrents"
 
-    "${HOME}/Code"
-    "${HOME}/Projects"
     "${HOME}/Repositories"
-    "${HOME}/Work"
-    "${HOME}/Workspaces"
 
     "${HOME}/bin"
 )

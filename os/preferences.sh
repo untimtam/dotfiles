@@ -42,7 +42,7 @@ main() {
     if [[ "${pref}" -eq 0 ]]; then
         local -r OS="$(get_os)"
         if [[ "${OS}" == "osx" ]]; then
-            ./osx/preferences/main.sh "$1"
+            ./macos/preferences/main.sh "$1"
             exit_on_fail "Error while setting preferences"
         elif [[ "${OS}" == "ubuntu" ]]; then
             ./ubuntu/preferences/main.sh "$1"

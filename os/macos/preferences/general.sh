@@ -15,8 +15,8 @@ declare -r E_PREFERENCE_FAILURE=101
 declare -r -a APPS=(
     ''
 )
-declare COMPUTER_NAME="foo"
-declare HD_NAME="box"
+declare COMPUTER_NAME="fenrir"
+declare HD_NAME="crate"
 
 # -----------------------------------------------------------------------------
 # | Functions                                                                  |

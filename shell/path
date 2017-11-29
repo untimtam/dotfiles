@@ -10,56 +10,32 @@
 # search ~/bin first
 PATH="${HOME}/bin:${PATH}"
 
-# add heroku cli to path if installed
-if which heroku &> /dev/null; then
-    PATH="${PATH}:/usr/local/heroku/bin"
-fi
+# if which heroku &> /dev/null; then
+#     PATH="${PATH}:/usr/local/heroku/bin"
+# fi
 
-# add go to path if installed
-if which go &> /dev/null; then
-    export GOPATH="${HOME}/code/Go"
-    export GOROOT=/usr/local/opt/go/libexec
-    PATH="${PATH}:${GOPATH}/bin"
-    PATH="${PATH}:${GOROOT}/bin"
-fi
+# if which go &> /dev/null; then
+#     export GOPATH="${HOME}/code/Go"
+#     export GOROOT=/usr/local/opt/go/libexec
+#     PATH="${PATH}:${GOPATH}/bin"
+#     PATH="${PATH}:${GOROOT}/bin"
+# fi
 
-if which cargo &> /dev/null; then
-    export RUST_SRC_PATH="${HOME}/projects/rust/src"
-    PATH="${PATH}:${HOME}/.cargo/bin"
-fi
+# if which cargo &> /dev/null; then
+#     export RUST_SRC_PATH="${HOME}/projects/rust/src"
+#     PATH="${PATH}:${HOME}/.cargo/bin"
+# fi
 
-if which rbenv &> /dev/null; then
-    export RBENVPATH="${HOME}/.rbenv"
-    PATH="${PATH}:${RBENVPATH}/bin"
-    export RBENVPLUGINPATH="${HOME}/.rbenv/plugins"
-    PATH="${PATH}:${RBENVPLUGINPATH}/ruby-build/bin"
-fi
+# if which rbenv &> /dev/null; then
+#     export RBENVPATH="${HOME}/.rbenv"
+#     PATH="${PATH}:${RBENVPATH}/bin"
+#     export RBENVPLUGINPATH="${HOME}/.rbenv/plugins"
+#     PATH="${PATH}:${RBENVPLUGINPATH}/ruby-build/bin"
+# fi
 
-if which pyenv &> /dev/null; then
-    export PYENVPATH="${HOME}/.pyenv"
-    PATH="${PATH}:${PYENVPATH}/bin"
-fi
-
-if [[ -e "/usr/local/cuda" ]]; then
-    export CUDAPATH='/usr/local/cuda'
-    PATH="${PATH}:${CUDAPATH}/bin"
-    # LD_LIBRARY_PATH
-    LD_LIBRARY_PATH="/usr/local/lib"
-    # CUDA
-    LD_LIBRARY_PATH="${CUDAPATH}/lib64:${LD_LIBRARY_PATH}"
-    # MKL
-    export INTELPATH="/opt/intel/lib/intel64"
-    export MKLPATH="/opt/intel/mkl/lib/intel64"
-    # Note: bugfix because the above didnt work
-    # added intel64_lin to path to get libiomp5.a in the path
-    LD_LIBRARY_PATH="${INTELPATH}:/opt/intel/lib/intel64_lin:${MKLPATH}:${LD_LIBRARY_PATH}"
-    export LD_LIBRARY_PATH
-fi
-
-if [[ -e "${HOME}/caffe" ]]; then
-    export CAFFE_ROOT="${HOME}/caffe"
-    PYTHONPATH="${CAFFE_ROOT}/python:${PYTHONPATH}"
-    export PYTHONPATH
-fi
+# if which pyenv &> /dev/null; then
+#     export PYENVPATH="${HOME}/.pyenv"
+#     PATH="${PATH}:${PYENVPATH}/bin"
+# fi
 
 export PATH

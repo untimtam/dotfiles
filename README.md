@@ -16,7 +16,7 @@ Warning: Ubuntu configuration is not completed!
 This will:
 
 * Download these dotfiles to `~/dotfiles`
-* Create directories: `~/bin`, `~/code`, `~/projects`, `~/work`, `~/Downloads/torrents`
+* Create directories: `~/bin`, `~/Downloads/torrents`
 * copy bin scripts
 * Symlink some dotfiles
 * Install tools, apps, other stuff
@@ -43,20 +43,10 @@ To update the dotfiles, run the [bootstrap](script/bootstrap) script.
 
 ## TODO:
 
-* finish update script
 * vim and vim packges
 * verification step
 * add post-install preferences to install
-* extra packages for some tools (opam init) (python, ruby, ocaml/opam, etc)
 * These dotfiles only work from `~/dotfiles`?
-
-## Adding (?):
-- [] update gnu utils
-- [] teamspeak
-- [] GitUp
-- [] StarUML
-- [] Tor/Torbrowser
-- [] rust packages?
 
 ## [Contributing](CONTRIBUTING.md)
 

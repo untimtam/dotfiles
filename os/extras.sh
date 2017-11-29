@@ -33,7 +33,28 @@ declare -r E_PACKAGES_FAILURE=109
 # | Global variables                                                           |
 # -----------------------------------------------------------------------------
 
+# -----------------------------------------------------------------------------
+# | Shell                                                                      |
+# -----------------------------------------------------------------------------
 
+set_shell() {
+    confirm "Install tools?"
+    local do_change_shell="$?"
+
+    # update shells
+    if [[ do_change_shell -eq 0 ]]; then
+        # TODO: should only run once now but make sure we dont polute /etc/shells?
+        sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
+        sudo bash -c 'echo /usr/local/bin/zsh >> /etc/shells'
+        if [[ -e "/usr/local/bin/zsh" ]]; then
+            # set shell to updated zsh (preferred over bash)
+            change_shell "/usr/local/bin/zsh"
+        elif [[ -e "/usr/local/bin/bash" ]]; then
+            # set shell to updated bash
+            change_shell "/usr/local/bin/bash"
+        fi
+    fi
+}
 
 # -----------------------------------------------------------------------------
 # | Git                                                                        |
@@ -165,6 +186,14 @@ set_sublime() {
 }
 
 # -----------------------------------------------------------------------------
+# | Focal                                                                      |
+# -----------------------------------------------------------------------------
+
+set_focal() {
+    mkdir -p "${HOME}/focal"
+}
+
+# -----------------------------------------------------------------------------
 # | Main                                                                       |
 # -----------------------------------------------------------------------------
 
@@ -193,6 +222,9 @@ main() {
     if [[ "${extra}" -eq 0 ]]; then
         local -r OS="$(get_os)"
         if [[ "${OS}" == "osx" ]]; then
+            set_shell
+            status_no_exit "Error setting up shell"
+
             git config --global credential.helper osxkeychain >> "${ERROR_FILE}" 2>&1 > /dev/null
             status "Git config" "${E_GIT_CONFIG_FAILURE}"
 
@@ -204,6 +236,9 @@ main() {
 
             set_sublime
             exit_on_fail "Error setting up sublime"
+
+            set_focal
+            exit_on_fail "Error setting up focal extras"
         elif [[ "${OS}" == "ubuntu" ]]; then
             print_success "No extras for Ubuntu"
         else

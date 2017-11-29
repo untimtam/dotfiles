@@ -12,9 +12,6 @@ alias cd..='cd ../'
 # quickly switch to commonly used directories
 alias dl="cd ${HOME}/Downloads"
 alias dt="cd ${HOME}/Desktop"
-alias co="cd ${HOME}/code"
-alias pr="cd ${HOME}/projects"
-alias wr="cd ${HOME}/work"
 alias dots="cd ${DOTS}"
 alias repo="${HOME}/Repositories"
 
@@ -62,10 +59,6 @@ alias octal='stat -f %Mp%Lp'
 # link files
 alias lns='ln -s'
 alias symlink='lns'
-
-# tmux
-alias muxls='tmuxl'
-alias muxks='tmux kill-session'
 
 # -----------------------------------------------------------------------------
 # | Network                                                                    |
@@ -137,7 +130,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     alias badge="osascript -e 'beep'"
 
     # run homebrew updates
-    alias brewup="brew update && brew upgrade && brew cleanup"
+    alias brewup="brewu && brewc"
 fi
 
 # -----------------------------------------------------------------------------
