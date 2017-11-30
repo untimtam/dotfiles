@@ -27,6 +27,8 @@ export JAVA_HOME="$(/usr/libexec/java_home)"
 # | android                                                                    |
 # -----------------------------------------------------------------------------
 
+export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
+
 if [[ -e "${HOME}/Library/Android/sdk" ]]; then
     export SDK_ROOT="${HOME}/Library/Android/sdk"
     export NDK_ROOT="${HOME}/Library/Android/sdk/ndk-bundle"
