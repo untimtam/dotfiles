@@ -186,6 +186,11 @@ messages_preferences() {
     # defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 }
 
+textedit_preferences() {
+    # open new document by default
+    defaults write -g NSShowAppCentricOpenPanelInsteadOfUntitledFile -bool false
+}
+
 set_preferences() {
     start_spinner "Setting Spotlight preferences"
     spotlight_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
@@ -226,6 +231,11 @@ set_preferences() {
     messages_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
     status_stop_spinner "Finished setting Messages preferences"
     exit_on_fail "Messages preferences failed" "${E_PREFERENCE_FAILURE}"
+
+    start_spinner "Setting TextEdit preferences"
+    textedit_preferences >> "${ERROR_FILE}" 2>&1 > /dev/null
+    status_stop_spinner "Finished setting TextEdit preferences"
+    exit_on_fail "TextEdit preferences failed" "${E_PREFERENCE_FAILURE}"
 }
 
 # -----------------------------------------------------------------------------
