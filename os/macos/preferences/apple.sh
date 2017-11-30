@@ -87,6 +87,11 @@ mail_preferences() {
     # Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
     defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" -string "@\\U21a9"
 
+    # Display emails in threaded mode, sorted by date (oldest at the top)
+    defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
+    defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
+    defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
+
     # Disable inline attachments (just show the icons)
     defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 
@@ -99,7 +104,7 @@ timemachine_preferences() {
     defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
     # Disable local Time Machine backups
-    hash tmutil &> /dev/null && sudo tmutil disablelocal
+    # hash tmutil &> /dev/null && sudo tmutil disablelocal
 }
 
 activity_preferences() {

@@ -21,15 +21,8 @@ declare -r -a DOCK_APPS=(
     'System Preferences'
     'Calendar'
     'Mail'
-    'iTerm'
-    'Gitkraken'
-    'Sublime Text'
-    'TextEdit'
-    'Google Chrome'
-    'Franz'
     'Messages'
-    'Skype'
-    'League of Legends'
+    'TextEdit'
 )
 
 # -----------------------------------------------------------------------------
@@ -61,8 +54,14 @@ io_preferences() {
     defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
     # Set a blazingly fast keyboard repeat rate
-    defaults write NSGlobalDomain KeyRepeat -int 1
+    defaults write NSGlobalDomain KeyRepeat -int 2
     defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+    # Disable smart quotes
+    defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+    # Disable smart dashes
+    defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
     # Disable auto-correct
     defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -91,8 +90,8 @@ screen_preferences() {
     defaults write com.apple.screencapture disable-shadow -bool true
 
     # Enable subpixel font rendering on non-Apple LCDs
-    # TODO is this what messes up retina antialiasing on non-apple monitors?
-    defaults write NSGlobalDomain AppleFontSmoothing -int 2
+    # Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501
+    defaults write NSGlobalDomain AppleFontSmoothing -int 1
 
     # Enable HiDPI display modes (requires restart)
     sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
@@ -146,9 +145,6 @@ finder_preferences() {
 
     # Remove the spring loading delay for directories
     defaults write NSGlobalDomain com.apple.springing.delay -float 0
-
-    # Avoid creating .DS_Store files on network volumes
-    defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
     # Avoid creating .DS_Store files on network or USB volumes
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true

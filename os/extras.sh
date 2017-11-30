@@ -37,6 +37,16 @@ declare -r E_PACKAGES_FAILURE=109
 # | Shell                                                                      |
 # -----------------------------------------------------------------------------
 
+change_shell() {
+    chsh -s "$1"
+    if ! status_code; then
+        confirm "Try changing shell again?"
+        if status_code; then
+            change_shell "$1"
+        fi
+    fi
+}
+
 set_shell() {
     confirm "Install tools?"
     local do_change_shell="$?"

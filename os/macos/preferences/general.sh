@@ -56,9 +56,9 @@ general_preferences() {
     sudo nvram SystemAudioVolume=" "
 
     # Menu bar: hide the User icon
-    for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
-        defaults write "${domain}" dontAutoLoad -array "/System/Library/CoreServices/Menu Extras/User.menu"
-    done
+    # for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
+    #     defaults write "${domain}" dontAutoLoad -array "/System/Library/CoreServices/Menu Extras/User.menu"
+    # done
     defaults write com.apple.systemuiserver menuExtras -array \
         "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
         "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
@@ -118,17 +118,11 @@ general_preferences() {
 
     # Never go into computer sleep mode
     sudo systemsetup -setcomputersleep Off >> "${ERROR_FILE}" 2>&1 > /dev/null
-
-    # Disable smart quotes
-    defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-
-    # Disable smart dashes
-    defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 }
 
 ssd_preferences() {
-    # Disable local Time Machine snapshots
-    sudo tmutil disablelocal
+    # # Disable local Time Machine snapshots
+    # sudo tmutil disablelocal
 
     # Disable hibernation (speeds up entering sleep mode)
     sudo pmset -a hibernatemode 0

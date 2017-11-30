@@ -80,6 +80,7 @@ declare -r -a APPS=(
     'iterm2'
     'keyboard-cleaner'
     'postman'
+    'sizeup'
     'skype'
     'slack'
     'sonos'
