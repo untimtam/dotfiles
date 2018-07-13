@@ -1,6 +1,6 @@
 # Path
 
-# Default path (osx fresh install)
+# Default path (macOS fresh install)
 #   /usr/local/bin
 #   /usr/bin
 #   /bin
@@ -9,33 +9,5 @@
 
 # search ~/bin first
 PATH="${HOME}/bin:${PATH}"
-
-# if which heroku &> /dev/null; then
-#     PATH="${PATH}:/usr/local/heroku/bin"
-# fi
-
-# if which go &> /dev/null; then
-#     export GOPATH="${HOME}/code/Go"
-#     export GOROOT=/usr/local/opt/go/libexec
-#     PATH="${PATH}:${GOPATH}/bin"
-#     PATH="${PATH}:${GOROOT}/bin"
-# fi
-
-# if which cargo &> /dev/null; then
-#     export RUST_SRC_PATH="${HOME}/projects/rust/src"
-#     PATH="${PATH}:${HOME}/.cargo/bin"
-# fi
-
-# if which rbenv &> /dev/null; then
-#     export RBENVPATH="${HOME}/.rbenv"
-#     PATH="${PATH}:${RBENVPATH}/bin"
-#     export RBENVPLUGINPATH="${HOME}/.rbenv/plugins"
-#     PATH="${PATH}:${RBENVPLUGINPATH}/ruby-build/bin"
-# fi
-
-# if which pyenv &> /dev/null; then
-#     export PYENVPATH="${HOME}/.pyenv"
-#     PATH="${PATH}:${PYENVPATH}/bin"
-# fi
 
 export PATH

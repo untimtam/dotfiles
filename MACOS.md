@@ -5,7 +5,7 @@ Procedure after a fresh dotfiles setup
 
 ## Apps
 
-* set up emails
+* set up accounts (should be synced with iCloud)
 
 ## Settings
 
@@ -16,7 +16,6 @@ Procedure after a fresh dotfiles setup
 * system preferences: Desktop & Screen Saver > set desktop
 * system preferences: Accessibility > Mouse and Trackpad > Trackpad options > enable draging: 3 finger drag
 * system preferences: Sound > Sound Effects > play feedback when volume is changed
-* sublime preferences: "color_scheme": "Packages/Material Theme/schemes/Material-Theme.tmTheme"
 
 ## Start up apps
 

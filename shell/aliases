@@ -4,26 +4,11 @@
 # | General                                                                    |
 # -----------------------------------------------------------------------------
 
-# Shortcuts for changing directories
-alias ~='cd ~'
-alias ~~='cd ~ && clear && ls'
-alias cd..='cd ../'
-
-# quickly switch to commonly used directories
-alias dl="cd ${HOME}/Downloads"
-alias dt="cd ${HOME}/Desktop"
-alias dots="cd ${DOTS}"
-alias repo="${HOME}/Repositories"
-
 # List directories only
 alias ld='ls -l | grep "^d"'
-alias lA='ls -A'
 
 # path
 alias path='echo -e ${PATH//:/\\n}'
-
-# really delete things
-alias rmf='rm -rf'
 
 # Shutdown and Reboot
 alias shutdown='sudo shutdown -h now'
@@ -38,79 +23,47 @@ alias hardreboot='sudo reboot'
 alias shell='echo "${SHELL}"'
 alias editor='echo "${EDITOR}"'
 
-# clear
-alias c='clear'
-alias cls='clear && ls'
-alias cla='clear && lA'
-alias ctr='clear && tree'
-
-# Developer shortcuts
-alias edit="${EDITOR}"
+# Count files
 alias count='ls -la | wc -l'
 alias count_files='ls -la | grep ^[-,l] | wc -l'
-alias m='man'
-alias map='xargs -n1'
-
-# chown
-alias own='sudo chown -R $(whoami):admin'
-alias ownv='sudo chown -R -v $(whoami):admin'
-alias octal='stat -f %Mp%Lp'
-
-# link files
-alias lns='ln -s'
-alias symlink='lns'
 
 # -----------------------------------------------------------------------------
 # | Network                                                                    |
 # -----------------------------------------------------------------------------
 
-# IP
+# Show local and remote IP
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
-alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+alias local_ip="ipconfig getifaddr en0"
+alias local_ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Ports
-alias openPorts='sudo lsof -i | grep LISTEN'
-alias showBlocked='sudo ipfw list'
+alias open_ports='sudo lsof -i | grep LISTEN'
 
 # Flush (DNS) Directory Service cache
-alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+alias flush_dns="dscacheutil -flushcache && killall -HUP mDNSResponder"
 
 # View HTTP traffic
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 # -----------------------------------------------------------------------------
-# | Other                                                                      |
-# -----------------------------------------------------------------------------
-
-# Reload the shell (i.e. invoke as a login shell)
-alias reload="clear && exec ${SHELL} -l"
-
-# -----------------------------------------------------------------------------
-# | OSX                                                                        |
+# | MACOS                                                                      |
 # -----------------------------------------------------------------------------
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
-    # lazy startup...
-    alias start='sudo -v && startup && emptytrash && cleanup && cls'
-
-    # open current directory in Finder
+    # Open current directory in Finder
     alias f='open -a Finder ./'
 
-    # go afk in OSX
+    # Go AFK
     alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 
     # Show/hide hidden files in Finder
-    alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-    alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+    alias show_hidden="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+    alias hide_hidden="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
     # Hide/show all desktop icons (useful when presenting)
-    alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-    alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
-    # Recursively delete `.DS_Store` files
-    alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+    alias show_desktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+    alias hide_desktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 
     # Clean up LaunchServices to remove duplicates in the “Open With” menu
     alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
@@ -118,74 +71,5 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     # Empty the Trash on all mounted volumes and the main HDD.
     # Also, clear Apple’s System Logs to improve shell startup speed.
     # Finally, clear download history from quarantine. https://mths.be/bum
-    alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-
-    # Merge PDF files
-    # Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
-    alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
-
-    # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
-    # (useful when executing time-consuming commands)
-    # alias badge="tput bel"
-    alias badge="osascript -e 'beep'"
-
-    # run homebrew updates
-    alias brewup="brewu && brewc"
-fi
-
-# -----------------------------------------------------------------------------
-# | Ubuntu                                                                     |
-# -----------------------------------------------------------------------------
-
-if [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
-    alias startunity='sudo service lightdm start'
-    # Grub
-    alias grubu='sudo update-grub' #update grub
-    alias grubi='sudo grub-install' #install grub
-    # Update and Upgrade Packages
-    alias update='sudo apt-get update'
-    alias upgrade='sudo apt-get upgrade'
-    alias dist-upgrade='sudo apt-get dist-upgrade'
-    alias upgrade-all='update && dist-upgrade'
-    # Install and Remove Packages
-    alias install='sudo apt-get install'
-    alias uninstall='sudo apt-get remove'
-    alias finstall='sudo apt-get -f install' #force install
-    alias freinstall='sudo apt-get -f install --reinstall' #force reinstall
-    # Add repository keys (usage: addkey XXXXXXXX - last 8 digits of the key)
-    alias addkey='sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com'
-    # Search apt repository
-    alias search='sudo apt-cache search'
-    alias show='sudo apt-cache show'
-    # Cleaning
-    alias clean='sudo apt-get clean && sudo apt-get autoclean'
-    alias remove='sudo apt-get remove && sudo apt-get autoremove'
-    alias purge='sudo apt-get purge'
-    # SSH
-    alias sshstart='sudo service ssh start'
-    alias sshstop='sudo service ssh stop'
-    alias sshrestart='sudo service ssh restart'
-    alias sshstatus='sudo service ssh status'
-    # Network Start, Stop, and Restart
-    alias networkrestart='sudo service networking restart'
-    alias networkstop='sudo service networking stop'
-    alias networkstart='sudo service networking start'
-    # SAMBA Start, Stop, and Restart
-    alias sambarestart='sudo service smbd restart'
-    alias sambastop='sudo service smbd stop'
-    alias sambastart='sudo service smbd start'
-    # Misellaneous
-    alias fdisk='sudo fdisk -l'
-    alias uuid='sudo vol_id -u' #list UUIDs
-    alias rfind='sudo find / -name' #find a file. Usage: rfind 'filename'
-    alias rd='sudo rm -R' #remove directory
-    alias imount='sudo mount -o loop -t iso9660' #mount iso. Usage: imount 'filename.iso'
-    alias dirsize='sudo du -hx --max-depth=1' #directory size. Usage: dirsize directoryname
-    # Commands
-    alias rrsync='rsync --verbose -rtvogp --progress'
-    alias scp='scp -c blowfish'
-    alias nano='sudo nano -iSw$'
-    alias cp='cp --verbose'
-    alias mv='mv --verbose'
-    alias make='make -j4'
+    alias empty_trash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 fi

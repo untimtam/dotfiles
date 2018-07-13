@@ -21,75 +21,42 @@ zstyle ':prezto:load' zmodule 'attr' 'stat'
 zstyle ':prezto:load' zfunction 'zargs' 'zmv'
 
 # -----------------------------------------------------------------------------
-# | OS                                                                         |
+# | Modules                                                                    |
 # -----------------------------------------------------------------------------
 
 # Set the Prezto modules to load (browse modules).
 # The order matters.
-# OSX
-if [[ "$(uname -s)" == "Darwin" ]]; then
-    zstyle ':prezto:load' pmodule \
-        'environment' \
-        'editor' \
-        'history' \
-        'directory' \
-        'spectrum' \
-        'osx' \
-        'archive' \
-        'tmux' \
-        'homebrew' \
-        'git' \
-        'python' \
-        'utility' \
-        'completion' \
-        'fasd' \
-        'syntax-highlighting' \
-        'history-substring-search' \
-        'prompt'
-
-    # -------------------------------------------------------------------------
-    # | Tmux                                                                   |
-    # -------------------------------------------------------------------------
-
-    # Integrate with iTerm2.
-    zstyle ':prezto:module:tmux:iterm' integrate 'yes'
-
-elif [[ ("$(uname -s)" == "Linux") && (-e "/etc/lsb-release") ]]; then
-    zstyle ':prezto:load' pmodule \
-        'environment' \
-        'editor' \
-        'history' \
-        'directory' \
-        'spectrum' \
-        'archive' \
-        'tmux' \
-        'git' \
-        'python' \
-        'ssh' \
-        'utility' \
-        'completion' \
-        'fasd' \
-        'syntax-highlighting' \
-        'history-substring-search' \
-        'prompt'
-
-    # -------------------------------------------------------------------------
-    # | SSH                                                                    |
-    # -------------------------------------------------------------------------
-
-    # Set the SSH identities to load into the agent.
-    zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_github' 'known_hosts'
-
-fi
+zstyle ':prezto:load' pmodule \
+    'environment' \
+    'terminal' \
+    'editor' \
+    'history' \
+    'directory' \
+    'fasd' \
+    'spectrum' \
+    'utility' \
+    'ssh' \
+    'completion' \
+    'autosuggestions' \
+    'homebrew' \
+    'command-not-found' \
+    'osx' \
+    'git' \
+    'archive' \
+    'screen' \
+    'tmux' \
+    'docker' \
+    'python' \
+    'node' \
+    'syntax-highlighting' \
+    'history-substring-search' \
+    'prompt'
 
 # -----------------------------------------------------------------------------
-# | Prompt                                                                     |
+# | Terminal                                                                   |
 # -----------------------------------------------------------------------------
 
-# Set the prompt theme to load.
-# Setting it to 'random' loads a random theme.
-# Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'hellowor1d'
+zstyle ':prezto:module:terminal' auto-title 'yes'
 
 # -----------------------------------------------------------------------------
 # | Editor                                                                     |
@@ -101,15 +68,19 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 # Auto convert .... to ../..
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 
-# -----------------------------------------------------------------------------
-# | History Substring Search                                                   |
-# -----------------------------------------------------------------------------
+# -------------------------------------------------------------------------
+# | SSH                                                                    |
+# -------------------------------------------------------------------------
 
-# Set the query found color.
-zstyle ':prezto:module:history-substring-search:color' found ''
+# Set the SSH identities to load into the agent.
+zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'known_hosts'
 
-# Set the query not found color.
-zstyle ':prezto:module:history-substring-search:color' not-found ''
+# -------------------------------------------------------------------------
+# | Tmux                                                                   |
+# -------------------------------------------------------------------------
+
+# Integrate with iTerm2.
+zstyle ':prezto:module:tmux:iterm' integrate 'yes'
 
 # -----------------------------------------------------------------------------
 # | Syntax Highlighting                                                        |
@@ -124,3 +95,22 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'cursor' \
   'root' \
   'line'
+
+# -----------------------------------------------------------------------------
+# | History Substring Search                                                   |
+# -----------------------------------------------------------------------------
+
+# Set the query found color.
+zstyle ':prezto:module:history-substring-search:color' found ''
+
+# Set the query not found color.
+zstyle ':prezto:module:history-substring-search:color' not-found ''
+
+# -----------------------------------------------------------------------------
+# | Prompt                                                                     |
+# -----------------------------------------------------------------------------
+
+# Set the prompt theme to load.
+# Setting it to 'random' loads a random theme.
+# Auto set to 'off' on dumb terminals.
+zstyle ':prezto:module:prompt' theme 'hellowor1d'

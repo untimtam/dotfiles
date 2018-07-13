@@ -5,11 +5,11 @@
 # ****************************************
 # macOS https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
 # ****************************************
+
+# General
 .DS_Store
 .AppleDouble
 .LSOverride
-Desktop.ini
-.localized
 
 # Icon must end with two \r
 Icon
@@ -25,6 +25,7 @@ Icon
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
+.com.apple.timemachine.donotpresent
 
 # Directories potentially created on remote AFP share
 .AppleDB
@@ -36,12 +37,17 @@ Temporary Items
 # ****************************************
 # Windows https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
 # ****************************************
-# Windows image file caches
+
+# Windows thumbnail cache files
 Thumbs.db
 ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
 
 # Folder config file
-Desktop.ini
+[Dd]esktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
@@ -49,6 +55,7 @@ $RECYCLE.BIN/
 # Windows Installer files
 *.cab
 *.msi
+*.msix
 *.msm
 *.msp
 
@@ -59,14 +66,19 @@ $RECYCLE.BIN/
 # Linux https://github.com/github/gitignore/blob/master/Global/Linux.gitignore
 # ****************************************
 
-# Temporary files on linux
 *~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
 
 # KDE directory preferences
 .directory
 
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 # ****************************************
 # Sublime https://github.com/github/gitignore/blob/master/Global/SublimeText.gitignore

@@ -6,11 +6,3 @@ mkcd() { mkdir -p "$1" && cd "$1"; }
 spellcheck() {
     echo "$1" | aspell -a
 }
-
-# count() {
-#     ls -la "$1" | wc -l
-# }
-
-# count_files() {
-#     ls -la "$1" | grep ^[-,l] | wc -l
-# }
