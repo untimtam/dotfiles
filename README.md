@@ -1,6 +1,8 @@
 [Tim's dotfiles](https://github.com/hellowor1dn)
 ------------------------------------------------
 
+![TF](TF.png)
+
 ## Setup
 
 1. Install XCode
