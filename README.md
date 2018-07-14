@@ -1,7 +1,7 @@
 [Tim's dotfiles](https://github.com/hellowor1dn)
 ------------------------------------------------
 
-![TF](TF.png)
+![TF](TF_300.png)
 
 ## Setup
 
