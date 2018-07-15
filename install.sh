@@ -105,7 +105,6 @@ readonly ZSH_PROMPT_SOURCE="$(pwd)/shell/zsh/prompt_hellowor1d_setup"
 readonly ZSH_PROMPT_TARGET="$(pwd)/shell/zsh/.zprezto/modules/prompt/functions/prompt_hellowor1d_setup"
 
 readonly HOMEBREW_TAPS=(
-  'homebrew/versions'
   'homebrew/command-not-found'
   'caskroom/cask'
   'caskroom/versions'
