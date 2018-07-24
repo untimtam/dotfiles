@@ -137,7 +137,7 @@ readonly HOMEBREW_TOOLS=(
   'git'
   'git-lfs'
   'gradle'
-  'imagemagick --with-webp'
+  # 'imagemagick --with-webp'
   'jadx'
   'jupyter'
   'nativefier'
@@ -148,17 +148,20 @@ readonly HOMEBREW_TOOLS=(
   'shellcheck'
   'tmux'
   'tree'
-  'vim --with-override-system-vi'
-  'wget --with-iri'
+  # 'vim --with-override-system-vi'
+  # 'wget --with-iri'
 )
 
 readonly CASK_FONTS=(
-  'font-input'
   'font-fira-code'
+  'font-fira-mono'
+  'font-firacode-nerd-font'
+  'font-firacode-nerd-font-mono'
   'font-fontawesome'
+  'font-hack-nerd-font'
+  'font-input'
   'font-roboto'
   'font-source-code-pro'
-  # 'font-source-code-pro-for-powerline'
 )
 
 readonly CASK_APPS=(
@@ -990,7 +993,7 @@ function install_apps() {
 function set_environment() {
   verbose "entering set_environment"
 
-  install_homebrew
+  # install_homebrew
   homebrew_taps
 
   # Update homebrew packages
@@ -1303,8 +1306,8 @@ function spotlight_preferences() {
     '{"enabled" = 1;"name" = "APPLICATIONS";}' \
     '{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
     '{"enabled" = 1;"name" = "DIRECTORIES";}' \
-    '{"enabled" = 0;"name" = "PDF";}' \
-    '{"enabled" = 0;"name" = "FONTS";}' \
+    '{"enabled" = 1;"name" = "PDF";}' \
+    '{"enabled" = 1;"name" = "FONTS";}' \
     '{"enabled" = 0;"name" = "DOCUMENTS";}' \
     '{"enabled" = 0;"name" = "MESSAGES";}' \
     '{"enabled" = 0;"name" = "CONTACT";}' \
@@ -1547,7 +1550,7 @@ function finder_preferences() {
 
   # Show item info near icons on the desktop and in other icon views
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
-  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+  # /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
   /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 
   # Show item info on the bottom of the icons on the desktop
@@ -1555,17 +1558,17 @@ function finder_preferences() {
 
   # Enable snap-to-grid for icons on the desktop and in other icon views
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+  # /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
   /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
   # Increase grid spacing for icons on the desktop and in other icon views
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 64" ~/Library/Preferences/com.apple.finder.plist
-  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 64" ~/Library/Preferences/com.apple.finder.plist
+  # /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 64" ~/Library/Preferences/com.apple.finder.plist
   /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 64" ~/Library/Preferences/com.apple.finder.plist
 
   # Increase the size of icons on the desktop and in other icon views
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
-  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
+  # /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
   /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
 
   # Use column view in all Finder windows by default
@@ -1993,7 +1996,7 @@ function set_preferences() {
   general_preferences
   dock_preferences
   language_preferences
-  spotlight_preferences
+  # spotlight_preferences # TODO spotlight is NOT working
   display_preferences
   energy_preferences
   keyboard_preferences

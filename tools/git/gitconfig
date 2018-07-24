@@ -1,6 +1,6 @@
 # .gitconfig
 [user]
-	name = Tim Flichy
+	name = Tim FLichy
 	email = timflichy@gmail.com
 [credential]
 	helper = osxkeychain
