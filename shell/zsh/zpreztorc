@@ -73,7 +73,7 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 # -------------------------------------------------------------------------
 
 # Set the SSH identities to load into the agent.
-zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'known_hosts'
+zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'focal_rsa' 'known_hosts'
 
 # -------------------------------------------------------------------------
 # | Tmux                                                                   |
@@ -113,4 +113,4 @@ zstyle ':prezto:module:history-substring-search:color' not-found ''
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'hellowor1d'
+zstyle ':prezto:module:prompt' theme 'powerlevel9k'
