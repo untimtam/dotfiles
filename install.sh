@@ -137,7 +137,7 @@ readonly HOMEBREW_TOOLS=(
   'git'
   'git-lfs'
   'gradle'
-  # 'imagemagick --with-webp'
+  'imagemagick --with-webp'
   'jadx'
   'jupyter'
   'nativefier'
@@ -148,8 +148,8 @@ readonly HOMEBREW_TOOLS=(
   'shellcheck'
   'tmux'
   'tree'
-  # 'vim --with-override-system-vi'
-  # 'wget --with-iri'
+  'vim --with-override-system-vi'
+  'wget --with-iri'
 )
 
 readonly CASK_FONTS=(
@@ -934,7 +934,7 @@ function install_tools() {
     if [[ -n "${tool}" ]]; then
       info "installing ${tool}"
       if [[ ! -n ${dry_run-} ]]; then
-        if ! brew install "$tool" >> "${LOG_FILE}" 2>&1 > /dev/null; then
+        if ! brew install $tool >> "${LOG_FILE}" 2>&1 > /dev/null; then
           script_exit "${tool} install failed" $E_INSTALL_FAILURE
         fi
       fi
