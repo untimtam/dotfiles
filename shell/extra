@@ -11,18 +11,20 @@ export JAVA_HOME="$(/usr/libexec/java_home)"
 # -----------------------------------------------------------------------------
 
 export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
+export ANDROID_NDK_HOME="/usr/local/share/android-ndk"
+export ANDROID_HOME="${ANDROID_SDK_ROOT}"
 
-if [[ -e "${HOME}/Library/Android/sdk" ]]; then
-    export SDK_ROOT="${HOME}/Library/Android/sdk"
-    export NDK_ROOT="${HOME}/Library/Android/sdk/ndk-bundle"
-    export ANDROID_HOME="${HOME}/Library/Android/sdk"
-    export ANDROID_NDK_HOME="${HOME}/Library/Android/sdk/ndk-bundle"
-    # /usr/local/share/android-sdk
-    # /usr/local/opt/android-ndk
-
-    launchctl setenv ANDROID_HOME "$ANDROID_HOME"
-    launchctl setenv ANDROID_NDK_HOME "$ANDROID_NDK_HOME"
-fi
+# if [[ -e "${HOME}/Library/Android/sdk" ]]; then
+#     export SDK_ROOT="${HOME}/Library/Android/sdk"
+#     export NDK_ROOT="${HOME}/Library/Android/sdk/ndk-bundle"
+#     export ANDROID_HOME="${HOME}/Library/Android/sdk"
+#     export ANDROID_NDK_HOME="${HOME}/Library/Android/sdk/ndk-bundle"
+#     # /usr/local/share/android-sdk
+#     # /usr/local/opt/android-ndk
+#
+#     launchctl setenv ANDROID_HOME "$ANDROID_HOME"
+#     launchctl setenv ANDROID_NDK_HOME "$ANDROID_NDK_HOME"
+# fi
 
 # -----------------------------------------------------------------------------
 # | jupyter                                                                    |
