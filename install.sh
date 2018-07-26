@@ -87,6 +87,7 @@ readonly DOT_LINKS=(
 
   "shell/zsh/zshrc"
 
+  "shell/other/vimrc"
   "shell/other/curlrc"
   "shell/other/wgetrc"
   "shell/other/inputrc"
