@@ -87,6 +87,7 @@ readonly DOT_LINKS=(
 
   "shell/zsh/zshrc"
 
+  "shell/other/vimrc"
   "shell/other/curlrc"
   "shell/other/wgetrc"
   "shell/other/inputrc"
@@ -168,6 +169,7 @@ readonly CASK_APPS=(
   '1password'
   'alfred'
   'android-ndk'
+  'android-platform-tools'
   'android-sdk'
   'android-studio'
   'appcleaner'
@@ -872,14 +874,14 @@ function install_shells() {
     fi
   done
 
-  if grep '/usr/local/bin/bash' /etc/shells &> /dev/null ; then
+  if sudo grep '/usr/local/bin/bash' /etc/shells &> /dev/null ; then
     verbose 'adding /usr/local/bin/bash to /etc/shells'
     if [[ ! -n ${dry_run-} ]]; then
       sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells' &> /dev/null
     fi
   fi
 
-  if grep '/usr/local/bin/zsh' /etc/shells &> /dev/null ; then
+  if sudo grep '/usr/local/bin/zsh' /etc/shells &> /dev/null ; then
     verbose 'adding /usr/local/bin/zsh to /etc/shells'
     if [[ ! -n ${dry_run-} ]]; then
       sudo bash -c 'echo /usr/local/bin/zsh >> /etc/shells' &> /dev/null
@@ -2019,11 +2021,11 @@ function set_preferences() {
   spectacle_preferences
   archive_preferences
 
-  for app in "${KILL_APPS[@]}"; do
-    if [[ -n "${app}" ]]; then
-      killall "${app}" &> /dev/null
-    fi
-  done
+  # for app in "${KILL_APPS[@]}"; do
+  #   if [[ -n "${app}" ]]; then
+  #     killall "${app}" &> /dev/null
+  #   fi
+  # done
 
   verbose "exiting set_preferences"
   return $SUCCESS
