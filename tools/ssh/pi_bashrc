@@ -1,8 +1,23 @@
-#!/usr/bin/env bash
-#
-# .bash_profile for login
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # region bash options
+
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend
+
+# Check the window size after each command
+shopt -s checkwinsize
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
@@ -13,12 +28,6 @@ shopt -s dotglob
 # Use extended pattern matching features
 shopt -s extglob
 
-# Append to the Bash history file, rather than overwriting it
-shopt -s histappend
-
-# Autocorrect typos in path names when using `cd`
-shopt -s cdspell
-
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
@@ -28,24 +37,12 @@ done
 
 # endregion
 
-# region path
-
-# search ~/bin first
-if [[ -d "${HOME}/bin" ]]; then
-  PATH="${HOME}/bin:${PATH}"
-fi
-
-# endregion
-
 # region exports
 
 # Exports
 
 # make vim the default editor
 export EDITOR='vim';
-
-# make terminal output colored
-export TERM=xterm-256color;
 
 # increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE='32768';
@@ -57,9 +54,6 @@ export HISTCONTROL='ignoreboth';
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 
-# Highlight section titles in manual pages.
-export LESS_TERMCAP_md="${yellow}"
-
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
 
@@ -70,6 +64,31 @@ export GREP_OPTIONS='--color=auto';
 # shells instead of the default "last window closed" history
 export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
 
 # endregion
 
@@ -97,7 +116,7 @@ else # OS X `ls`
 fi
 
 # Always use color output for `ls`
-alias ls="command ls ${colorflag}"
+alias ls='ls --color=auto'
 export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:'
 
 # Files and directories
@@ -112,6 +131,15 @@ alias lt='ll -tr'        # Lists sorted by date, most recent last.
 alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
 alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
 alias sl='ls'            # I often screw this up.
+
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # endregion
 
@@ -227,20 +255,58 @@ else
     hostStyle="${yellow}";
 fi;
 
-# Set the terminal title and prompt.
-PS1="\[\033]0;\W\007\]"; # working directory base name
-PS1+="\[${bold}\]\n"; # newline
-PS1+="\[${userStyle}\]\u"; # username
-PS1+="\[${white}\] at ";
-PS1+="\[${hostStyle}\]\h"; # host
-PS1+="\[${white}\] in ";
-PS1+="\[${green}\]\w"; # working directory full path
-PS1+="\$(prompt_git \"\[${white}\] on \[${violet}\]\" \"\[${blue}\]\")"; # Git repository details
-PS1+="\n";
-PS1+="\[${white}\]\$ \[${reset}\]"; # `$` (and reset color)
-export PS1;
+if [ "$color_prompt" = yes ]; then
+  # Set the terminal title and prompt.
+  PS1="\[\033]0;\W\007\]"; # working directory base name
+  PS1+="\[${bold}\]\n"; # newline
+  PS1+="\[${userStyle}\]\u"; # username
+  PS1+="\[${white}\] at ";
+  PS1+="\[${hostStyle}\]\h"; # host
+  PS1+="\[${white}\] in ";
+  PS1+="\[${green}\]\w"; # working directory full path
+  PS1+="\$(prompt_git \"\[${white}\] on \[${violet}\]\" \"\[${blue}\]\")"; # Git repository details
+  PS1+="\n";
+  PS1+="\[${white}\]\$ \[${reset}\]"; # `$` (and reset color)
+  export PS1;
 
-PS2="\[${yellow}\]→ \[${reset}\]";
-export PS2;
+  PS2="\[${yellow}\]→ \[${reset}\]";
+  export PS2;
+else
+  PS1="\W\n\u at \h in \w\$(prompt_git \" on \" \"\")\n\$"
+  export PS1
+  PS2="→ "
+  export PS2
+fi
+
+# if [ "$color_prompt" = yes ]; then
+#     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
+# else
+#     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+# fi
+
+# If this is an xterm set the title to user@host:dir
+# case "$TERM" in
+# xterm*|rxvt*)
+#     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+#     ;;
+# *)
+#     ;;
+# esac
+
+unset color_prompt force_color_prompt
+# endregion
+
+# region completion
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
 
 # endregion
