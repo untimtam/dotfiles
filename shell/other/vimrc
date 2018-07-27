@@ -10,6 +10,7 @@ endif
 " vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-commentary'
 call plug#end()
 
 syntax on
