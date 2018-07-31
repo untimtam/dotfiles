@@ -1,0 +1,91 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# region virtualenv
+
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+
+# endregion
+
+# region powerlevel9k
+
+# set font
+POWERLEVEL9K_MODE='nerdfont-complete'
+
+# Easily switch primary foreground/background colors
+DEFAULT_FOREGROUND=012
+DEFAULT_BACKGROUND=235
+DEFAULT_COLOR=$DEFAULT_FOREGROUND
+
+# set lprompt
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user host ssh dir_writable dir vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user host dir_writable dir vcs)
+# set rprompt
+# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
+# prompt on new line
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
+# custom multiline prefix
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="❯ "
+
+# user
+POWERLEVEL9K_USER_TEMPLATE="%n"
+POWERLEVEL9K_USER_ICON='\uF415 '
+POWERLEVEL9K_USER_DEFAULT_FOREGROUND="${DEFAULT_COLOR}"
+POWERLEVEL9K_ROOT_ICON="#"
+POWERLEVEL9K_USER_SUDO_FOREGROUND='red'
+POWERLEVEL9K_SUDO_ICON=$'\uF09C '
+POWERLEVEL9K_USER_ROOT_FOREGROUND='green'
+
+# host
+POWERLEVEL9K_HOST_TEMPLATE="%m"
+POWERLEVEL9K_HOST_ICON="\uF109 "
+POWERLEVEL9K_SSH_ICON="\uF489 "
+POWERLEVEL9K_HOST_LOCAL_FOREGROUND="010"
+POWERLEVEL9K_HOST_REMOTE_FOREGROUND="010"
+
+# dir
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+
+# vcs
+POWERLEVEL9K_VCS_SHORTEN_LENGTH=4
+POWERLEVEL9K_VCS_SHORTEN_MIN_LENGTH=11
+POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_from_right"
+POWERLEVEL9K_VCS_SHORTEN_DELIMITER=".."
+
+# status
+POWERLEVEL9K_STATUS_CROSS=false
+POWERLEVEL9K_STATUS_OK=true
+POWERLEVEL9K_STATUS_SHOW_PIPESTATUS=true
+POWERLEVEL9K_STATUS_HIDE_SIGNAME=false
+
+# command_execution_time
+
+# background_jobs
+
+# date
+POWERLEVEL9K_DATE_FORMAT='%D{%d.%m.%y}'
+
+# time
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
+
+# endregion
+
+export TERM="xterm-256color"
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Customize to your needs...
