@@ -1,0 +1,9 @@
+{{/* macos only */}}
+{{ if ne .chezmoi.os "darwin" }}
+.Brewfile
+{{ end }}
+
+{{/* linux only */}}
+{{ if ne .chezmoi.os "linux" }}
+{{/* todo */}}
+{{ end }}

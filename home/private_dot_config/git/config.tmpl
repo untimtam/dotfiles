@@ -1,0 +1,37 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+[alias]
+	lgr = log --oneline --decorate --graph
+[color]
+	ui = auto
+[core]
+	editor = {{ .editor }}
+    excludesfile = ~/.config/git/ignore
+    whitespace = trailing-space,space-before-tab
+[diff]
+	algorithm = histogram
+	renamelimit = 8192
+	renames = copies
+[fetch]
+	fsckobjects = false
+	prune = true
+[init]
+	defaultBranch = "main"
+[pager]
+	branch = false
+	grep = false
+[push]
+	default = current
+[rebase]
+	autosquash = true
+	autostash = true
+[receive]
+	fsckobjects = true
+[status]
+	submoduleSummary = true
+[transfer]
+	fsckobjects = true
+[trim]
+	bases = main,gh-pages
+{{/* vim: set filetype=gitconfig: */}}

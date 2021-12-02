@@ -1,0 +1,14 @@
+{{ if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v cargo >/dev/null 2>&1; then
+    echo "cargo is not installed"
+else
+    cargo install tealdeer
+    cargo install exa
+    cargo install sd
+    cargo install ripgrep
+fi
+{{ end -}}

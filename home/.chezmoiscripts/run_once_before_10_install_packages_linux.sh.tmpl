@@ -1,0 +1,94 @@
+{{ if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -eufo pipefail
+{{  if (eq .chezmoi.osRelease.id "debian" "ubuntu") -}}
+repositories=(
+    ppa:longsleep/golang-backports
+)
+packages=(
+    software-properties-common
+    bash
+    zsh
+    tmux
+    tree
+    vim
+    neovim
+    gnupg
+    libssl-dev
+    xz-utils
+    curl
+    wget
+    mosh
+    git
+    git-lfs
+    bat
+    fd-find
+    jq
+    shellcheck
+    build-essential
+    cmake
+    llvm
+    clang
+    libelf-dev
+    python3-dev
+    python3-pip
+    python3-venv
+    pipx
+    tig
+    graphviz
+    golang
+    nodejs
+)
+snaps=()
+classic_snaps=()
+
+{{ if (not .headless) }}
+packages+=(
+    openjdk-16-jdk
+    openjdk-11-jdk
+)
+{{ else }}
+packages+=(
+    openjdk-16-jdk-headless
+    openjdk-11-jdk-headless
+)
+{{ end }}
+
+for repository in ${repositories[@]}; do
+    sudo add-apt-repository -y $repository
+done
+
+sudo apt update
+
+sudo apt install -y ${packages[@]}
+
+{{ if (eq .chezmoi.osRelease.id "ubuntu") }}
+for snap in ${snaps[@]}; do
+    sudo snap install $snap
+done
+
+for classic_snap in ${classic_snaps[@]}; do
+    sudo snap install $classic_snap --classic
+done
+{{ end }}
+
+{{  end -}}
+
+# download fonts
+fonts_dir="${HOME}/.local/share/fonts"
+mkdir -p "${fonts_dir}"
+
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/SourceCodePro.zip
+unzip SourceCodePro.zip -d "${fonts_dir}"
+rm SourceCodePro.zip
+
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
+unzip FiraCode.zip -d "${fonts_dir}"
+rm FiraCode.zip
+
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraMono.zip
+unzip FiraMono.zip -d "${fonts_dir}"
+rm FiraMono.zip
+
+{{ end -}}

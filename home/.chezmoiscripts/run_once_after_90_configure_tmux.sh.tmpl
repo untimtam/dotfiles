@@ -1,0 +1,8 @@
+{{ if (and (eq .chezmoi.os "darwin" "linux") (not .ephemeral)) -}}
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+export TMUX_PLUGIN_MANAGER_PATH=${HOME}/.tmux/
+${HOME}/.tmux/plugins/tpm/bin/install_plugins
+{{ end -}}

@@ -1,0 +1,378 @@
+# prompt options
+# remove blank newline between shell prompts
+add_newline = false
+
+
+# aws options
+[aws]
+disabled = true
+
+
+# battery options
+[battery]
+disabled = false
+
+[[battery.display]]
+threshold = 15
+style = "bold red"
+
+
+# character options
+[character]
+disabled = false
+
+
+# cmake options
+[cmake]
+disabled = false
+
+
+# cobol/gnucobol options
+[cobol]
+disabled = true
+
+
+# command duration options
+[cmd_duration]
+disabled = false
+min_time = 2_000
+min_time_to_notify = 45_000
+show_milliseconds = true
+show_notifications = true
+
+
+# conda options
+[conda]
+disabled = true
+
+
+# crystal options
+[crystal]
+disabled = true
+
+
+# dart options
+[dart]
+disabled = true
+
+
+# deno options
+[deno]
+disabled = false
+
+
+# directory options
+[directory]
+disabled = false
+truncation_length = 4
+truncate_to_repo = true
+
+
+# docker context options
+[docker_context]
+disabled = false
+
+
+# dotnet options
+[dotnet]
+disabled = true
+
+
+# elixir options
+[elixir]
+disabled = true
+
+
+# elm options
+[elm]
+disabled = true
+
+
+# erlang options
+[erlang]
+disabled = true
+
+
+# fill options
+[fill]
+disabled = false
+
+
+# gcloud options
+[gcloud]
+disabled = false
+format = 'on [$symbol$account (\($region\))]($style) '
+style = "bold blue"
+
+[gcloud.region_aliases]
+us-central1 = "uc1"
+us-east1 = "ue1"
+us-east4 = "ue4"
+us-west1 = "uw1"
+us-west2 = "uw2"
+us-west3 = "uw3"
+us-west4 = "uw4"
+
+
+# git branch options
+[git_branch]
+disabled = false
+format = "on [$symbol$branch]($style) "
+style = "bold purple"
+
+
+# git commit options
+[git_commit]
+disabled = false
+format = "[\\($hash$tag\\)]($style) "
+style = "bold green"
+only_detached = false
+tag_disabled = false
+commit_hash_length = 7
+
+
+# git state options
+[git_state]
+disabled = false
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bold yellow"
+
+
+# git metrics options
+[git_metrics]
+disabled = false
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+added_style = "bold green"
+deleted_style = "bold red"
+
+
+# git status options
+[git_status]
+disabled = false
+
+
+# golang options
+[golang]
+disabled = false
+
+
+# helm options
+[helm]
+disabled = true
+
+
+# hostname options
+[hostname]
+disabled = false
+format = "[$hostname]($style) in "
+style = "bold dimmed green"
+ssh_only = false
+
+
+# java options
+[java]
+disabled = false
+
+
+# jobs options
+[jobs]
+disabled = false
+format = "[$symbol$number]($style) "
+style = "bold blue"
+
+
+# julia options
+[julia]
+disabled = true
+
+
+# kotlin options
+[kotlin]
+disabled = false
+
+
+# kubernetes options
+[kubernetes]
+disabled = true
+
+
+# line break options
+[line_break]
+disabled = false
+
+
+# lua options
+[lua]
+disabled = false
+
+
+# memory usage options
+[memory_usage]
+disabled = true
+
+
+# mercurial options
+[hg_branch]
+disabled = true
+
+
+# nim options
+[nim]
+disabled = true
+
+
+# nix options
+[nix_shell]
+disabled = true
+
+
+# nodejs options
+[nodejs]
+disabled = false
+
+
+# ocaml options
+[ocaml]
+disabled = true
+
+
+# openstack options
+[openstack]
+disabled = true
+
+
+# package options
+[package]
+disabled = false
+format = "is [$symbol$version]($style) "
+style = "bold 208"
+display_private = true
+
+
+# perl options
+[perl]
+disabled = true
+
+
+# php options
+[php]
+disabled = true
+
+
+# pulumi options
+[pulumi]
+disabled = true
+
+
+# purescript options
+[purescript]
+disabled = true
+
+
+# python options
+[python]
+disabled = false
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+style = "yellow bold"
+
+
+# rlang options
+[rlang]
+disabled = true
+
+
+# red options
+[red]
+disabled = true
+
+
+# ruby options
+[ruby]
+disabled = true
+
+
+# options
+[rust]
+disabled = false
+format = "via [$symbol($version )]($style)"
+style = "bold red"
+
+
+# options
+[scala]
+disabled = true
+
+
+# shell options
+[shell]
+disabled = false
+format = "[$indicator]($style) "
+style = "white bold"
+
+
+# shlvl options
+[shlvl]
+disabled = false
+format = "[$symbol$shlvl]($style) "
+style = "bold yellow"
+threshold = 2
+
+
+# singularity options
+[singularity]
+disabled = true
+
+
+# status options
+[status]
+disabled = false
+format = "[$symbol$status]($style) "
+style = "bold red"
+map_symbol = true
+
+
+# swift options
+[swift]
+disabled = true
+
+
+# terraform options
+[terraform]
+disabled = false
+
+
+# time options
+[time]
+disabled = false
+format = "at [$time UTC]($style) "
+style = "bold yellow"
+utc_time_offset = "0"
+
+
+# username options
+[username]
+disabled = false
+format = "[$user]($style) in "
+style_root = "bold red"
+style_user = "bold yellow"
+show_always = true
+
+
+# vagrant options
+[vagrant]
+disabled = true
+
+
+# vlang options
+[vlang]
+disabled = true
+
+
+# vcsh options
+[vcsh]
+disabled = true
+
+
+# zig options
+[zig]
+disabled = false

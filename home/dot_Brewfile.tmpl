@@ -1,0 +1,111 @@
+# Taps
+tap 'homebrew/core'
+tap 'homebrew/bundle'
+tap 'homebrew/cask'
+tap 'homebrew/cask-fonts'
+tap 'homebrew/cask-versions'
+tap 'buo/cask-upgrade'
+
+# Bundle Dependencies
+brew 'mas'
+
+# Binaries
+brew 'coreutils'
+brew 'uutils-coreutils'
+brew 'bash'
+brew 'zsh'
+brew 'nushell'
+brew 'tmux'
+brew 'tree'
+brew 'vim'
+brew 'neovim'
+brew 'gnupg'
+brew 'openssl@1.1'
+brew 'openssl@3'
+brew 'xz'
+brew 'curl'
+brew 'wget'
+brew 'mosh'
+brew 'git'
+brew 'git-lfs'
+brew 'svn'
+brew 'tealdeer'
+brew 'bat'
+brew 'exa'
+brew 'fd'
+brew 'jq'
+brew 'sd'
+brew 'ripgrep'
+brew 'shellcheck'
+brew 'cmake'
+brew 'llvm'
+brew 'libelf'
+brew 'python@3.9'
+brew 'pipx'
+brew 'tig'
+brew 'graphviz'
+brew 'go'
+brew 'node'
+brew 'openjdk'
+{{- if .personal }}
+brew 'youtube-dl'
+{{- end }}
+
+# Apps
+cask 'iterm2'
+cask '1password'
+cask '1password-cli'
+cask 'brave-browser'
+cask 'visual-studio-code'
+cask 'rectangle'
+cask 'docker'
+# cask 'vagrant'
+# cask 'virtualbox'
+cask 'insomnia'
+cask 'the-unarchiver'
+cask 'balenaetcher'
+cask 'caffeine'
+{{ if .personal -}}
+cask 'firefox'
+cask 'google-chrome'
+cask 'transmission'
+cask 'signal'
+cask 'spotify'
+cask 'discord'
+cask 'steam'
+{{- end -}}
+{{ if .akasha -}}
+cask 'google-cloud-sdk'
+cask 'slack'
+cask 'zoom'
+{{- end }}
+
+# Quicklook
+cask 'qlcolorcode'
+cask 'qlimagesize'
+cask 'qlmarkdown'
+cask 'qlstephen'
+cask 'quicklook-json'
+
+# Fonts
+cask 'font-lato'
+cask 'font-open-sans'
+cask 'font-roboto'
+cask 'font-source-code-pro-for-powerline'
+cask 'font-source-code-pro'
+cask 'font-source-sans-pro'
+cask 'font-source-serif-pro'
+cask 'font-fira-code'
+cask 'font-fira-code-nerd-font'
+cask 'font-fira-mono'
+cask 'font-fira-mono-nerd-font'
+cask 'font-fira-sans'
+
+# Mac App Store
+{{ if .personal -}}
+mas 'Keynote', id: 409183694
+mas 'Numbers', id: 409203825
+mas 'Pages', id: 409201541
+mas 'Xcode', id: 497799835
+mas 'Spark', id: 1176895641
+{{- end }}

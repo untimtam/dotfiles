@@ -1,0 +1,11 @@
+#
+# User configuration sourced by all invocations of the shell
+#
+
+# Define Zim location
+: "${ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim}"
+
+
+if [[ -f "${HOME}/.cargo/env" ]]; then
+  . "${HOME}/.cargo/env"
+fi

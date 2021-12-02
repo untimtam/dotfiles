@@ -1,0 +1,9 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ $brewfile := joinPath .chezmoi.homeDir ".Brewfile" -}}
+# .Brewfile hash: {{ include $brewfile | sha256sum }}
+brew bundle --no-lock --file={{ $brewfile | quote }}
+{{- end }}
