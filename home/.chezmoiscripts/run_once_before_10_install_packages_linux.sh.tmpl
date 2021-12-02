@@ -79,16 +79,27 @@ done
 fonts_dir="${HOME}/.local/share/fonts"
 mkdir -p "${fonts_dir}"
 
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/SourceCodePro.zip
-unzip SourceCodePro.zip -d "${fonts_dir}"
-rm SourceCodePro.zip
+shopt -s nullglob
 
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
-unzip FiraCode.zip -d "${fonts_dir}"
-rm FiraCode.zip
+source_pro_files=("Sauce Code*.otf")
+if (( ${#source_pro_files[@]} == 0 )); then
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/SourceCodePro.zip
+    unzip SourceCodePro.zip -d ${fonts_dir}
+    rm SourceCodePro.zip
+fi
 
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraMono.zip
-unzip FiraMono.zip -d "${fonts_dir}"
-rm FiraMono.zip
+fira_code_files=("Fira Code*.otf")
+if (( ${#fira_code_files[@]} == 0 )); then
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
+    unzip FiraCode.zip -d ${fonts_dir}
+    rm FiraCode.zip
+fi
+
+fira_mono_files=("Fira Mono*.otf")
+if (( ${#fira_mono_files[@]} == 0 )); then
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraMono.zip
+    unzip FiraMono.zip -d ${fonts_dir}
+    rm FiraMono.zip
+fi
 
 {{ end -}}
