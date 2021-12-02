@@ -1,11 +1,5 @@
 HashKnownHosts no
 
-{{- if eq .chezmoi.os "darwin" }}
-Host *
-  AddKeysToAgent yes
-  UseKeychain yes
-{{- end }}
-
 Host github.com
   User git
 
@@ -14,5 +8,17 @@ Host github.com
 {{- end }}
 
 {{ if (and (.akasha) (not .ephemeral)) }}
-{{/* TODO akasha hostnames */}}
+Host argo-not
+  HostName 34.105.19.85
+  IdentityFile ~/.ssh/google_compute_engine
+  UserKnownHostsFile=~/.ssh/google_compute_known_hosts
+  HostKeyAlias=argo-not.alias
+{{- end }}
+
+Host *
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/id_ed25519
+{{- if eq .chezmoi.os "darwin" }}
+  AddKeysToAgent yes
+  UseKeychain yes
 {{- end }}
