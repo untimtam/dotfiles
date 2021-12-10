@@ -6,3 +6,4 @@ Tim Flichy dotfiles
 - init device private ssh key
 - sync service ssh keys
 - iterm init and profile
+- fix path across platforms
